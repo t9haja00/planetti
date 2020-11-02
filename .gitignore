@@ -1,0 +1,24 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+planetti-ui/node_modules
+planetti-api/node_modules
+planetti-ui/.pnp
+planetti-ui/.pnp.js
+
+# testing
+planetti-ui/coverage
+
+# production
+planetti-ui/build
+
+# misc
+/.DS_Store
+planetti-ui/.env.local
+planetti-ui/.env.development.local
+planetti-ui/.env.test.local
+planetti-ui/.env.production.local
+
+/npm-debug.log*
+/yarn-debug.log*
+/yarn-error.log*

@@ -1,0 +1,7 @@
+{
+  "database": {
+    "user": "PLANETTI_ADMIN",
+    "password": "PLANETTI_ADMIN_PASSWORD"
+  },
+  "__comment__": "create env variable and store your database username and password. Example: 'PLANETTI_ADMIN=ADMIN' 'PLANETTI_ADMIN_PASSWORD=PASSWORD' replace 'ADMIN' and 'PASSWORD' with your own username and password"
+}

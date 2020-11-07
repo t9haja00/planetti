@@ -3,12 +3,11 @@
 import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { Jumbotron } from 'react-bootstrap';
 
 /* Components
 --------------*/
-import NavBar from './components/common/NavBar';
-import Signup from './components/Signup';
+import NotLogged from './components/NotLogged';
+import Footer from './components/common/Footer';
 
 /* Styles
 ----------*/
@@ -27,31 +26,8 @@ const App = () => {
         closeButton={false}
         limit={1}
       />
-      {!user &&
-        <>
-          <div
-            className="container position-absolute py-2"
-            style={{ left: 0, right: 0 }}>
-            <NavBar
-              siteName="Planetti"
-              user={null}
-              onLogout="" />
-          </div>
-          <Jumbotron>
-            <div className="container-lg">
-              <div
-                className="d-flex align-items-center gutter-md-spacious">
-                <div className="col-7 text-center">
-                  <p className="h1 text-wrap">Schedule generator for everyone</p>
-                </div>
-                <div className="col-5">
-                  <Signup />
-                </div>
-              </div>
-            </div>
-          </Jumbotron>
-        </>
-      }
+      { !user && <NotLogged /> }
+      <Footer />
     </>
   )
 }

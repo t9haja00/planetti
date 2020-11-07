@@ -11,3 +11,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.jumbotron {
+  padding: 70px 0;
+  background: url('http://192.168.1.7:3200/images/jumbo-img.svg') #16a3a3;
+  background-repeat: no-repeat;
+  background-clip: border-box;
+  border-radius: 0;
+}
+
+@media (max-width:950px) {
+.jumbotron .align-items-center {
+  align-items: unset!important;
+}
+}
+
+.jumbotron .h1 {
+  font-size:  3rem;
+  color: #EDF5E1;
+}

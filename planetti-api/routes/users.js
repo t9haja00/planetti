@@ -17,25 +17,24 @@ router.post('/', (req, res) => {
   const {name, email, password} = req.body;
   const hashedPassword = bcrypt.hashSync(password, 8);
   const newUser = [
-    null,
     name,
     email,
     hashedPassword,
   ];
 
-  db.query('SELECT email FROM users WHERE email= ?', email)
+  db.query('SELECT email FROM users WHERE email= $1', [email])
     .then(email => {
-      if (email.length > 0) return res.status(400).send('Email already exists');
+      if (email.rows.length > 0) return res.status(400).send('Email already exists');
 
-      db.query('INSERT INTO users VALUES (?,?,?,?)', newUser)
+      db.query('INSERT INTO users (name, email, password) VALUES ($1, $2, $3) ', newUser)
         .then(() => res.sendStatus(201))
         .catch(err => {
-          console.log(err);
+          console.log('Register Error', err);
           res.sendStatus(500);
         });
     })
     .catch(err => {
-      console.log(err);
+      console.log('Email exists ', err);
       res.sendStatus(500)
     });
 });

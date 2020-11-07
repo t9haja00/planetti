@@ -6,6 +6,7 @@
     "dev": "nodemon index.js"
   },
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "config": "^3.3.2",
     "cors": "^2.8.5",
     "express": "^4.16.1",

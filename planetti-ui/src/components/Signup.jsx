@@ -1,6 +1,7 @@
 import React from 'react';
 import Joi from 'joi';
 import { Card } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import { signup } from '../services/userService';
 import Form from './common/Form';
 

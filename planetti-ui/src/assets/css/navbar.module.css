@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&display=swap');
+
+.navbar {
+  color: #FEFFFF;
+}
+
+.navbar-brand {
+  color: #05386B;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.navbar-brand:hover {
+  text-decoration: none;
+  color: #FEFFFF;
+}
+
+.join {
+  color: #FEFFFF !important;
+  background-color: #05386B !important;
+  border-color: transparent !important;
+}
+
+.login {
+  color: #05386B !important;
+}
+
+.navbar-link:hover {
+  text-decoration: none!important;
+}
+
+.navbar-link:focus {
+  box-shadow: none!important;
+}

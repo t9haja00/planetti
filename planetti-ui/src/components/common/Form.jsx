@@ -33,10 +33,10 @@ class Form extends Component {
     this.setState({ data });
   };
 
-  renderButton(label) {
+  renderButton(label, btnStyles='') {
     return (
       <button
-        type="submit" className={`${styles['submit-btn']} btn mb-3 mt-3 py-3 px-4 w-100`}>{label}</button>
+        type="submit" className={`${styles['submit-btn']} ${btnStyles} btn`}>{label}</button>
     );
   }
 

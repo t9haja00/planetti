@@ -4,6 +4,7 @@ import { Card } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { signup } from '../services/userService';
 import Form from './common/Form';
+import styles from '../assets/css/signup.module.css';
 
 class Signup extends Form {
   state = {
@@ -85,7 +86,7 @@ class Signup extends Form {
               {this.renderInput('email', 'Email', 'email')}
               {this.renderInput('password', 'Password', 'password')}
               {this.renderInput('confirmPassword', 'Renter Password', 'password')}
-              {this.renderButton('Sign up for Planetti')}
+              {this.renderButton('Sign up for Planetti', `${styles['signup-btn']}`)}
           </form>
           <p className="w-100 mb-0 mt-2 text-muted text-small">
             <small>

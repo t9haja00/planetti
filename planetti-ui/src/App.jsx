@@ -1,6 +1,6 @@
 /* Packages
 ------------*/
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
@@ -15,7 +15,27 @@ import Footer from './components/common/Footer';
 import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
-  const { user, setUser } = useState();
+
+  const [ loggedIn, setLoggedIn ] = useState(null);
+
+  useEffect(() => {
+      const user = {
+        id: localStorage.getItem('userId'),
+        name: localStorage.getItem('name')
+      }
+
+      setLoggedIn(user);
+
+  }, [setLoggedIn]);
+  
+  const handleSignin = () => {
+      const user = {
+        id: localStorage.getItem('userId'),
+        name: localStorage.getItem('name')
+      }
+
+      setLoggedIn(user);
+  };
 
   return (
     <>
@@ -29,9 +49,9 @@ const App = () => {
       />
       <Switch>
         <Route path='/login' render={routeProps =>
-          <Signin  {...routeProps} />} />
+          <Signin signin={handleSignin} {...routeProps} />} />
         <Route path='/' render={() => {
-          if (!user) return <NotLogged />
+          if (!loggedIn) return <NotLogged />
           return <h1>logged</h1>
         }} />
       </Switch>

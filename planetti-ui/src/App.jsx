@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify';
 /* Components
 --------------*/
 import NotLogged from './components/NotLogged';
+import Signin from './components/Signin';
 import Footer from './components/common/Footer';
 
 /* Styles
@@ -14,7 +15,7 @@ import Footer from './components/common/Footer';
 import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
-  const { user, setUser } = useState(null);
+  const { user, setUser } = useState();
 
   return (
     <>
@@ -26,8 +27,16 @@ const App = () => {
         closeButton={false}
         limit={1}
       />
-      { !user && <NotLogged /> }
-      <Footer />
+      <Switch>
+        <Route path='/login' render={routeProps =>
+          <Signin  {...routeProps} />} />
+        <Route path='/' render={() => {
+          if (!user) return <NotLogged />
+          return <h1>logged</h1>
+        }} />
+      </Switch>
+      <Route path='*' render={routerProps =>
+        <Footer {...routerProps} />} />
     </>
   )
 }

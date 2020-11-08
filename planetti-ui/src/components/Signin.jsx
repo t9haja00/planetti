@@ -36,9 +36,12 @@ class Signin extends Form {
     try {
       const { data } = this.state;
       const { data: user } = await signin(data.email, data.password);
+
       localStorage.setItem('name', user[0].name);
       localStorage.setItem('userId', user[0].id);
+
       this.props.history.push('/');
+      this.props.signin();
     }
     catch (ex) {
       if (ex.response && ex.response.status === 400) {

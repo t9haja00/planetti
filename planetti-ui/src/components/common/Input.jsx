@@ -3,7 +3,7 @@ import React from 'react';
 const Input = ({ name, label, error, ...rest }) => {
   return (
     <div className="form-group">
-      <label htmlFor={name} className="d-flex justify-content-between">{label}
+      <label htmlFor={name} className="d-flex flex-wrap justify-content-between">{label}
       {error && <small className="text-danger">{error}</small>}
       </label>
       <input

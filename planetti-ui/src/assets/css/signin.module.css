@@ -1,0 +1,15 @@
+.brand {
+  color: #05386B;
+  font-size: 28px;
+  font-family: 'Russo One', sans-serif;
+}
+
+.auth-form {
+  width: 340px!important;
+}
+
+.auth-form-body {
+  font-weight: 600;
+  font-size: 14px;
+  background-color: #f1f5f7
+}

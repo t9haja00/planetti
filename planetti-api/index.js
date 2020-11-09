@@ -1,5 +1,7 @@
 const cors = require('cors');
 const express = require('express');
+const users = require('./routes/users');
+const auth = require('./routes/auth');
 
 const app = express();
 const PORT = process.env.PORT || 3200;
@@ -8,6 +10,8 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(cors());
 
+app.use('/users', users);
+app.use('/auth', auth);
 
 console.log('Database connection is opened successfully!');
 app.listen(PORT, () => console.log(`Server is up and listening on ${PORT}...`));

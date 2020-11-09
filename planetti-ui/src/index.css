@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +12,30 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+
+.jumbotron {
+  padding: 80px 0;
+  background: url('assets/images/jumbo-img.svg') #16a3a3;
+  background-repeat: no-repeat;
+  background-clip: border-box;
+  border-radius: 0;
+}
+
+@media (max-width:950px) {
+.jumbotron .align-items-center {
+  align-items: unset!important;
+}
+}
+
+@media (min-width: 2400px) {
+  .jumbotron {
+    background-image: none;
+  }
+}
+
+.jumbotron .h1 {
+  font-size:  3rem;
+  color: #EDF5E1;
 }

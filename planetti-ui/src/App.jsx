@@ -19,20 +19,14 @@ const App = () => {
   const [ loggedIn, setLoggedIn ] = useState(null);
 
   useEffect(() => {
-      const user = {
-        id: localStorage.getItem('userId'),
-        name: localStorage.getItem('name')
-      }
+      const user = localStorage.getItem('userId');
 
       setLoggedIn(user);
 
   }, [setLoggedIn]);
   
   const handleSignin = () => {
-      const user = {
-        id: localStorage.getItem('userId'),
-        name: localStorage.getItem('name')
-      }
+      const user = localStorage.getItem('userId');
 
       setLoggedIn(user);
   };

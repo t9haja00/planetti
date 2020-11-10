@@ -1,59 +1,107 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Link, useLocation } from 'react-router-dom';
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import styles from '../../assets/css/navbar.module.css';
 
 const NavBar = ({ siteName = '', user, onLogout }) => {
 
-  const [expanded, setExpanded] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
-  const className = !user ? "container position-absolute py-2" :
-                        "";
+  const location = useLocation();
+
+  const handleShowMenu = () => {
+    setShowMenu(!showMenu);
+  }
+
+  const handleHideMenu = () => {
+    setShowMenu(false);
+  }
+
+  let containerStyle = "";
+  const notLoggedIn = (() => {
+    if (!user && location.pathname !== '/login') {
+      containerStyle = "container position-absolute py-2";
+      return (
+        <>
+          <Link
+            className={`${styles.login} ${styles['navbar-link']} btn mx-1`}
+            to='/login'
+            name='login'
+            >Sign in</Link>
+          <Link
+            className={`${styles.join} ${styles['navbar-link']} btn rounded-pill mx-1`}
+            to='/join'
+            name='join'
+            >Sing up</Link>
+        </>
+      );
+    }
+  })();
+
+  const loggedIn = (() => {
+    if (user) {
+      return (
+        <NavDropdown 
+          title={user} 
+          id="basic-nav-dropdown" 
+          className={`${styles['nav-dropdown']}`}
+          alignRight
+          show={showMenu}
+          onMouseEnter={handleShowMenu}
+          onMouseLeave={handleHideMenu}
+          >
+          <NavDropdown.Item>
+            <Link to='/'>Main page</Link>
+          </NavDropdown.Item>
+          <NavDropdown.Item>
+            <Link to='/settings'>User settings</Link>
+          </NavDropdown.Item>
+          <NavDropdown.Divider />
+          <NavDropdown.Item>
+           <button
+             name='logout'
+             onClick={onLogout}>Sign out</button>
+          </NavDropdown.Item>
+        </NavDropdown>
+        // <>
+        //   <button
+        //     className='border rounded-sm mx-1'
+        //     name='user'>
+        //     {user}
+        //   </button>
+        //   <button
+        //     className='border rounded-sm mx-1'
+        //     name='Logout'
+        //     onClick={onLogout}>Logout</button>
+        // </>
+      );
+    }
+  })();
 
   return (
-    <div className={className} style={{right: 0, left: 0}}>
-      <Navbar variant="dark" expanded={expanded} className={styles.navbar}>
-        <Navbar.Brand>
-          <Link className={styles['navbar-brand']} to='/' onClick={() => setExpanded(false)}>
-            {siteName}
+    <div className={containerStyle} style={{ right: 0, left: 0 }}>
+      {location.pathname === '/login' &&
+        <div className="text-center pt-4 pb-3">
+          <Link to="/" className="text-decoration-none">
+            <p className={styles['navbar-brand']}>Planetti</p>
           </Link>
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav"
-          onClick={() => setExpanded(expanded ? false : "expanded")} />
-        <Navbar.Collapse className="justify-content-end">
+        </div>
+      }
+      {location.pathname !== '/login' &&
+        <Navbar variant="light" className={`${styles.navbar} justify-content-between`}>
+          <Navbar.Brand>
+            <Link className={styles['navbar-brand']} to='/'>
+              {siteName}
+            </Link>
+          </Navbar.Brand>
           <Nav>
-            {!user &&
-              <>
-                <Link
-                  className={`${styles.login} ${styles['navbar-link']} btn mx-1`}
-                  to='/Login'
-                  name='Login'
-                  onClick={() => setExpanded(false)}>Sign in</Link>
-                <Link
-                  className={`${styles.join} ${styles['navbar-link']} btn rounded-pill mx-1`}
-                  to='/Join'
-                  name='Join'
-                  onClick={() => setExpanded(false)}>Sing up</Link>
-              </>
-            }
-            {user &&
-              <>
-                <button
-                  className='border rounded-sm mx-1'
-                  name='user'>
-                  {user}
-                </button>
-                <button
-                  className='border rounded-sm mx-1'
-                  name='Logout'
-                  onClick={onLogout}>Logout</button>
-              </>
-            }
+            {notLoggedIn}
+            {loggedIn}
           </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+        </Navbar>
+      }
     </div>
-  )
+  );
 }
 
 export default NavBar;

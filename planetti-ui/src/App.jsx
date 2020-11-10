@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 
 /* Components
 --------------*/
+import NavBar from './components/common/NavBar';
 import NotLogged from './components/NotLogged';
 import Signin from './components/Signin';
 import Footer from './components/common/Footer';
@@ -40,6 +41,10 @@ const App = () => {
         pauseOnFocusLose={false}
         closeButton={false}
         limit={1}
+      />
+      <NavBar 
+        siteName="Planetti" 
+        user={!loggedIn ? null : loggedIn}
       />
       <Switch>
         <Route path='/login' render={routeProps =>

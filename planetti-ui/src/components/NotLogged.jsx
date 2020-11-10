@@ -1,6 +1,5 @@
 import React from 'react';
 import { Jumbotron, CardDeck, Card, Container } from 'react-bootstrap';
-import NavBar from './common/NavBar';
 import Signup from './Signup';
 
 const NotLogged = () => {

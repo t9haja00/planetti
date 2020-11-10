@@ -10,7 +10,6 @@
 
 .navbar-brand:hover {
   text-decoration: none;
-  color: #FEFFFF;
 }
 
 .join {
@@ -29,4 +28,8 @@
 
 .navbar-link:focus {
   box-shadow: none!important;
+}
+
+.nav-dropdown a{
+  color: #05386B!important;
 }

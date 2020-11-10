@@ -17,19 +17,19 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
 
-  const [ loggedIn, setLoggedIn ] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(null);
 
   useEffect(() => {
-      const user = localStorage.getItem('userId');
+    const user = localStorage.getItem('name');
 
-      setLoggedIn(user);
+    setLoggedIn(user);
 
   }, [setLoggedIn]);
-  
-  const handleSignin = () => {
-      const user = localStorage.getItem('userId');
 
-      setLoggedIn(user);
+  const handleSignin = () => {
+    const user = localStorage.getItem('name');
+
+    setLoggedIn(user);
   };
 
   return (
@@ -42,9 +42,9 @@ const App = () => {
         closeButton={false}
         limit={1}
       />
-      <NavBar 
-        siteName="Planetti" 
-        user={!loggedIn ? null : loggedIn}
+      <NavBar
+        siteName="Planetti"
+        user={loggedIn}
       />
       <Switch>
         <Route path='/login' render={routeProps =>
@@ -54,8 +54,7 @@ const App = () => {
           return <h1>logged</h1>
         }} />
       </Switch>
-      <Route path='*' render={routerProps =>
-        <Footer {...routerProps} />} />
+      <Footer />
     </>
   )
 }

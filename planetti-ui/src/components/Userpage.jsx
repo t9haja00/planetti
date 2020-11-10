@@ -10,7 +10,7 @@ import { getSchedules } from '../services/scheduleService';
 /* Styles
 ----------*/
 
-
+user_id = localStorage.getItem('userId');
 
 
 useEffect(() => {

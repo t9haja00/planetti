@@ -1,6 +1,5 @@
 import React from 'react';
 import Joi from 'joi';
-import { Link } from 'react-router-dom';
 import { signin } from '../services/authService';
 import Form from '../components/common/Form';
 import styles from '../assets/css/signin.module.css';
@@ -55,11 +54,6 @@ class Signin extends Form {
   render() {
     return (
       <>
-        <div className="text-center pt-4 pb-3">
-          <Link to="/" className="text-decoration-none">
-            <p className={styles.brand}>Planetti</p>
-          </Link>
-        </div>
         <div className={`${styles['auth-form']} container px-3`}>
           <form onSubmit={this.handlesubmit} noValidate>
             <div className="text-center">

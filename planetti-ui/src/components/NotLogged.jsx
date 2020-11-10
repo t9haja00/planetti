@@ -7,13 +7,6 @@ const NotLogged = () => {
 
   return (
     <>
-      <div
-        className="container position-absolute py-2"
-        style={{ left: 0, right: 0 }}>
-        <NavBar
-          siteName="Planetti"
-          user={null} />
-      </div>
       <Jumbotron>
         <div className="container-lg">
           <div

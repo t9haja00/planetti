@@ -9,7 +9,7 @@ const user_id = req.params.id;
 
   db.query('SELECT * FROM schedules WHERE user_id=($1)',[user_id])
     .then(schedules => {
-      res.send(schedules);
+      res.send(schedules.rows);
     })
 });
 

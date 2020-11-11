@@ -8,9 +8,15 @@ export function getSchedules(user_id) {
 }
 //create new schedule for this user_id
 export function newSchedule(user_id) {
-    return http.post(schedulesAPI, {}, );
+    return http.post(schedulesAPI, {
+        title,
+        description,
+        user_id
+    }, );
   }
   //delete 1 schedule with the selected id
   export function deleteSchedule(schedule_id) {
-    return http.delete(schedulesAPI, {},  );
+    return http.delete(schedulesAPI, {
+        schedule_id
+    },  );
   }

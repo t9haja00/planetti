@@ -1,5 +1,6 @@
 const cors = require('cors');
 const express = require('express');
+const schedules = require('./routes/schedules');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
 
@@ -12,6 +13,7 @@ app.use(cors());
 
 app.use('/users', users);
 app.use('/auth', auth);
+app.use('/schedules',schedules);
 
 console.log('Database connection is opened successfully!');
 app.listen(PORT, () => console.log(`Server is up and listening on ${PORT}...`));

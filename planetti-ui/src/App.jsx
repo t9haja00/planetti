@@ -49,8 +49,8 @@ const App = () => {
       <Switch>
         <Route path='/login' render={routeProps =>
           <Signin signin={handleSignin} {...routeProps} />} />
-        <Route path='/' render={() => {
-          if (!loggedIn) return <NotLogged />
+        <Route path='/' render={routeProps => {
+          if (!loggedIn) return <NotLogged {...routeProps} />
           return <h1>logged</h1>
         }} />
       </Switch>

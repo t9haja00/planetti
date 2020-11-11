@@ -2,7 +2,7 @@ import React from 'react';
 import { Jumbotron, CardDeck, Card, Container } from 'react-bootstrap';
 import Signup from './Signup';
 
-const NotLogged = () => {
+const NotLogged = ({ history }) => {
 
   return (
     <>
@@ -14,7 +14,7 @@ const NotLogged = () => {
               <p className="h1 text-wrap">Schedule generator for everyone</p>
             </div>
             <div className="col-5">
-              <Signup />
+              <Signup history={history} />
             </div>
           </div>
         </div>

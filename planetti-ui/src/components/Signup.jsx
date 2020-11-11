@@ -60,6 +60,7 @@ class Signup extends Form {
      try {
         const res = await signup(this.state.data);
         if (res) {
+          this.props.history.push('/login');
            this.successNote();
         }
      }

@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import NavBar from './components/common/NavBar';
 import NotLogged from './components/NotLogged';
 import Signin from './components/Signin';
+import UserSettings from './components/UserSettings';
 import Footer from './components/common/Footer';
 
 /* Styles
@@ -49,6 +50,7 @@ const App = () => {
       <Switch>
         <Route path='/login' render={routeProps =>
           <Signin signin={handleSignin} {...routeProps} />} />
+        <Route path='/user-settings' component={UserSettings} />
         <Route path='/' render={routeProps => {
           if (!loggedIn) return <NotLogged {...routeProps} />
           return <h1>logged</h1>

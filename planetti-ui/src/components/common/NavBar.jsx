@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import styles from '../../assets/css/navbar.module.css';
 
-const NavBar = ({ siteName = '', user, onLogout }) => {
+const NavBar = ({ siteName = '', userInfo, onLogout }) => {
 
   const [showMenu, setShowMenu] = useState(false);
 
@@ -19,7 +19,7 @@ const NavBar = ({ siteName = '', user, onLogout }) => {
 
   let containerStyle = "";
   const notLoggedIn = (() => {
-    if (!user && location.pathname !== '/login') {
+    if (!userInfo && location.pathname !== '/login') {
       containerStyle = "container position-absolute py-2";
       return (
         <>
@@ -39,10 +39,10 @@ const NavBar = ({ siteName = '', user, onLogout }) => {
   })();
 
   const loggedIn = (() => {
-    if (user) {
+    if (userInfo) {
       return (
         <NavDropdown 
-          title={user} 
+          title={userInfo} 
           id="basic-nav-dropdown" 
           className={`${styles['nav-dropdown']}`}
           alignRight

@@ -34,11 +34,9 @@ class Signin extends Form {
   doSubmit = async () => {
     try {
       const { data } = this.state;
-      const { data: user } = await signin(data.email, data.password);
+      const { data: userInfo } = await signin(data.email, data.password);
 
-      localStorage.setItem('name', user[0].name);
-      localStorage.setItem('userId', user[0].id);
-
+      localStorage.setItem('userInfo', JSON.stringify(userInfo));
       this.props.history.push('/');
       this.props.signin();
     }

@@ -2,6 +2,7 @@ import React from 'react';
 import Joi from 'joi';
 import { Card } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import { changeNameAndEmail, getUserInfoById } from '../services/userService';
 import Form from './common/Form';
 import styles from '../assets/css/usersettings.module.css';
 
@@ -35,39 +36,57 @@ class Profile extends Form {
       .label('Email')
   });
 
-  // doSubmit = async () => {
-  //    try {
-  //       const res = await signup(this.state.data);
-  //       if (res) {
-  //         this.props.history.push('/login');
-  //          this.successNote();
-  //       }
-  //    }
-  //    catch (ex) {
-  //       if (ex.response && ex.response.status === 400) {
-  //          const errors = { ...this.state.errors };
-  //          errors.email = ex.response.data;
-  //          this.setState({ errors });
-  //       }
-  //    }
-  // };
+  async componentDidMount() {
+    const userInfo = localStorage.getItem('userInfo');
+    const { name, email } = JSON.parse(userInfo);
+    const data = {
+      ...this.state.data,
+      name,
+      email
+    };
+
+    this.setState({ data });
+  }
+
+  doSubmit = async () => {
+    const { data } = this.state;
+    const userInfo = localStorage.getItem('userInfo');
+    const { user_id } = JSON.parse(userInfo);
+
+    try {
+      await changeNameAndEmail(data, user_id);
+      const { data: newUserInfo } = await getUserInfoById(user_id);
+      if (newUserInfo) {
+        localStorage.setItem('userInfo', JSON.stringify(newUserInfo));
+        this.successNote();
+      }
+    }
+    catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        const errors = { ...this.state.errors };
+        errors.email = ex.response.data;
+        this.setState({ errors });
+      }
+    }
+
+  };
 
   successNote = () => {
-    toast.dark(('Successfully registered!')
+    toast.dark(('Saved')
     );
   };
 
   render() {
     return (
-        <Card className="text-gray bg-gray-light mb-5">
-          <Card.Body>
-            <form onSubmit={this.handlesubmit} noValidate>
-              {this.renderInput('name', 'Name', 'name')}
-              {this.renderInput('email', 'Email', 'email')}
-              {this.renderButton('Save', `${styles['signup-btn']}`)}
-            </form>
-          </Card.Body>
-        </Card>
+      <Card className="text-gray bg-gray-light mb-5">
+        <Card.Body>
+          <form onSubmit={this.handlesubmit} noValidate>
+            {this.renderInput('name', 'Name', 'name')}
+            {this.renderInput('email', 'Email', 'email')}
+            {this.renderButton('Save', `${styles['signup-btn']}`)}
+          </form>
+        </Card.Body>
+      </Card>
     );
   }
 }

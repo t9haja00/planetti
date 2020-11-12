@@ -50,30 +50,19 @@ const NavBar = ({ siteName = '', user, onLogout }) => {
           onMouseEnter={handleShowMenu}
           onMouseLeave={handleHideMenu}
           >
-          <NavDropdown.Item>
-            <Link to='/'>Main page</Link>
+          <NavDropdown.Item as={Link} to="/">
+            Main page
           </NavDropdown.Item>
-          <NavDropdown.Item>
-            <Link to='/settings'>User settings</Link>
+          <NavDropdown.Item as={Link} to="/user-settings/user-profile">
+            User settings
           </NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item>
+          <NavDropdown.Item >
            <button
              name='logout'
              onClick={onLogout}>Sign out</button>
           </NavDropdown.Item>
         </NavDropdown>
-        // <>
-        //   <button
-        //     className='border rounded-sm mx-1'
-        //     name='user'>
-        //     {user}
-        //   </button>
-        //   <button
-        //     className='border rounded-sm mx-1'
-        //     name='Logout'
-        //     onClick={onLogout}>Logout</button>
-        // </>
       );
     }
   })();

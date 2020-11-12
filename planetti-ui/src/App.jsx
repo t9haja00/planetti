@@ -21,16 +21,18 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(null);
 
   useEffect(() => {
-    const user = localStorage.getItem('name');
+    let userInfo = localStorage.getItem('userInfo');
+    userInfo = JSON.parse(userInfo);
 
-    setLoggedIn(user);
+    setLoggedIn(userInfo);
 
   }, [setLoggedIn]);
 
   const handleSignin = () => {
-    const user = localStorage.getItem('name');
+    let userInfo = localStorage.getItem('userInfo');
+    userInfo = JSON.parse(userInfo);
 
-    setLoggedIn(user);
+    setLoggedIn(userInfo);
   };
 
   return (
@@ -45,12 +47,12 @@ const App = () => {
       />
       <NavBar
         siteName="Planetti"
-        user={loggedIn}
+        userInfo={loggedIn && loggedIn.name}
       />
       <Switch>
         <Route path='/login' render={routeProps =>
           <Signin signin={handleSignin} {...routeProps} />} />
-        <Route path='/user-settings' component={UserSettings} />
+        <Route path='/user-settings' render={() => loggedIn && <UserSettings />} />
         <Route path='/' render={routeProps => {
           if (!loggedIn) return <NotLogged {...routeProps} />
           return <h1>logged</h1>

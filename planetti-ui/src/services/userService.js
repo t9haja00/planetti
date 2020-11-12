@@ -23,3 +23,7 @@ export function changeNameAndEmail(userInfo, userId) {
     email
   });
 }
+
+export function deleteUserAccount(userId) {
+  return http.delete(`${usersApi}/${userId}`);
+}

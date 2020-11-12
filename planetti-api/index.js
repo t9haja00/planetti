@@ -1,8 +1,10 @@
 const cors = require('cors');
 const express = require('express');
-const schedules = require('./routes/schedules');
+
 const users = require('./routes/users');
 const auth = require('./routes/auth');
+const changePassword = require('./routes/changePassword');
+const schedules = require('./routes/schedules');
 
 const app = express();
 const PORT = process.env.PORT || 3200;
@@ -13,6 +15,7 @@ app.use(cors());
 
 app.use('/users', users);
 app.use('/auth', auth);
+app.use('/users/changePassword', changePassword);
 app.use('/schedules',schedules);
 
 console.log('Database connection is opened successfully!');

@@ -2,7 +2,7 @@
 ------------*/
 import React, { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 
 /* Components
 --------------*/
@@ -35,6 +35,12 @@ const App = () => {
     setLoggedIn(userInfo);
   };
 
+  const handleSignout = () => {
+    toast.dark('You are now logged out!');
+    localStorage.removeItem('userInfo');
+    setLoggedIn(null);
+  }
+
   return (
     <>
       <ToastContainer
@@ -48,6 +54,7 @@ const App = () => {
       <NavBar
         siteName="Planetti"
         userInfo={loggedIn && loggedIn.name}
+        onLogout={handleSignout}
       />
       <Switch>
         <Route path='/login' render={routeProps =>

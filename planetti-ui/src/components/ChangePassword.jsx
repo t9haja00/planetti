@@ -2,6 +2,7 @@ import React from 'react';
 import Joi from 'joi';
 import { toast } from 'react-toastify';
 import { Card } from 'react-bootstrap';
+import { changePassword } from '../services/changePasswordService';
 import Form from './common/Form';
 
 class ChangePassword extends Form {
@@ -43,26 +44,34 @@ class ChangePassword extends Form {
   });
 
 
-  // doSubmit = async () => {
-  //   try {
-  //     const res = await signup(this.state.data);
-  //     if (res) {
-  //       this.props.history.push('/login');
-  //       this.successNote();
-  //     }
-  //   }
-  //   catch (ex) {
-  //     if (ex.response && ex.response.status === 400) {
-  //       const errors = { ...this.state.errors };
-  //       errors.email = ex.response.data;
-  //       this.setState({ errors });
-  //     }
-  //   }
-  // };
+  doSubmit = async () => {
+    const userInfo = localStorage.getItem('userInfo');
+    const { email } = JSON.parse(userInfo);
+
+    try {
+      await changePassword(this.state.data, email);
+
+      this.successNote();
+
+      const data = {
+        ...this.state.data,
+        oldPassword: '',
+        newPassword: '',
+        confirmNewPassword: ''
+      }
+      this.setState({ data });
+    }
+    catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        const errors = { ...this.state.errors };
+        errors.oldPassword = ex.response.data;
+        this.setState({ errors });
+      }
+    }
+  };
 
   successNote = () => {
-    toast.dark(('Successfully registered!')
-    );
+    toast.dark(('Password changed successfully'));
   };
 
   render() {

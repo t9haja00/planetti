@@ -1,6 +1,6 @@
 /* Packages
 ------------*/
-import React, { useEffect, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import NotLogged from './components/NotLogged';
 import Signin from './components/Signin';
 import Footer from './components/common/Footer';
+import UserPage from './components/Userpage';
 
 /* Styles
 ----------*/
@@ -46,7 +47,7 @@ const App = () => {
           <Signin signin={handleSignin} {...routeProps} />} />
         <Route path='/' render={() => {
           if (!loggedIn) return <NotLogged />
-          return <h1>logged</h1>
+          return <UserPage/>
         }} />
       </Switch>
       <Route path='*' render={routerProps =>

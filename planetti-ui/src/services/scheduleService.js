@@ -4,15 +4,15 @@ const schedulesAPI = process.env.REACT_APP_SCHEDULES;
 
 //get all schedules with this user id
 export function getSchedules(user_id) {
-  return http.get(schedulesAPI, {},);
+  return http.get(schedulesAPI, {
+    user_id},);
 }
 //create new schedule for this user_id
 export function newSchedule(user_id) {
     return http.post(schedulesAPI, {
-        title,
-        description,
-        user_id
-    }, );
+      user_id
+
+      }, );
   }
   //delete 1 schedule with the selected id
   export function deleteSchedule(schedule_id) {
@@ -20,3 +20,6 @@ export function newSchedule(user_id) {
         schedule_id
     },  );
   }
+
+
+  

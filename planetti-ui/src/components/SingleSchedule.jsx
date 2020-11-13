@@ -19,7 +19,7 @@ import {Delete} from '../components/common/Delete'
         onClick={e=>
             window.confirm("Are you sure you want to delete the schedule?") &&
             Delete(e.target.value)}
-        ></button>
+        >DELETE</button>
         </div>
     )
 }

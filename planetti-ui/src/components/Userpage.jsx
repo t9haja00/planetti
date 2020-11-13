@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 --------------*/
 import { getSchedules } from '../services/scheduleService';
 import SingleSchedule from './SingleSchedule';
+import { useHistory } from "react-router-dom";
 
 
 /* Styles
@@ -12,14 +13,22 @@ import SingleSchedule from './SingleSchedule';
   
 
 const Userpage = () => {
-
+    //Using the dom history to push the path
+  const history = useHistory();
+  const routeChange = () =>{ 
+    let path = `/Add_schedule`; 
+    history.push(path);
+  }
     const [schedules, setSchedules] = useState(
+    [
         ({schedule_id :"1",
-        uuid:"1",
-        title:"1",
-        description:"1",
-        create_time:"1",
-        user_id:"1",}))
+        uuid:"2",
+        title:"3",
+        description:"4",
+        create_time:"5",
+        user_id:"6",})
+    ]
+        )
 
     // useEffect( async () => {
     //     const user_id = localStorage.getItem('userId');
@@ -29,6 +38,7 @@ const Userpage = () => {
     //       }, [])
  
     console.log(schedules)
+
     return(
         <div>
             {schedules.map(single => (
@@ -36,10 +46,10 @@ const Userpage = () => {
             ))
             }
             <div>
-                <button href ="/Add_schedule">
-                Add schedule
+                <button onClick= {routeChange}>
+                Add new schedule
                 </button>
-            </div>
+             </div>
            </div>
             )       
 }

@@ -7,5 +7,5 @@ export function Delete(test) {
     deleteSchedule(test.params);
     //Maybe should check if ok and then use toast to tell?
      // window.location.reload();
-     return test.upDateCount(test.val +1);
+     return test.updateRenderCount(test.val +1);
   } 

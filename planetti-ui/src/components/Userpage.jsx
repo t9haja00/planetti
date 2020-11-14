@@ -15,7 +15,7 @@ import {Delete} from '../components/common/Delete';
 const Userpage = () => {
     //Using the dom history to push the path
   const history = useHistory();
-  const[updateCount , upDateCount] =useState(1);
+  const[ renderCount, updateRenderCount] =useState(1);
   const [schedules, setSchedules] = useState( [] )
 
   const routeChange = () =>{ 
@@ -24,23 +24,22 @@ const Userpage = () => {
   }
    
 useEffect( async () => {
-        console.log('render');
+        console.log(' inside the Use effect ');
         const id = localStorage.getItem('userId');
         const {data}  = await getSchedules(id)
         setSchedules(data)
-          }, [updateCount])
+          }, [renderCount])
 
-     console.log(schedules)
+    //  console.log(schedules)
 
      function deleteSchedule(params) {
       const test= {
         params,
-        upDateCount,
-        val :updateCount
+        updateRenderCount,
+        val :renderCount
       }
-      console.log(test);
         if (window.confirm("Are you sure you want to delete this schedule?")) {
-          console.log("yes")
+          console.log("yes delete")
            return  Delete(test);
                              }
         else{
@@ -48,7 +47,7 @@ useEffect( async () => {
         }
     
      }
-     console.log(updateCount)
+     console.log(renderCount+ " = render count value")
   
 
     return(

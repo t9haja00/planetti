@@ -1,6 +1,6 @@
 /* Packages
 ------------*/
-import React, { Component, useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 

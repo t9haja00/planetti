@@ -1,8 +1,7 @@
 import React from "react";
 
  function SingleSchedule(props, deleteSchedule) {
-    console.log(typeof deleteSchedule)
-    console.log(props)
+
     return(
         <div key={props.schedule_id}>
         <li>{props.schedule_id}</li>

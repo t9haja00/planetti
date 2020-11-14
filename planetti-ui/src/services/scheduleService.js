@@ -19,7 +19,7 @@ export function newSchedule(schedule) {
   //delete 1 schedule with the selected id
   export function deleteSchedule(schedule_id)
   {
-    return http.delete(schedulesAPI,{schedule_id},);
+    return http.delete(`${schedulesAPI}/${schedule_id}`,{schedule_id},);
   }
 
 

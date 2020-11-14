@@ -1,8 +1,9 @@
 import {deleteSchedule} from '../../services/scheduleService';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
 export function Delete(params) {
-    useEffect(async () => {
-        const res = await deleteSchedule(params)
-    }, [] );
-}
+    console.log(params)
+    const res =  deleteSchedule(params);
+    //Maybe should check if ok and then use toast to tell?
+    window.location.reload();
+  }

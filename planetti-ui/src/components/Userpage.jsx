@@ -6,11 +6,21 @@ import React, { useEffect, useState } from 'react';
 import { getSchedules } from '../services/scheduleService';
 import SingleSchedule from './SingleSchedule';
 import { useHistory } from "react-router-dom";
-
+import {Delete} from '../components/common/Delete';
 
 /* Styles
 ----------*/
+function deleteSchedule(params) {
+  console.log(params)
+  if (window.confirm("Are you sure you want to delete this schedule?")) {
+      console.log("yes")
+       return Delete(params)
+    }
+    else{
+        console.log("no")
+    }
 
+ }
 
 const Userpage = () => {
     //Using the dom history to push the path
@@ -31,9 +41,7 @@ const Userpage = () => {
 
      console.log(schedules)
 
-    function deleteSchedule(params) {
-      console.log(params)
-    }
+  
 
     return(
         <div>

@@ -1,7 +1,8 @@
 import React from "react";
 
  function SingleSchedule(props, deleteSchedule) {
-    
+    console.log(typeof deleteSchedule)
+    console.log(props)
     return(
         <div key={props.schedule_id}>
         <li>{props.schedule_id}</li>
@@ -14,7 +15,7 @@ import React from "react";
          pressed then activates the delete function with schudele id as value */}
         <button
          value={props.schedule_id}
-        onClick={(e)=>{deleteSchedule(e.target.value)}}>DELETE</button>
+        onClick={(e)=>{props.deleteSchedule(e.target.value)}}>DELETE</button>
         </div>
     )
 }

@@ -7,15 +7,21 @@ import DeleteAccount from './DeleteAccount';
 
 const UserSettings = () => {
   return (
-    <>
+    <div className='d-flex'>
+      <SettingsNavBar />
+      <div className="col-7 my-4 mx-2">
       <h1>User Settings</h1>
-      <div className="container">
-        <SettingsNavBar />
-        <Route path='/user-settings/user-profile' component={Profile} />
-        <Route path='/user-settings/change-password' component={ChangePassword} />
-        <Route path='/user-settings/delete-account' component={DeleteAccount} />
+        <Route 
+          path='/user-settings/user-profile'
+          component={Profile} />
+        <Route 
+          path='/user-settings/change-password' 
+          component={ChangePassword} />
+        <Route 
+          path='/user-settings/delete-account' 
+          component={DeleteAccount} />
       </div>
-    </>
+    </div>
   );
 }
 

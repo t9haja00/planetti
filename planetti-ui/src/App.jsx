@@ -40,7 +40,12 @@ const App = () => {
     toast.dark('You are now logged out!');
     localStorage.removeItem('userInfo');
     setLoggedIn(null);
-  }
+  };
+
+  const handleDelete = () => {
+      toast.dark('Your account has been successfully deleted!');
+      setLoggedIn(null);
+  };
 
   return (
     <>
@@ -60,7 +65,11 @@ const App = () => {
       <Switch>
         <Route path='/login' render={routeProps =>
           <Signin signin={handleSignin} {...routeProps} />} />
-        <Route path='/user-settings' render={() => loggedIn && <UserSettings />} />
+        <Route 
+          path='/user-settings' 
+          render={() => 
+            loggedIn && 
+            <UserSettings deleteFeedBack={handleDelete} />} />
         <Route path='/' render={routeProps => {
           if (!loggedIn) return <NotLogged {...routeProps} />
           return <h1>logged</h1>

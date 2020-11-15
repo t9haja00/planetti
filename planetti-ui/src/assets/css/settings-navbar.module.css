@@ -1,12 +1,12 @@
 .sidebar {
   width: 240px;
   min-width: 0;
-  min-height: 100vh;
+  min-height: calc(100vh - 128px);
   background-color: #f1f5f7;
 }
 
 .sidebar-link {
-  border-top: 1px solid #05386b!important;
+  border-top:1px solid #dee2e6!important;
   border-radius: 0!important;
   color: #6c757d!important;
   font-size: 17px;

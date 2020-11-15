@@ -9,9 +9,6 @@ const Footer = ({ match }) => {
 
   let fixedBottom = "";
   const footer = () => {
-    if (location.pathname.includes('settings'))
-      fixedBottom = "fixed-bottom"
-
     if (location.pathname !== '/login') {
       return (
         <div className={`${styles.main} ${fixedBottom}`}>

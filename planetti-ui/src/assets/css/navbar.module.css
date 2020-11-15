@@ -48,10 +48,16 @@
 
 .nav-dropdown div a:hover {
   background-color: #05386B;
+  border: 1px solid #EDF5E1;
+}
+
+.nav-dropdown div a:focus {
+  background-color: #05386B;
+  border: 1px solid #EDF5E1;
 }
 
 .nav-dropdown button {
-  border: inherit;
+  border: 0;
   background-color: inherit;
   color: inherit;
   font-size: inherit;
@@ -60,4 +66,10 @@
 
 .nav-dropdown button:hover {
   background-color: inherit;
+  border: 0;
+}
+
+.nav-dropdown button:focus {
+  background-color: inherit;
+  border: 0;
 }

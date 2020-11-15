@@ -62,7 +62,7 @@ class DeleteAccount extends Form {
             </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <p className='h5 mb-5 text-center'>
+              <p className='h5 mb-5'>
                 We are sad to see you go!
               </p>
                 {this.renderInput('confirm', 'Please confirm by Writing "DELETE"')}

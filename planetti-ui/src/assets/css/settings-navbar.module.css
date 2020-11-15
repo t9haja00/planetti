@@ -1,0 +1,24 @@
+.sidebar {
+  width: 240px;
+  min-width: 0;
+  min-height: 100vh;
+  background-color: #f1f5f7;
+}
+
+.sidebar-link {
+  border-top: 1px solid #05386b!important;
+  border-radius: 0!important;
+  color: #6c757d!important;
+  font-size: 17px;
+  line-height: 55px;
+  word-spacing: 0.034em;
+  font-weight: 500;
+}
+
+.sidebar-link:hover {
+  background-color: #ffffff;
+}
+
+.sidebar-link:focus {
+  background-color: #ffffff;
+}

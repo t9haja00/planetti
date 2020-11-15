@@ -1,10 +1,8 @@
 import React from 'react';
 import Joi from 'joi';
-import { Card } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { changeNameAndEmail, getUserInfoById } from '../services/userService';
 import Form from './common/Form';
-import styles from '../assets/css/usersettings.module.css';
 
 class Profile extends Form {
   state = {
@@ -78,15 +76,11 @@ class Profile extends Form {
 
   render() {
     return (
-      <Card className="text-gray bg-gray-light mb-5">
-        <Card.Body>
           <form onSubmit={this.handlesubmit} noValidate>
             {this.renderInput('name', 'Name', 'name')}
             {this.renderInput('email', 'Email', 'email')}
-            {this.renderButton('Save', `${styles['signup-btn']}`)}
+            {this.renderButton('Save')}
           </form>
-        </Card.Body>
-      </Card>
     );
   }
 }

@@ -43,7 +43,7 @@ const App = () => {
   };
 
   const handleDelete = () => {
-      toast.dark('Your account has been successfully deleted!');
+      toast.dark('Your account has been deleted successfully!');
       setLoggedIn(null);
   };
 

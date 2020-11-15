@@ -1,7 +1,6 @@
 import React from 'react';
 import Joi from 'joi';
 import { toast } from 'react-toastify';
-import { Card } from 'react-bootstrap';
 import { changePassword } from '../services/changePasswordService';
 import Form from './common/Form';
 
@@ -76,16 +75,12 @@ class ChangePassword extends Form {
 
   render() {
     return (
-      <Card className="text-gray bg-gray-light mb-5">
-        <Card.Body>
           <form onSubmit={this.handlesubmit} noValidate>
             {this.renderInput('oldPassword', 'Old Password', 'password')}
             {this.renderInput('newPassword', 'New Password', 'password')}
             {this.renderInput('confirmNewPassword', 'Renter New Password', 'password')}
             {this.renderButton('Change password')}
           </form>
-        </Card.Body>
-      </Card>
     );
   }
 }

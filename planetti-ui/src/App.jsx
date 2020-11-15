@@ -1,7 +1,7 @@
 /* Packages
 ------------*/
 import React, { useEffect, useState } from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
 /* Components
@@ -20,8 +20,6 @@ const App = () => {
 
   const [loggedIn, setLoggedIn] = useState(null);
 
-  const history = useHistory();
-
   useEffect(() => {
     let userInfo = localStorage.getItem('userInfo');
     userInfo = JSON.parse(userInfo);
@@ -38,7 +36,7 @@ const App = () => {
   };
 
   const handleSignout = () => {
-    history.replace('/');
+    window.location = '/';
     toast.dark('You are now logged out!');
     localStorage.removeItem('userInfo');
     setLoggedIn(null);

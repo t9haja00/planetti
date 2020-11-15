@@ -3,14 +3,18 @@ import { Link, useLocation } from 'react-router-dom';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import styles from '../../assets/css/navbar.module.css';
 
-const NavBar = ({ siteName = '', userInfo, onLogout }) => {
+const NavBar = ({
+  siteName = '',
+  userName = null,
+  onLogout = f => f
+}) => {
 
   const [showMenu, setShowMenu] = useState(false);
 
   const location = useLocation();
 
   const handleShowMenu = () => {
-    setShowMenu(!showMenu);
+    setShowMenu(true);
   }
 
   const handleHideMenu = () => {
@@ -19,7 +23,7 @@ const NavBar = ({ siteName = '', userInfo, onLogout }) => {
 
   let containerStyle = "";
   const notLoggedIn = (() => {
-    if (!userInfo && location.pathname !== '/login') {
+    if (!userName && location.pathname !== '/login') {
       containerStyle = "container position-absolute py-2";
       return (
         <>
@@ -27,40 +31,41 @@ const NavBar = ({ siteName = '', userInfo, onLogout }) => {
             className={`${styles.login} ${styles['navbar-link']} btn mx-1`}
             to='/login'
             name='login'
-            >Sign in</Link>
+          >Sign in</Link>
           <Link
             className={`${styles.join} ${styles['navbar-link']} btn rounded-pill mx-1`}
             to='/join'
             name='join'
-            >Sing up</Link>
+          >Sing up</Link>
         </>
       );
     }
   })();
 
   const loggedIn = (() => {
-    if (userInfo) {
+    if (userName) {
       return (
-        <NavDropdown 
-          title={userInfo} 
-          id="basic-nav-dropdown" 
+        <NavDropdown
+          title={userName}
           className={`${styles['nav-dropdown']}`}
           alignRight
           show={showMenu}
           onMouseEnter={handleShowMenu}
           onMouseLeave={handleHideMenu}
-          >
+        >
           <NavDropdown.Item as={Link} to="/">
             Main page
           </NavDropdown.Item>
-          <NavDropdown.Item as={Link} to="/user-settings/user-profile">
+          <NavDropdown.Item 
+            as={Link} 
+            to="/user-settings/user-profile">
             User settings
           </NavDropdown.Item>
           <NavDropdown.Divider />
           <NavDropdown.Item >
-           <button
-             name='logout'
-             onClick={onLogout}>Sign out</button>
+            <button
+              onClick={onLogout}
+            >Sign out</button>
           </NavDropdown.Item>
         </NavDropdown>
       );
@@ -71,17 +76,21 @@ const NavBar = ({ siteName = '', userInfo, onLogout }) => {
     <div className={containerStyle} style={{ right: 0, left: 0 }}>
       {location.pathname === '/login' &&
         <div className="text-center pt-4 pb-3">
-          <Link to="/" className="text-decoration-none">
-            <p className={styles['navbar-brand']}>Planetti</p>
+          <Link
+            to="/"
+            className="text-decoration-none">
+            <p
+              className={styles['navbar-brand']}
+            >Planetti</p>
           </Link>
         </div>
       }
       {location.pathname !== '/login' &&
         <Navbar variant="light" className={`${styles.navbar} justify-content-between`}>
           <Navbar.Brand>
-            <Link className={styles['navbar-brand']} to='/'>
-              {siteName}
-            </Link>
+            <Link
+              className={styles['navbar-brand']}
+              to='/'>{siteName}</Link>
           </Navbar.Brand>
           <Nav>
             {notLoggedIn}

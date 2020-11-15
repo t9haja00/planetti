@@ -1,5 +1,6 @@
 .navbar {
   color: #FEFFFF;
+  background-color: #16a3a3;
 }
 
 .navbar-brand {
@@ -30,6 +31,33 @@
   box-shadow: none!important;
 }
 
-.nav-dropdown a{
-  color: #05386B!important;
+.nav-dropdown div {
+  background-color:#16a3a3;
+}
+
+.nav-dropdown a {
+  color: #EDF5E1 !important;
+  font-size: large;
+  font-weight: 600;
+}
+
+.nav-dropdown div a {
+  font-size: medium;
+  font-weight: 500;
+}
+
+.nav-dropdown div a:hover {
+  background-color: #05386B;
+}
+
+.nav-dropdown button {
+  border: inherit;
+  background-color: inherit;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.nav-dropdown button:hover {
+  background-color: inherit;
 }

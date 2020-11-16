@@ -13,8 +13,7 @@ import React from "react";
         {/* Saves the id of the schedule as value of button when delete button is
          pressed then activates the delete function with schudele id as value */}
         <button
-         value={props.schedule_id}
-        onClick={(e)=>{props.deleteSchedule(e.target.value)}}>DELETE</button>
+         onClick={()=>{props.deleteSchedule(props.schedule_id)}}>DELETE</button>
         </div>
     )
 }

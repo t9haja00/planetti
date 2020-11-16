@@ -1,68 +1,55 @@
 /* Packages
 ------------*/
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 /* Components
 --------------*/
-import { getSchedules } from '../services/scheduleService';
-import SingleSchedule from './SingleSchedule';
+import { getSchedules } from "../services/scheduleService";
+import SingleSchedule from "./SingleSchedule";
 import { useHistory } from "react-router-dom";
-import {Delete} from '../components/common/Delete';
+import { deleteSchedule } from "../services/scheduleService";
 
 /* Styles
 ----------*/
 
-
 const Userpage = () => {
-    //Using the dom history to push the path
+  //Using the dom history to push the path
   const history = useHistory();
-  const[ renderCount, updateRenderCount] =useState(1);
-  const [schedules, setSchedules] = useState( [] )
+  const [schedules, setSchedules] = useState([]);
 
-  const routeChange = () =>{ 
-    let path = `/Add_schedule`; 
+  const routeChange = () => {
+    let path = `/Add_schedule`;
     history.push(path);
-  }
-   
-useEffect( async () => {
-        console.log(' inside the Use effect ');
-        const id = localStorage.getItem('userId');
-        const {data}  = await getSchedules(id)
-        setSchedules(data)
-          }, [renderCount])
+  };
 
-    //  console.log(schedules)
+  useEffect(async () => {
+    console.log(" inside the Use effect ");
+    const id = localStorage.getItem("userId");
+    const { data } = await getSchedules(id);
+    //so gets all the schedules for given user id
+    setSchedules(data);
+  }, []);
 
-     function deleteSchedule(params) {
-      const test= {
-        params,
-        updateRenderCount,
-        val :renderCount
-      }
-        if (window.confirm("Are you sure you want to delete this schedule?")) {
-          console.log("yes delete")
-           return  Delete(test);
-                             }
-        else{
-            console.log("no")
-        }
-    
-     }
-     console.log(renderCount+ " = render count value")
-  
+  const handleDeleteSchedule = async (schedule_id) => {
+    await deleteSchedule(schedule_id);
+    const id = localStorage.getItem("userId");
+    const { data } = await getSchedules(id);
+    setSchedules(data);
+  };
 
-    return(
-        <div>
-            {schedules.map(single => (
-            <SingleSchedule deleteSchedule={deleteSchedule} key ={single.schedule_id}{...single}/>
-            ))
-            }
-            <div>
-                <button onClick= {routeChange}>
-                Add new schedule
-                </button>
-             </div>
-           </div>
-            )       
-}
+  return (
+    <div>
+      {schedules.map((single) => (
+        <SingleSchedule
+          deleteSchedule={handleDeleteSchedule}
+          key={single.schedule_id}
+          {...single}
+        />
+      ))}
+      <div>
+        <button onClick={routeChange}>Add new schedule</button>
+      </div>
+    </div>
+  );
+};
 
-export default  Userpage;
+export default Userpage;

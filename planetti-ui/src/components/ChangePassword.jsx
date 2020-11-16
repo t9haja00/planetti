@@ -42,7 +42,6 @@ class ChangePassword extends Form {
       .label('Confirm Password')
   });
 
-
   doSubmit = async () => {
     const userInfo = localStorage.getItem('userInfo');
     const { email } = JSON.parse(userInfo);

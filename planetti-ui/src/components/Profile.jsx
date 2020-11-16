@@ -56,7 +56,7 @@ class Profile extends Form {
       const { data: newUserInfo } = await getUserInfoById(user_id);
       if (newUserInfo) {
         localStorage.setItem('userInfo', JSON.stringify(newUserInfo));
-        this.successNote();
+        this.props.profileFeedBack();
       }
     }
     catch (ex) {

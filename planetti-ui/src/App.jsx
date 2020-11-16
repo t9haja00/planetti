@@ -91,7 +91,7 @@ const App = () => {
           path="/"
           render={(routeProps) => {
             if (!loggedIn) return <NotLogged {...routeProps} />;
-            return <Userpage />;
+            return <UserPage />;
           }}
         />
       </Switch>

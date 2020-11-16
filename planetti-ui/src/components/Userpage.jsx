@@ -12,13 +12,13 @@ import { deleteSchedule } from "../services/scheduleService";
 /* Styles
 ----------*/
 import styles from "../assets/css/delete-account.module.css";
-
+let scheduleID;
 const Userpage = () => {
   //Using the dom history to push the path
   const history = useHistory();
   const [schedules, setSchedules] = useState([]);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [scheduleIDDelete, setscheduleIdDelete] = useState();
+
   const routeChange = () => {
     let path = `/Add_schedule`;
     history.push(path);
@@ -27,7 +27,7 @@ const Userpage = () => {
   useEffect(async () => {
     const userInfo = localStorage.getItem("userInfo");
     const { user_id } = JSON.parse(userInfo);
-    console.log(user_id);
+
     const { data } = await getSchedules(user_id);
     //so gets all the schedules for given user id
     setSchedules(data);
@@ -39,18 +39,17 @@ const Userpage = () => {
 
   const handleShow = (schedule_id) => {
     setShowDeleteConfirm(true);
-    setscheduleIdDelete(schedule_id);
+    scheduleID = schedule_id;
   };
-  const handleDeleteSchedule = async () => {
-    const schedule_id = scheduleIDDelete;
-    await deleteSchedule(schedule_id);
+
+  const handleDelete = async (scheduleID) => {
+    await deleteSchedule(scheduleID);
     const userInfo = localStorage.getItem("userInfo");
     const { user_id } = JSON.parse(userInfo);
     const { data } = await getSchedules(user_id);
     setSchedules(data);
     handleClose();
   };
-
   return (
     <div>
       {schedules.map((single) => (
@@ -71,7 +70,10 @@ const Userpage = () => {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className={styles["modal-body"]}>
-            <Button className="btn-danger" onClick={handleDeleteSchedule}>
+            <Button
+              className="btn-danger"
+              onClick={() => handleDelete(scheduleID)}
+            >
               Delete schedule
             </Button>
             <Button className={styles.cancel} onClick={handleClose}>

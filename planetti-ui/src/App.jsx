@@ -1,35 +1,49 @@
 /* Packages
 ------------*/
-import React, {useEffect, useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+import React, { useEffect, useState } from "react";
+import { Route, Switch } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 /* Components
 --------------*/
-import NotLogged from './components/NotLogged';
-import Signin from './components/Signin';
-import Footer from './components/common/Footer';
-import UserPage from './components/Userpage';
+import NavBar from "./components/common/NavBar";
+import NotLogged from "./components/NotLogged";
+import Signin from "./components/Signin";
+import UserSettings from "./components/UserSettings";
+import Footer from "./components/common/Footer";
+import UserPage from "./components/Userpage";
 
 /* Styles
 ----------*/
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
-
-  const [ loggedIn, setLoggedIn ] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(null);
 
   useEffect(() => {
-      const user = localStorage.getItem('userId');
+    let userInfo = localStorage.getItem("userInfo");
+    userInfo = JSON.parse(userInfo);
 
-      setLoggedIn(user);
-
+    setLoggedIn(userInfo);
   }, [setLoggedIn]);
-  
-  const handleSignin = () => {
-      const user = localStorage.getItem('userId');
 
-      setLoggedIn(user);
+  const handleSignin = () => {
+    let userInfo = localStorage.getItem("userInfo");
+    userInfo = JSON.parse(userInfo);
+
+    setLoggedIn(userInfo);
+  };
+
+  const handleSignout = () => {
+    window.location = "/";
+    toast.dark("You are now logged out!");
+    localStorage.removeItem("userInfo");
+    setLoggedIn(null);
+  };
+
+  const handleDelete = () => {
+    toast.dark("Your account has been deleted successfully!");
+    setLoggedIn(null);
   };
 
   return (
@@ -42,18 +56,35 @@ const App = () => {
         closeButton={false}
         limit={1}
       />
+      <NavBar
+        siteName="Planetti"
+        userName={loggedIn && loggedIn.name}
+        onLogout={handleSignout}
+      />
       <Switch>
-        <Route path='/login' render={routeProps =>
-          <Signin signin={handleSignin} {...routeProps} />} />
-        <Route path='/' render={() => {
-          if (!loggedIn) return <NotLogged />
-          return <UserPage/>
-        }} />
+        <Route
+          path="/login"
+          render={(routeProps) => (
+            <Signin signin={handleSignin} {...routeProps} />
+          )}
+        />
+        <Route
+          path="/user-settings"
+          render={() =>
+            loggedIn && <UserSettings deleteFeedBack={handleDelete} />
+          }
+        />
+        <Route
+          path="/"
+          render={(routeProps) => {
+            if (!loggedIn) return <NotLogged {...routeProps} />;
+            return <UserPage />;
+          }}
+        />
       </Switch>
-      <Route path='*' render={routerProps =>
-        <Footer {...routerProps} />} />
+      <Footer />
     </>
-  )
-}
+  );
+};
 
 export default App;

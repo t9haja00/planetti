@@ -25,8 +25,10 @@ const Userpage = () => {
   };
 
   useEffect(async () => {
-    const id = localStorage.getItem("userId");
-    const { data } = await getSchedules(id);
+    const userInfo = localStorage.getItem("userInfo");
+    const { user_id } = JSON.parse(userInfo);
+    console.log(user_id);
+    const { data } = await getSchedules(user_id);
     //so gets all the schedules for given user id
     setSchedules(data);
   }, []);

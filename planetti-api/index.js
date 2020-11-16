@@ -1,9 +1,11 @@
 const cors = require('cors');
 const express = require('express');
-const schedules = require('./routes/schedules');
-const events = require('./routes/events');
+
 const users = require('./routes/users');
 const auth = require('./routes/auth');
+const changePassword = require('./routes/changePassword');
+const schedules = require('./routes/schedules');
+const events = require('./routes/events');
 
 const app = express();
 const PORT = process.env.PORT || 3200;
@@ -14,6 +16,7 @@ app.use(cors());
 
 app.use('/users', users);
 app.use('/auth', auth);
+app.use('/users/changePassword', changePassword);
 app.use('/schedules',schedules);
 app.use('/events', events);
 

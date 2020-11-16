@@ -1,5 +1,6 @@
 .navbar {
   color: #FEFFFF;
+  background-color: #16a3a3;
 }
 
 .navbar-brand {
@@ -10,7 +11,6 @@
 
 .navbar-brand:hover {
   text-decoration: none;
-  color: #FEFFFF;
 }
 
 .join {
@@ -29,4 +29,47 @@
 
 .navbar-link:focus {
   box-shadow: none!important;
+}
+
+.nav-dropdown div {
+  background-color:#16a3a3;
+}
+
+.nav-dropdown a {
+  color: #EDF5E1 !important;
+  font-size: large;
+  font-weight: 600;
+}
+
+.nav-dropdown div a {
+  font-size: medium;
+  font-weight: 500;
+}
+
+.nav-dropdown div a:hover {
+  background-color: #05386B;
+  border: 1px solid #EDF5E1;
+}
+
+.nav-dropdown div a:focus {
+  background-color: #05386B;
+  border: 1px solid #EDF5E1;
+}
+
+.nav-dropdown button {
+  border: 0;
+  background-color: inherit;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.nav-dropdown button:hover {
+  background-color: inherit;
+  border: 0;
+}
+
+.nav-dropdown button:focus {
+  background-color: inherit;
+  border: 0;
 }

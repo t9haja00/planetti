@@ -1,7 +1,6 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import Joi from 'joi';
-import { toast } from 'react-toastify';
 import Form from './common/Form';
 import { deleteUserAccount } from '../services/userService';
 import styles from '../assets/css/delete-account.module.css';
@@ -51,7 +50,6 @@ class DeleteAccount extends Form {
   render() {
     return (
       <>
-        {this.state.show &&
           <Modal
             centered
             show={this.state.show}
@@ -80,7 +78,6 @@ class DeleteAccount extends Form {
               </Button>
             </Modal.Footer>
           </Modal>
-        }
         <div
           className='border border-1 border-danger p-3'>
           <p className='h5'>Please be careful, Once you delete your account, you will not be able to access your schedules anymore.

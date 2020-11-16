@@ -41,7 +41,15 @@ const App = () => {
     setLoggedIn(null);
   };
 
-  const handleDelete = () => {
+  const handleProfileChanged = () => {
+    let userInfo = localStorage.getItem("userInfo");
+    userInfo = JSON.parse(userInfo);
+
+    toast.dark("Saved successfully!");
+    setLoggedIn(userInfo);
+  };
+
+  const handleAccountDelete = () => {
     toast.dark("Your account has been deleted successfully!");
     setLoggedIn(null);
   };
@@ -71,14 +79,19 @@ const App = () => {
         <Route
           path="/user-settings"
           render={() =>
-            loggedIn && <UserSettings deleteFeedBack={handleDelete} />
+            loggedIn && (
+              <UserSettings
+                deleteFeedBack={handleAccountDelete}
+                profileFeedBack={handleProfileChanged}
+              />
+            )
           }
         />
         <Route
           path="/"
           render={(routeProps) => {
             if (!loggedIn) return <NotLogged {...routeProps} />;
-            return <UserPage />;
+            return <Userpage />;
           }}
         />
       </Switch>

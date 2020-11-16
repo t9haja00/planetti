@@ -7,7 +7,8 @@ import DeleteAccount from './DeleteAccount';
 import styles from '../assets/css/settings.module.css';
 
 const UserSettings = ({
-  deleteFeedBack = f => f
+  deleteFeedBack = f => f,
+  profileFeedBack = f => f
 }) => {
   return (
     <div className='d-flex'>
@@ -16,7 +17,7 @@ const UserSettings = ({
         <p className={`${styles.title} h2`}>User Settings</p>
         <Route
           path='/user-settings/user-profile'
-          component={Profile} />
+          render={() => <Profile profileFeedBack={profileFeedBack}/>} />
         <Route
           path='/user-settings/change-password'
           component={ChangePassword} />

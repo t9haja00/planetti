@@ -1,13 +1,17 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import styles from '../../assets/css/footer.module.css';
 
 const iconsUrl = process.env.REACT_APP_API;
 
 const Footer = ({ match }) => {
+  const location = useLocation();
+
+  let fixedBottom = "";
   const footer = () => {
-    if (match.url !== '/Login') {
+    if (location.pathname !== '/login') {
       return (
-        <div className={styles.main}>
+        <div className={`${styles.main} ${fixedBottom}`}>
           <div className="d-flex container justify-content-between flex-row-reverse align-items-center py-3">
             <ul className="list-unstyled d-flex justify-content-center mb-0">
               <li className="mr-3">

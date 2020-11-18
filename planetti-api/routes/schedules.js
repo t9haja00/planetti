@@ -11,6 +11,10 @@ const user_id = req.params.id;
     .then(schedules => {
       res.send(schedules.rows);
     })
+    .catch((err) => {
+      console.log("get schedule error ", err);
+      res.sendStatus(500);
+    });
 });
 
 // create a schedule for a user
@@ -49,6 +53,27 @@ router.delete('/:id',  (req, res) => {
           res.sendStatus(500);
         });
 
+});
+
+// edit a schedule
+router.put("/:id", (req, res) => {
+  console.log(req.body);
+  const schedule_id = req.params.id;
+  const {title, description} = req.body;
+  const editSchedule  = [
+    title,
+    description
+  ];
+  console.log(editSchedule);
+  db.query("SELECT * FROM schedules WHERE schedule_id=($1)", [schedule_id])
+    .then(() => {
+      db.query("UPDATE schedules SET title=($1), description=($2)", editSchedule);
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log("edit schedule error ", err);
+      res.sendStatus(500);
+    });
 });
 
 module.exports = router;

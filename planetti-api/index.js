@@ -5,6 +5,7 @@ const users = require('./routes/users');
 const auth = require('./routes/auth');
 const changePassword = require('./routes/changePassword');
 const schedules = require('./routes/schedules');
+const events = require('./routes/events');
 
 const app = express();
 const PORT = process.env.PORT || 3200;
@@ -17,6 +18,7 @@ app.use('/users', users);
 app.use('/auth', auth);
 app.use('/users/changePassword', changePassword);
 app.use('/schedules',schedules);
+app.use('/events', events);
 
 console.log('Database connection is opened successfully!');
 app.listen(PORT, () => console.log(`Server is up and listening on ${PORT}...`));

@@ -2,9 +2,12 @@
   color: #16a3a3;
 }
 .modal-footer {
-  justify-content: space-between!important;
+  justify-content: space-between !important;
 }
 
 .cancel {
-  background-color: #05386b!important;
+  background-color: #05386b !important;
+}
+.modal-body {
+  justify-content: space-between !important;
 }

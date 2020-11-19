@@ -1,57 +1,56 @@
 /* Packages
 ------------*/
-import React, { useEffect, useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import React, { useEffect, useState } from "react";
+import { Route, Switch } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 /* Components
 --------------*/
-import NavBar from './components/common/NavBar';
-import NotLogged from './components/NotLogged';
-import Signin from './components/Signin';
-import UserSettings from './components/UserSettings';
-import Footer from './components/common/Footer';
+import NavBar from "./components/common/NavBar";
+import NotLogged from "./components/NotLogged";
+import Signin from "./components/Signin";
+import UserSettings from "./components/UserSettings";
+import Footer from "./components/common/Footer";
+import UserPage from "./components/Userpage";
 
 /* Styles
 ----------*/
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
-
   const [loggedIn, setLoggedIn] = useState(null);
 
   useEffect(() => {
-    let userInfo = localStorage.getItem('userInfo');
+    let userInfo = localStorage.getItem("userInfo");
     userInfo = JSON.parse(userInfo);
 
     setLoggedIn(userInfo);
-
   }, [setLoggedIn]);
 
   const handleSignin = () => {
-    let userInfo = localStorage.getItem('userInfo');
+    let userInfo = localStorage.getItem("userInfo");
     userInfo = JSON.parse(userInfo);
 
     setLoggedIn(userInfo);
   };
 
   const handleSignout = () => {
-    window.location = '/';
-    toast.dark('You are now logged out!');
-    localStorage.removeItem('userInfo');
+    window.location = "/";
+    toast.dark("You are now logged out!");
+    localStorage.removeItem("userInfo");
     setLoggedIn(null);
   };
 
   const handleProfileChanged = () => {
-    let userInfo = localStorage.getItem('userInfo');
+    let userInfo = localStorage.getItem("userInfo");
     userInfo = JSON.parse(userInfo);
 
-    toast.dark('Saved successfully!');
+    toast.dark("Saved successfully!");
     setLoggedIn(userInfo);
   };
 
   const handleAccountDelete = () => {
-    toast.dark('Your account has been deleted successfully!');
+    toast.dark("Your account has been deleted successfully!");
     setLoggedIn(null);
   };
 
@@ -71,24 +70,34 @@ const App = () => {
         onLogout={handleSignout}
       />
       <Switch>
-        <Route path='/login' render={routeProps =>
-          <Signin signin={handleSignin} {...routeProps} />} />
         <Route
-          path='/user-settings'
-          render={() =>
-            loggedIn &&
-            <UserSettings
-              deleteFeedBack={handleAccountDelete}
-              profileFeedBack={handleProfileChanged} />}
+          path="/login"
+          render={(routeProps) => (
+            <Signin signin={handleSignin} {...routeProps} />
+          )}
         />
-        <Route path='/' render={routeProps => {
-          if (!loggedIn) return <NotLogged {...routeProps} />
-          return <h1>logged</h1>
-        }} />
+        <Route
+          path="/user-settings"
+          render={() =>
+            loggedIn && (
+              <UserSettings
+                deleteFeedBack={handleAccountDelete}
+                profileFeedBack={handleProfileChanged}
+              />
+            )
+          }
+        />
+        <Route
+          path="/"
+          render={(routeProps) => {
+            if (!loggedIn) return <NotLogged {...routeProps} />;
+            return <UserPage />;
+          }}
+        />
       </Switch>
       <Footer />
     </>
-  )
-}
+  );
+};
 
 export default App;

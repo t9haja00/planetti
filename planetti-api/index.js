@@ -15,7 +15,7 @@ app.use(cors());
 app.use('/users', users);
 app.use('/auth', auth);
 app.use('/schedules',schedules);
-app.use('/events', events);
+app.use('/:uuid?/events/', events);
 
 console.log('Database connection is opened successfully!');
 app.listen(PORT, () => console.log(`Server is up and listening on ${PORT}...`));

@@ -24,13 +24,15 @@ const Userpage = () => {
     history.push(path);
   };
 
-  useEffect(async () => {
-    const userInfo = localStorage.getItem("userInfo");
-    const { user_id } = JSON.parse(userInfo);
-
-    const { data } = await getSchedules(user_id);
+  useEffect(() => {
+    async function fetchData() {
+      const userInfo = localStorage.getItem("userInfo");
+      const { user_id } = JSON.parse(userInfo);
+      const { data } = await getSchedules(user_id);
+      setSchedules(data);
+    }
+    fetchData();
     //so gets all the schedules for given user id
-    setSchedules(data);
   }, []);
 
   const handleClose = () => {

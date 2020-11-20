@@ -6,7 +6,7 @@ const db = require("../db/index");
 
 router.get("/:id", (req, res) => {
   const schedule_id = req.params.id;
-
+console.log("selecting by id..");
   db.query("SELECT * FROM events WHERE schedule_id=($1)", [schedule_id]).then(
     (events) => {
       res.send(events.rows);
@@ -16,13 +16,13 @@ router.get("/:id", (req, res) => {
 
 // get events for schedule by schedule uuid
 
-router.get("/:uuid", (req, res) => {
+router.get("/", (req, res) => {
   const schedule_uuid = req.params.uuid;
-
-  db.query("SELECT schedule FROM schedules WHERE uuid=($1)", [
-    schedule_uuid,
-  ]).then((schedule) => {
-    const schedule_id = schedule.rows.id;
+console.log("selecting by uuid. " + schedule_uuid);
+  db.query("SELECT schedule_id FROM schedules WHERE uuid=($1)", [
+    schedule_uuid,])
+    .then((schedule) => {
+    const schedule_id = (schedule.rows[0].schedule_id);
     db.query("SELECT * FROM events WHERE schedule_id=($1)", [schedule_id]).then(
       (events) => {
         res.send(events.rows);

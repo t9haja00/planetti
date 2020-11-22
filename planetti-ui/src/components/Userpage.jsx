@@ -71,6 +71,9 @@ const Userpage = () => {
     setShowNewSchedule(false);
   };
   const handleNewScheduleShow = () => {
+    //set statates to empty as if user had edited old schedule state would been saved still
+    updateTitle("");
+    updateDescription("");
     setShowNewSchedule(true);
   };
   const handleNewSchedule = async () => {

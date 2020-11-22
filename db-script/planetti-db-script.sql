@@ -49,7 +49,7 @@ ALTER TABLE public.schedules ADD CONSTRAINT schedules_fk FOREIGN KEY ("user_id")
 
 CREATE TABLE IF NOT EXISTS  events (
 	"event_id" serial PRIMARY KEY,
-	"event" json NOT NULL,
+	"event" jsonb NOT NULL,
 	"create_time" timestamptz NULL DEFAULT CURRENT_TIMESTAMP,
 	"schedule_id" int4 NOT NULL
 );

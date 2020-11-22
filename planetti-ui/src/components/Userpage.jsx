@@ -29,10 +29,6 @@ const Userpage = () => {
   // input field states for modules
   const [title, updateTitle] = useState("");
   const [description, updateDescription] = useState("");
-  const routeChange = () => {
-    let path = `/newSchedule`;
-    history.push(path);
-  };
 
   useEffect(() => {
     async function fetchData() {
@@ -87,10 +83,12 @@ const Userpage = () => {
       user_id: user_id,
     };
     const { data } = await newSchedule(scheduleInfo);
+    console.log(data);
+    console.log(data[0].uuid);
     //should api return? the uuid
     handleNewScheduleClose();
     // return uuid to route change to new schedule?
-    routeChange(data);
+    routeChange(data[0].uuid);
   };
 
   // edit old schedule and update
@@ -122,6 +120,11 @@ const Userpage = () => {
     const { data } = await getSchedules(user_id);
     setSchedules(data);
     handleEditScheduleClose();
+  };
+
+  // Used to push to new scedules main window.
+  const routeChange = (path) => {
+    history.push("/schedules/" + path);
   };
 
   return (

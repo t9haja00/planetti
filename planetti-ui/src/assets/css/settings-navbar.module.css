@@ -17,8 +17,13 @@
 
 .sidebar-link:hover {
   background-color: #ffffff;
+  border-right-color: transparent!important;
 }
 
 .sidebar-link:focus {
+  border-color: transparent!important;
+}
+
+.sidebar-link-active {
   background-color: #ffffff;
 }

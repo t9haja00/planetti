@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
-const router = express.Router();
 const db = require("../db/index");
 
 // get events for schedule by schedule id

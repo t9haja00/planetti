@@ -28,7 +28,11 @@ router.post("/", (req, res) => {
     "INSERT INTO schedules (title, description, uuid, user_id) VALUES ($1, $2, $3, $4) ",
     newSchedule
   )
-    .then(() => res.sendStatus(201))
+    .then(() =>
+      db.query("SELECT * FROM schedules WHERE uuid=($1)", [uuid])
+        .then((result) => res.send(result.rows))
+    )
+
     .catch((err) => {
       console.log("Create new schedule error ", err);
       res.sendStatus(500);

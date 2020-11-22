@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 const db = require("../db/index");
 const { v4: uuidv4 } = require("uuid");
 
@@ -8,6 +8,21 @@ router.get("/:id", (req, res) => {
   const user_id = req.params.id;
 
   db.query("SELECT * FROM schedules WHERE user_id=($1)", [user_id])
+    .then((schedules) => {
+      res.send(schedules.rows);
+    })
+    .catch((err) => {
+      console.log("get schedule error ", err);
+      res.sendStatus(500);
+    });
+});
+
+// get schedule by schedule uuid
+
+router.get("/", (req, res) => {
+  const uuid = req.params.uuid;
+
+  db.query("SELECT * FROM schedules WHERE uuid=($1)", [uuid])
     .then((schedules) => {
       res.send(schedules.rows);
     })
@@ -29,7 +44,8 @@ router.post("/", (req, res) => {
     newSchedule
   )
     .then(() =>
-      db.query("SELECT * FROM schedules WHERE uuid=($1)", [uuid])
+      db
+        .query("SELECT * FROM schedules WHERE uuid=($1)", [uuid])
         .then((result) => res.send(result.rows))
     )
 

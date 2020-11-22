@@ -55,11 +55,11 @@ class Signup extends Form {
       .label('Confirm Password')
   });
 
-
   doSubmit = async () => {
      try {
         const res = await signup(this.state.data);
         if (res) {
+          this.props.history.push('/login');
            this.successNote();
         }
      }

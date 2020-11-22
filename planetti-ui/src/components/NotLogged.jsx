@@ -1,19 +1,11 @@
 import React from 'react';
 import { Jumbotron, CardDeck, Card, Container } from 'react-bootstrap';
-import NavBar from './common/NavBar';
 import Signup from './Signup';
 
-const NotLogged = () => {
+const NotLogged = ({ history }) => {
 
   return (
     <>
-      <div
-        className="container position-absolute py-2"
-        style={{ left: 0, right: 0 }}>
-        <NavBar
-          siteName="Planetti"
-          user={null} />
-      </div>
       <Jumbotron>
         <div className="container-lg">
           <div
@@ -22,7 +14,7 @@ const NotLogged = () => {
               <p className="h1 text-wrap">Schedule generator for everyone</p>
             </div>
             <div className="col-5">
-              <Signup />
+              <Signup history={history} />
             </div>
           </div>
         </div>

@@ -29,4 +29,13 @@ export function deleteSchedule(schedule_id) {
   return http.delete(`${schedulesAPI}/${schedule_id}`);
 }
 
+export function updateSchedule(updatedScheduleData) {
+  const { title, description, schedule_id } = updatedScheduleData;
+  return http.put(`${schedulesAPI}/${schedule_id}`, {
+    title,
+    description
+  });
+}
+
+
 

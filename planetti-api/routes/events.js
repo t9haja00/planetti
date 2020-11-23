@@ -66,7 +66,7 @@ router.delete("/:id", (req, res) => {
 // edit an event object
 router.put("/:id", (req, res) => {
   const event_id = req.params.id;
-  const editEvent = req.body;
+  const editEvent = req.body.event;
   console.log(editEvent);
   db.query("UPDATE events SET event=($2) WHERE event_id=($1)", [
     event_id,

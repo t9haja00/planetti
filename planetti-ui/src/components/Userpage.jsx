@@ -65,11 +65,10 @@ const Userpage = () => {
 
   const handleNewScheduleClose = () => {
     setShowNewSchedule(false);
-  };
-  const handleNewScheduleShow = () => {
-    //set statates to empty as if user had edited old schedule state would been saved still
     updateTitle("");
     updateDescription("");
+  };
+  const handleNewScheduleShow = () => {
     setShowNewSchedule(true);
   };
   const handleNewSchedule = async () => {
@@ -83,11 +82,7 @@ const Userpage = () => {
       user_id: user_id,
     };
     const { data } = await newSchedule(scheduleInfo);
-    console.log(data);
-    console.log(data[0].uuid);
-    //should api return? the uuid
     handleNewScheduleClose();
-    // return uuid to route change to new schedule?
     routeChange(data[0].uuid);
   };
 

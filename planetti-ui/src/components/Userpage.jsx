@@ -91,7 +91,7 @@ const Userpage = () => {
     routeChange(data[0].uuid);
   };
 
-  // edit old schedule and update
+  // edit old schedule and update it to database
 
   const handleEditScheduleClose = () => {
     setEditNewSchedule(false);

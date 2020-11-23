@@ -12,6 +12,8 @@ import { deleteSchedule } from "../services/scheduleService";
 /* Styles
 ----------*/
 import styles from "../assets/css/delete-account.module.css";
+import styles2 from "../assets/css/userpage.module.css";
+
 let scheduleID;
 const Userpage = () => {
   //Using the dom history to push the path
@@ -52,16 +54,23 @@ const Userpage = () => {
   };
   return (
     <div>
+      <div className={styles2.centerContent}>
+      <div className={styles2.gridContainer}>
+      <button onClick={routeChange}  className={styles2.clickDiv}>
+      <div>
+        Add New Schedule
+      </div>
+      </button>
       {schedules.map((single) => (
         <SingleSchedule
           deleteSchedule={handleShow}
           key={single.schedule_id}
+          className={styles2.gridItem}
           {...single}
         />
       ))}
-      <div>
-        <button onClick={routeChange}>Add new schedule</button>
       </div>
+        </div>
       <div>
         <Modal centered show={showDeleteConfirm} onHide={handleClose}>
           <Modal.Header closeButton>

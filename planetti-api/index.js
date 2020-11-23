@@ -18,7 +18,8 @@ app.use('/users', users);
 app.use('/auth', auth);
 app.use('/:uuid?/schedules',schedules);
 app.use('/users/changePassword', changePassword);
-app.use('/events', events);
+app.use('/:uuid?/events/', events);
+
 
 
 console.log('Database connection is opened successfully!');

@@ -9,7 +9,7 @@ export function getSchedules(user_id)
 }
 //create new schedule for this user_id
 export function newSchedule(schedule) {
-  const {title, description, user_id} =schedule
+  const {title, description, user_id} =schedule;
     return http.post(schedulesAPI, {
       title,
       description,
@@ -21,6 +21,15 @@ export function newSchedule(schedule) {
   {
     return http.delete(`${schedulesAPI}/${schedule_id}`);
   }
+
+  export function updateSchedule(updatedScheduleData){
+    const { title ,description,schedule_id} =updatedScheduleData;
+      return http.put(`${schedulesAPI}/${schedule_id}`,{
+      title,
+      description
+    });
+    }
+  
 
 
   

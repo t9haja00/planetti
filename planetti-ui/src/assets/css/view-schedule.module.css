@@ -1,0 +1,47 @@
+.description {
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  border-bottom: 1px solid grey;
+  text-align: center;
+  background-color: #16a3a3;
+  color: #EDF5E1;
+  padding: 10px 0px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.title {
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  text-align: center;
+  background-color: #16a3a3;
+  color: #EDF5E1;
+  padding: 10px 0px;
+  font-weight: 600;
+  font-size: 1.25rem;
+
+}
+
+.icon {
+  width: 25px;
+  height: 25px;
+}
+
+.icon-container {
+  background-color: #16a3a3!important;
+}
+
+.link {
+  box-shadow: none!important;
+  font-size: .75rem!important;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  height: auto!important;
+}
+
+.link-comment {
+  margin-top: 3px;
+  color: gray;
+  font-size: 9px;
+  text-align: center;
+}

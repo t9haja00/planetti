@@ -4,7 +4,6 @@ import { ScheduleComponent, Inject, Week, ViewsDirective, ViewDirective }
   from '@syncfusion/ej2-react-schedule';
 import { DataManager, UrlAdaptor, Query } from '@syncfusion/ej2-data';
 import { getScheduleByUUID } from '../services/scheduleService';
-// import { getEventsByScheduleId, addEvent, editEvent, deleteEvent } from './../services/eventService';
 import { DelayedRender } from './common/DelayedRender';
 import "@syncfusion/ej2-base/styles/material.css";
 import "@syncfusion/ej2-buttons/styles/material.css";
@@ -52,55 +51,7 @@ const ViewSchedule = ({ match }) => {
 
   }, [match.params.uuid]);
 
-  const onActionBegin = async ({ requestType, data }) => {
-    // console.log(this.state.events);
-    console.log(requestType, data);
-    //   const { data: eventData } = await getEventsByScheduleId(this.state.schedule.schedule_id);
-
-    //   if (requestType === 'eventCreate') {
-    //     const newEvent = data[0];
-    //     await addEvent(newEvent, this.state.schedule.schedule_id);
-    //   }
-
-    //   else if (requestType === 'eventChange') {
-    //     let eventToEdit = null;
-
-    //     if (data.occurrence) {
-    //       const eventToAdd = data.occurrence;
-    //       eventToEdit = data.parent;
-    //       await addEvent(eventToAdd, this.schedule.schedule_id);
-    //     }
-    //     else
-    //       eventToEdit = data;
-
-    //     // find the event that match the one being updated
-    //     const eventObject = eventData.find(e => e.event.Id === eventToEdit.Id);
-    //     await editEvent(eventToEdit, eventObject);
-    //   }
-
-    //   else if (requestType === 'eventRemove') {
-    //     let eventToDelete = null;
-
-    //     if (data[0].occurrence) {
-    //       eventToDelete = data[0].occurrence;
-    //       const eventToEdit = data[0].parent;
-
-    //       // find the event that match the one being updated
-    //       const eventObject = eventData.find(e => e.event.Id === eventToEdit.Id);
-    //       const eventObjectToDelete = eventData.find(e => e.event.Id === eventToDelete.Id);
-    //       await editEvent(eventToEdit, eventObject);
-    //       await deleteEvent(eventObjectToDelete);
-    //     }
-    //     else {
-    //       const eventToDelete = data[0];
-
-    //       // find the event that match the one being updated
-    //       const eventObject = eventData.find(e => e.event.Id === eventToDelete.Id);
-    //       await deleteEvent(eventObject);
-    //     }
-    //   }
-  }
-  const handleCopyToClipboard = (e) => {
+  const handleCopyToClipboard = e => {
     textAreaRef.current.select();
     document.execCommand('copy');
     e.target.focus();

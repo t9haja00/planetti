@@ -152,18 +152,24 @@ const Userpage = () => {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p className="h5 mb-5">Give your schedule a Title</p>
-            <input
+          <div className="form-group">
+            <label>Give your schedule a Title</label>
+            <input className="form-control"
               value={title || ""}
               onChange={(e) => updateTitle(e.target.value)}
             />
-            <p className="h5 mb-5">Plase give short description</p>
-            <input
+            <hr></hr>
+            <label>Please give a short description</label>
+            <input className="form-control"
               value={description || ""}
               onChange={(e) => updateDescription(e.target.value)}
             />
+            </div>
           </Modal.Body>
           <Modal.Footer className={styles["modal-footer"]}>
+          <Button className={styles.cancel} onClick={handleNewScheduleClose}>
+              Cancel
+            </Button>
             <Button
               className="btn-success"
               onClick={() => {
@@ -185,15 +191,17 @@ const Userpage = () => {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className={styles["modal-body"]}>
+            <div class={styles2.buttonBar}>
+            <Button className={styles.cancel} onClick={handleDeleteClose}>
+              Cancel
+            </Button>
             <Button
               className="btn-danger"
               onClick={() => handleDelete(scheduleID)}
             >
               Delete schedule
             </Button>
-            <Button className={styles.cancel} onClick={handleDeleteClose}>
-              Cancel
-            </Button>
+            </div>
           </Modal.Body>
         </Modal>
       </div>
@@ -211,16 +219,19 @@ const Userpage = () => {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className={styles["modal-body"]}>
-            <p className="h5 mb-5">Edit a Title</p>
-            <input
+          <div className="form-group">
+            <label>Edit a Title</label>
+            <input className="form-control"
               value={title || ""}
               onChange={(e) => updateTitle(e.target.value)}
             />
-            <p className="h5 mb-5">edit your description</p>
-            <input
+            <hr></hr>
+            <label>edit your description</label>
+            <input className="form-control"
               value={description || ""}
               onChange={(e) => updateDescription(e.target.value)}
             />
+             </div>
           </Modal.Body>
           <Modal.Footer className={styles["modal-footer"]}>
             <Button className={styles.cancel} onClick={handleEditScheduleClose}>

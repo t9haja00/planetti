@@ -30,7 +30,7 @@ import styles from "../assets/css/userpage.module.css";
           props.deleteSchedule(props.schedule_id);
         }}
       >
-        DELETE
+        Delete
       </button>
       {/* edit button */}
       <button

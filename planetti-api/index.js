@@ -6,6 +6,7 @@ const auth = require('./routes/auth');
 const changePassword = require('./routes/changePassword');
 const schedules = require('./routes/schedules');
 const events = require('./routes/events');
+const events1 = require('./routes/events1');
 
 const app = express();
 const PORT = process.env.PORT || 3200;
@@ -18,7 +19,8 @@ app.use('/users', users);
 app.use('/auth', auth);
 app.use('/:uuid?/schedules',schedules);
 app.use('/users/changePassword', changePassword);
-app.use('/:uuid?/events/', events);
+app.use('/:uuid?/events-old/', events);
+app.use('/events', events1);
 
 
 

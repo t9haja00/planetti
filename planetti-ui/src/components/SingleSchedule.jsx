@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Card, Button } from "react-bootstrap";
 import styles from "../assets/css/userpage.module.css";
 
-function SingleSchedule(props, deleteSchedule) {
+function SingleSchedule(props) {
   return (
     <Card style={{ width: "10rm" }}>
       <Card.Body className={styles.card_style}>

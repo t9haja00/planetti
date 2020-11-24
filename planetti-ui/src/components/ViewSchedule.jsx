@@ -76,8 +76,7 @@ const ViewSchedule = ({ match }) => {
                 height='650px'
                 showWeekNumber={true}
                 firstDayOfWeek={1}
-                eventSettings={{ dataSource: dataManager, query: dataQuery }}
-                actionBegin={onActionBegin}>
+                eventSettings={{ dataSource: dataManager, query: dataQuery }} >
                 <ViewsDirective>
                   <ViewDirective option='Week'></ViewDirective>
                 </ViewsDirective>

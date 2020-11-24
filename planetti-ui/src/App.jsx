@@ -78,7 +78,7 @@ const App = () => {
           )}
         />
         <Route 
-          path="/view-schedule" 
+          path="/view-schedule/:uuid" 
           render={routeProps => (
             <ViewSchedule {...routeProps} />)} 
         />

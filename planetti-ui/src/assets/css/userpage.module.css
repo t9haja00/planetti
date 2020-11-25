@@ -29,6 +29,7 @@
   text-overflow: ellipsis;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+  color: #EDF5E1;
 }
 .truncated_paragraph::-webkit-scrollbar {
   display: none;
@@ -39,6 +40,7 @@
   white-space: no-wrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #EDF5E1;
 }
 
 

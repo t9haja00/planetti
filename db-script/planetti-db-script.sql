@@ -37,7 +37,8 @@ CREATE TABLE IF NOT EXISTS schedules (
 	"description" varchar(255) NULL,
 	"create_time" timestamptz NULL DEFAULT CURRENT_TIMESTAMP,
 	"user_id" int4 NOT NULL,
-	"schedule_config" jsonb NOT NULL
+	"schedule_config" jsonb NOT NULL,
+	"schedule_color" varchar(12)
 );
 
 

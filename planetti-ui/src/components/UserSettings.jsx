@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import SettingsNavBar from './common/SettingsNavBar';
 import Profile from './Profile';
 import ChangePassword from './ChangePassword';
@@ -11,6 +11,7 @@ const UserSettings = ({
   deleteFeedBack = f => f,
   profileFeedBack = f => f
 }) => {
+
   return (
     <div className='d-flex'>
       <SettingsNavBar />
@@ -18,7 +19,7 @@ const UserSettings = ({
         <p className={`${styles.title} h2`}>User Settings</p>
         <Route
           path={`${match.path}/user-profile`}
-          render={() => <Profile profileFeedBack={profileFeedBack}/>} />
+          render={() => <Profile profileFeedBack={profileFeedBack} />} />
         <Route
           path={`${match.path}/change-password`}
           component={ChangePassword} />
@@ -28,8 +29,8 @@ const UserSettings = ({
             return <DeleteAccount
               deleteFeedBack={deleteFeedBack}
               {...routeProps} />
-          }
-          } />
+          }} />
+        <Redirect to={`${match.path}/user-profile`} />
       </div>
     </div>
   );

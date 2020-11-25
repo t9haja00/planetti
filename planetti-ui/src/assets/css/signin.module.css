@@ -7,3 +7,9 @@
   font-size: 14px;
   background-color: #f1f5f7
 }
+
+.navbar-brand {
+  color: #05386B;
+  font-size: 28px;
+  font-family: 'Russo One', sans-serif;
+}

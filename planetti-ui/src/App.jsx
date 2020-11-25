@@ -74,13 +74,15 @@ const App = () => {
         <Route
           path="/login"
           render={routeProps => (
-            <Signin signin={handleSignin} {...routeProps} />
+            <Signin
+              signin={handleSignin}
+              {...routeProps} />
           )}
         />
-        <Route 
-          path="/view-schedule/:uuid" 
+        <Route
+          path="/view-schedule/:uuid"
           render={routeProps => (
-            <ViewSchedule {...routeProps} />)} 
+            <ViewSchedule {...routeProps} />)}
         />
         <Route
           path="/user-settings"
@@ -95,12 +97,15 @@ const App = () => {
           }
         />
         <Route
-          path="/"
+          path="/" exact
           render={(routeProps) => {
             if (!loggedIn) return <NotLogged {...routeProps} />;
             return <UserPage />;
           }}
         />
+        {/* <Route
+          path="*"
+          render={() => <h1>Not Found</h1>} /> */}
       </Switch>
       <Footer />
     </>

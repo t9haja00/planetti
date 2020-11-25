@@ -20,6 +20,7 @@ import styles from '../assets/css/view-schedule.module.css';
 let dataManager = null;
 let dataQuery = null;
 const iconsUrl = process.env.REACT_APP_API;
+const eventsAPI = process.env.REACT_APP_EVENTS;
 
 const ViewSchedule = ({ match }) => {
 
@@ -36,7 +37,7 @@ const ViewSchedule = ({ match }) => {
 
       // Syncfusion DataManager
       dataManager = new DataManager({
-        url: 'http://localhost:3200/events',
+        url: eventsAPI,
         adaptor: new UrlAdaptor(),
       });
 
@@ -58,7 +59,7 @@ const ViewSchedule = ({ match }) => {
 
     setTimeout(() => {
       setShowTooltip(false);
-    }, 1500);
+    }, 1000);
 
     setShowTooltip(true);
   };

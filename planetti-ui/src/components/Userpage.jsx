@@ -189,14 +189,14 @@ const Userpage = () => {
           </Modal.Header>
           <Modal.Body className={styles["modal-body"]}>
             <div class={styles2.buttonBar}>
-            <Button className={styles.cancel} onClick={handleDeleteClose}>
-              Cancel
-            </Button>
             <Button
               className="btn-danger"
               onClick={() => handleDelete(scheduleID)}
             >
               Delete schedule
+            </Button>
+            <Button className={styles.cancel} onClick={handleDeleteClose}>
+              Cancel
             </Button>
             </div>
           </Modal.Body>
@@ -231,9 +231,6 @@ const Userpage = () => {
              </div>
           </Modal.Body>
           <Modal.Footer className={styles["modal-footer"]}>
-            <Button className={styles.cancel} onClick={handleEditScheduleClose}>
-              Cancel
-            </Button>
             <Button
               className="btn-success"
               onClick={() => {
@@ -241,6 +238,9 @@ const Userpage = () => {
               }}
             >
               Save changes
+            </Button>
+            <Button className={styles.cancel} onClick={handleEditScheduleClose}>
+              Cancel
             </Button>
           </Modal.Footer>
         </Modal>

@@ -7,6 +7,7 @@ import DeleteAccount from './DeleteAccount';
 import styles from '../assets/css/settings.module.css';
 
 const UserSettings = ({
+  match,
   deleteFeedBack = f => f,
   profileFeedBack = f => f
 }) => {
@@ -16,13 +17,13 @@ const UserSettings = ({
       <div className="col-7 my-3 mx-2">
         <p className={`${styles.title} h2`}>User Settings</p>
         <Route
-          path='/user-settings/user-profile'
+          path={`${match.path}/user-profile`}
           render={() => <Profile profileFeedBack={profileFeedBack}/>} />
         <Route
-          path='/user-settings/change-password'
+          path={`${match.path}/change-password`}
           component={ChangePassword} />
         <Route
-          path='/user-settings/delete-account'
+          path={`${match.path}/delete-account`}
           render={routeProps => {
             return <DeleteAccount
               deleteFeedBack={deleteFeedBack}

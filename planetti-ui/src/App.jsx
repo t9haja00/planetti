@@ -7,11 +7,12 @@ import { ToastContainer, toast } from "react-toastify";
 /* Components
 --------------*/
 import NavBar from "./components/common/NavBar";
-import NotLogged from "./components/NotLogged";
 import Signin from "./components/Signin";
+import NotLogged from "./components/NotLogged";
+import UserPage from "./components/Userpage";
+import ViewSchedule from "./components/ViewSchedule";
 import UserSettings from "./components/UserSettings";
 import Footer from "./components/common/Footer";
-import UserPage from "./components/Userpage";
 
 /* Styles
 ----------*/
@@ -72,17 +73,23 @@ const App = () => {
       <Switch>
         <Route
           path="/login"
-          render={(routeProps) => (
+          render={routeProps => (
             <Signin signin={handleSignin} {...routeProps} />
           )}
         />
+        <Route 
+          path="/view-schedule/:uuid" 
+          render={routeProps => (
+            <ViewSchedule {...routeProps} />)} 
+        />
         <Route
           path="/user-settings"
-          render={() =>
+          render={routeProps =>
             loggedIn && (
               <UserSettings
                 deleteFeedBack={handleAccountDelete}
                 profileFeedBack={handleProfileChanged}
+                {...routeProps}
               />
             )
           }

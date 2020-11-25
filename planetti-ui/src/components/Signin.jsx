@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Joi from 'joi';
 import { signin } from '../services/authService';
 import Form from '../components/common/Form';
@@ -31,6 +32,12 @@ class Signin extends Form {
       .label('Password')
   });
 
+  componentDidMount() {
+    if (localStorage.getItem('userInfo')) {
+      this.props.history.replace('/');
+    }
+  }
+
   doSubmit = async () => {
     try {
       const { data } = this.state;
@@ -52,6 +59,15 @@ class Signin extends Form {
   render() {
     return (
       <>
+        <div className="text-center pt-4 pb-3">
+          <Link
+            to="/"
+            className="text-decoration-none">
+            <p
+              className={styles['navbar-brand']}
+            >Planetti</p>
+          </Link>
+        </div>
         <div className={`${styles['auth-form']} container px-3`}>
           <form onSubmit={this.handlesubmit} noValidate>
             <div className="text-center">
@@ -64,6 +80,9 @@ class Signin extends Form {
               {this.renderButton('Sign in')}
             </div>
           </form>
+        </div>
+        <div className="container text-center mt-4">
+          <small className="text-muted">© 2020 Planetti Inc.</small>
         </div>
       </>
     );

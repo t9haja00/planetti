@@ -9,7 +9,8 @@ const Footer = ({ match }) => {
 
   let fixedBottom = "";
   const footer = () => {
-    if (location.pathname !== '/login') {
+    const { pathname } = location;
+    if (pathname.toLowerCase() !== '/login') {
       return (
         <div className={`${styles.main} ${fixedBottom}`}>
           <div className="d-flex container justify-content-between flex-row-reverse align-items-center py-3">
@@ -31,13 +32,8 @@ const Footer = ({ match }) => {
         </div>
       )
     }
-
-      return (
-            <div className="container text-center mt-4">
-              <small className="text-muted">© 2020 Planetti Inc.</small>
-            </div>
-      )
   }
+
   return (
     <div className='footer mt-auto'>
       {footer()}

@@ -5,7 +5,8 @@ import styles from "../assets/css/userpage.module.css";
 
 function SingleSchedule(props) {
   return (
-    <Card style={{ width: "10rm" }}>
+    <div className={styles.grid_item}>
+    <Card style={{ width: "100%" }}>
       <Card.Body className={styles.card_style}>
         <div key={props.schedule_id}>
           <Link
@@ -13,9 +14,9 @@ function SingleSchedule(props) {
             style={{ color: "inherit", textDecoration: "inherit" }}
           >
             <Card.Title>
-              <h3 className={styles.truncated}>{props.title}</h3>
+              <h4 className={styles.truncated_title}>{props.title}</h4>
             </Card.Title>
-            <p className={styles.truncated}>{props.description}</p>
+            <p className={styles.truncated_paragraph}>{props.description}</p>
           </Link>
         </div>
         <hr></hr>
@@ -45,6 +46,7 @@ function SingleSchedule(props) {
         </div>
       </Card.Body>
     </Card>
+    </div>
   );
 }
 export default SingleSchedule;

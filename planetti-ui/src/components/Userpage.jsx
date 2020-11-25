@@ -121,24 +121,21 @@ const Userpage = () => {
 
   // Used to push to new scedules main window.
   const routeChange = (path) => {
-    history.push("/schedules/" + path);
+    history.push("/view-schedule/" + path);
   };
 
   return (
     <div>
       <div className={styles2.centerContent}>
       <div className={styles2.gridContainer}>
-      <button onClick={handleNewScheduleShow}  className={styles2.clickDiv}>
-      <div>
+      <div onClick={handleNewScheduleShow}  className={styles2.clickDiv}>
         Add New Schedule
       </div>
-      </button>
       {schedules.map((single) => (
         <SingleSchedule
           deleteSchedule={handleDeleteShow}
           editSchedule={handleEditScheduleShow}
           key={single.schedule_id}
-          className={styles2.gridItem}
           {...single}
         />
       ))}

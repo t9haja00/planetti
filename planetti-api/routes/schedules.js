@@ -35,12 +35,12 @@ router.get("/", (req, res) => {
 // create a schedule for a user
 router.post("/", (req, res) => {
   console.log(req.body);
-  const { title, description, user_id } = req.body;
+  const { title, description, user_id, schedule_config, schedule_color } = req.body;
   const uuid = uuidv4();
-  const newSchedule = [title, description, uuid, user_id];
+  const newSchedule = [title, description, uuid, user_id, schedule_config, schedule_color];
 
   db.query(
-    "INSERT INTO schedules (title, description, uuid, user_id) VALUES ($1, $2, $3, $4) ",
+    "INSERT INTO schedules (title, description, uuid, user_id, schedule_config, schedule_color) VALUES ($1, $2, $3, $4, $5, $6) ",
     newSchedule
   )
     .then(() =>

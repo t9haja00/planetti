@@ -38,11 +38,16 @@ router.post('/', (req, res) => {
           EndTimeZone: value.EndTimezone,
           RecurrenceRule: value.RecurrenceRule,
           RecurrenceID: value.RecurrenceID,
-          RecurrenceException: value.RecurrenceException
+          RecurrenceException: value.RecurrenceException,
+          FollowingID: value.FollowingID,
+          IsReadonly: value.IsReadonly,
+          IsBlock: value.IsBlock,
         }
 
+        userDefined.call(newEvent, value);
+
         db.query("INSERT INTO events (event, schedule_id) VALUES ($1, $2)", [newEvent, schedule_id])
-          .then( _ => res.send(newEvent))
+          .then(_ => res.send(newEvent))
           .catch(err => res.sendStatus(500));
       }
 
@@ -73,11 +78,13 @@ router.post('/', (req, res) => {
             event.RecurrenceException = value.RecurrenceException
         }
 
+        userDefined.call(event, value);
+
         db.query("UPDATE events SET event=($1) WHERE event_id=($2)", [
           event,
           event_id,
         ])
-          .then( _ => res.send(event))
+          .then(_ => res.send(event))
           .catch(err => res.sendStatus(500));
       }
 
@@ -88,7 +95,7 @@ router.post('/', (req, res) => {
           const { event_id } = filterData;
 
           db.query("DELETE FROM events WHERE event_id=($1)", [event_id])
-            .then( _ => res.send(filterData))
+            .then(_ => res.send(filterData))
             .catch((err) => {
               res.sendStatus(500);
             });
@@ -99,5 +106,13 @@ router.post('/', (req, res) => {
     .catch(e => res.sendStatus(500));
 });
 
+// add user defined fields
+function userDefined(value) {
+  for (let key in value) {
+    console.log(key);
+    if (key !== 'StartTime' || key !== 'EndTime')
+      this[key] = value[key];
+  }
+}
 
 module.exports = router;

@@ -1,10 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Card, Overlay, Tooltip } from 'react-bootstrap';
-import { ScheduleComponent, Inject, Week, ViewsDirective, ViewDirective }
-  from '@syncfusion/ej2-react-schedule';
+import { toast } from 'react-toastify';
+import { createElement, L10n, Internationalization } from '@syncfusion/ej2-base';
+import { FormValidator } from '@syncfusion/ej2-inputs';
+import { DialogUtility } from '@syncfusion/ej2-react-popups';
+import {
+  ScheduleComponent,
+  Inject,
+  Week,
+  Month,
+  ViewsDirective,
+  ViewDirective
+} from '@syncfusion/ej2-react-schedule';
 import { DataManager, UrlAdaptor, Query } from '@syncfusion/ej2-data';
 import { getScheduleByUUID } from '../services/scheduleService';
-import { DelayedRender } from './common/DelayedRender';
+import EventEditorTemplate from './templates/EventEditorTemplate';
+import Header from './templates/quickPopupTemplates/Header';
+import Content from './templates/quickPopupTemplates/Content';
+import EventTemplate from './templates/EventTemplate';
+import TooltipTemplate from './templates/TooltipTemplate';
+import DelayedRender from './common/DelayedRender';
 import "@syncfusion/ej2-base/styles/material.css";
 import "@syncfusion/ej2-buttons/styles/material.css";
 import "@syncfusion/ej2-calendars/styles/material.css";
@@ -17,16 +32,34 @@ import "@syncfusion/ej2-splitbuttons/styles/material.css";
 import "@syncfusion/ej2-react-schedule/styles/material.css";
 import styles from '../assets/css/view-schedule.module.css';
 
+/* change the default editor text
+-----------------------------------*/
+L10n.load({
+  'en-US': {
+    'schedule': {
+      'saveButton': 'Add',
+      'cancelButton': 'Close',
+      'deleteButton': 'Delete Event',
+      'newEvent': 'Add Event'
+    }
+  }
+});
+
 let dataManager = null;
 let dataQuery = null;
+let scheduleObj = null;
 const iconsUrl = process.env.REACT_APP_API;
 const eventsAPI = process.env.REACT_APP_EVENTS;
 
-const ViewSchedule = ({ match }) => {
+const ViewSchedule = ({ match, history }) => {
 
+  /* State
+  ---------*/
   const [schedule, setSchedule] = useState(null);
   const [showTooltip, setShowTooltip] = useState(false);
 
+  /* Refs
+  --------*/
   const textAreaRef = useRef(null);
   const tooltipRef = useRef(null);
 
@@ -34,6 +67,8 @@ const ViewSchedule = ({ match }) => {
     const getSchedule = async () => {
       const { data: scheduleData } =
         await getScheduleByUUID(match.params.uuid);
+
+      if (scheduleData.length === 0) return history.replace('/');
 
       // Syncfusion DataManager
       dataManager = new DataManager({
@@ -64,29 +99,241 @@ const ViewSchedule = ({ match }) => {
     setShowTooltip(true);
   };
 
+  /* Schedule eventHandlers
+  --------------------------*/
+
+  const onPopupOpen = args => {
+
+      // fields validation
+      mandatoryOrFirstOrDefault().map(field => {
+        const formElement = args.element.querySelector('.e-schedule-form');
+        let validator = formElement.ej2_instances[0];
+        validator.addRules(`${field.name}`, { required: true });
+      });
+
+  };
+
+  const onPopupClose = args => {
+
+    if (args.type == "Editor" && scheduleObj.eventWindow.isCrudAction) {
+      var bool = !(args.data.StartTime < args.data.EndTime);
+      if (bool) {
+        args.cancel = true;
+        DialogUtility.alert({
+          animationSettings: { effect: 'Zoom' },
+          closeOnEscape: true,
+          content: "End time must be greater than Start time ",
+          showCloseIcon: true,
+          title: 'Error',
+          position: 'center'
+        });
+      }
+    }
+
+    if (args.type === 'QuickInfo' && scheduleObj.quickPopup.isCrudAction) {
+
+      // fields validation
+      let validator = new FormValidator('#quickPopupForm');
+
+      mandatoryOrFirstOrDefault().map(field => {
+        validator.addRules(`${field.name}`, { required: true });
+      });
+
+      if (!validator.validate()) {
+        args.cancel = true;
+      }
+    }
+  };
+
+  /* Utils
+  ---------*/
+  const setMinDate = minDate => {
+    return minDate || new Date(1900, 0, 1);
+  };
+
+  const setMaxDate = maxDate => {
+    return maxDate || new Date(2099, 11, 31);
+  };
+
+  const isCustomFields = _ => {
+    return schedule.schedule_config.fields.length;
+  }
+
+  const isMandatoryFields = _ => {
+    return mandatoryFields().length;
+  }
+
+  const allCustomFields = _ => {
+    return schedule.schedule_config.fields;
+  }
+
+  const mandatoryFields = _ => {
+    const { fields } = schedule.schedule_config;
+    return fields.filter(field => field.mandatory === 'true');
+  };
+
+  const mandatoryOrFirstOrDefault = _ => {
+    if (isCustomFields())
+      return isMandatoryFields() ? mandatoryFields() : [allCustomFields()[0]];
+
+    return [{ id: 1, type: "text", name: "title", label: "Title" }];
+  }
+
+  const formatDate = (date, options) => {
+    const int = new Internationalization();
+
+    return int.formatDate(date, options);
+  }
+
+  const displayDateTime = (startTime, endTime) => {
+    const startTimeDetail = scheduleObj.getTimeString(startTime);
+    const endTimeDetail = scheduleObj.getTimeString(endTime);
+    const startDateDetails = formatDate(startTime, { skeleton: 'long' });
+
+    return { startTimeDetail, endTimeDetail, startDateDetails };
+  }
+
+  /* Templates 
+  -------------*/
+  const editorWindowTemplate = props => {
+    return (
+      <EventEditorTemplate
+        fields={isCustomFields() ? allCustomFields() : mandatoryOrFirstOrDefault()}
+        props={props}
+        maxDate={setMaxDate(schedule.schedule_config.maxDate)}
+        minDate={setMinDate(schedule.schedule_config.minDate)} />
+    );
+  };
+
+  const header = props => {
+    return (
+      <Header
+        props={props}
+        closePopup={closeQuickInfoPopup}
+        editEvent={openEditorWindow}
+        deleteEvent={deleteEvent}
+      />
+    );
+  };
+
+  const content = props => {
+    const {
+      startDateDetails,
+      startTimeDetail,
+      endTimeDetail } = displayDateTime(props.StartTime, props.EndTime);
+    const dateTimeDetails = `${startDateDetails} ( ${startTimeDetail} - ${endTimeDetail} )`;
+
+
+    return (
+      <Content
+        fields={mandatoryOrFirstOrDefault()}
+        props={props}
+        dateTimeDetails={dateTimeDetails} />
+    );
+  };
+
+  const eventTemplate = props => {
+    return (
+      <EventTemplate
+        props={props}
+        fields={mandatoryOrFirstOrDefault()}
+        startTime={formatDate(props.StartTime, { skeleton: 'hm' })}
+        endTime={formatDate(props.EndTime, { skeleton: 'hm' })} />
+    );
+  }
+
+  const tooltipTemplate = props => {
+    const {
+      startDateDetails,
+      startTimeDetail,
+      endTimeDetail } = displayDateTime(props.StartTime, props.EndTime);
+
+    return (
+      <TooltipTemplate
+        props={props}
+        fields={mandatoryOrFirstOrDefault()}
+        startDate={startDateDetails}
+        startTime={startTimeDetail}
+        endTime={endTimeDetail} />
+    );
+  };
+
+  /* Templates eventHandlers
+  ----------------------------*/
+  const openEditorWindow = async _ => {
+    const data = scheduleObj.activeEventData.event;
+
+    scheduleObj.currentAction = null;
+    closeQuickInfoPopup();
+    await scheduleObj.openEditor(data, 'Save');
+  }
+
+  const deleteEvent = props => {
+    scheduleObj.currentAction = null;
+    scheduleObj.activeEventData.event = props;
+    scheduleObj.quickPopup.quickPopupHide();
+    scheduleObj.quickPopup.openDeleteAlert();
+    // scheduleObj.quickPopup.deleteClick();
+  }
+
+  const closeQuickInfoPopup = _ => {
+    scheduleObj.quickPopup.isCrudAction = false;
+    scheduleObj.quickPopup.quickPopupHide();
+  };
+
+
   return (
     <>
       {schedule ?
         <div className='mx-4 my-4'>
           <div className='row my-3'>
             <div className='col border rounded p-1 shadow' >
-              <div className={styles.title}>
+              <div
+                className={styles.title}
+                style={{ backgroundColor: `${schedule.schedule_color}` }}
+              >
                 {schedule.title}
               </div>
               <ScheduleComponent
+                ref={schedule => scheduleObj = schedule}
                 height='650px'
+                rowAutoHeight={true}
                 showWeekNumber={true}
+                allowMultiCellSelection={false}
+                allowMultiRowSelection={false}
+                readonly={false}
+                showQuickInfo={true}
                 firstDayOfWeek={1}
-                eventSettings={{ dataSource: dataManager, query: dataQuery }} >
+                workDays={[1, 2, 3, 4, 5, 6]}
+                showWeekend={false}
+                eventSettings={{
+                  dataSource: dataManager,
+                  query: dataQuery,
+                  editFollowingEvents: true,
+                  enableTooltip: true,
+                  template: eventTemplate,
+                  tooltipTemplate: tooltipTemplate,
+                }}
+                minDate={setMinDate(schedule.schedule_config.minDate)}
+                maxDate={setMaxDate(schedule.schedule_config.maxDate)}
+                popupOpen={onPopupOpen}
+                popupClose={onPopupClose}
+                editorTemplate={editorWindowTemplate}
+                quickInfoTemplates={{ header, content, footer: null }}
+              >
                 <ViewsDirective>
                   <ViewDirective option='Week'></ViewDirective>
+                  <ViewDirective option='Month'></ViewDirective>
                 </ViewsDirective>
-                <Inject services={[Week]} />
+                <Inject services={[Week, Month]} />
               </ScheduleComponent>
             </div>
             <div className='col-lg-2 mt-2'>
               <Card className='mb-3'>
-                <div className={styles.description} >
+                <div
+                  className={styles.description}
+                  style={{ backgroundColor: `${schedule.schedule_color}` }}
+                >
                   Description
                   </div>
                 <Card.Body>
@@ -95,7 +342,9 @@ const ViewSchedule = ({ match }) => {
               </Card>
               <Card>
                 <div
-                  className={styles.description} >
+                  className={styles.description}
+                  style={{ backgroundColor: `${schedule.schedule_color}` }}
+                >
                   Share Link
                   </div>
                 <Card.Body
@@ -108,7 +357,9 @@ const ViewSchedule = ({ match }) => {
                       <div
                         ref={tooltipRef}
                         className={`${styles['icon-container']} input-group-text`}
-                        onClick={handleCopyToClipboard} >
+                        style={{ backgroundColor: `${schedule.schedule_color}` }}
+                        onClick={handleCopyToClipboard}
+                      >
                         <img
                           className={styles.icon}
                           src={`${iconsUrl}/icons/clipboard.svg`}

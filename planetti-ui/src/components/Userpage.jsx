@@ -71,7 +71,8 @@ const Userpage = () => {
     updateDescription("");
   };
   const handleNewScheduleShow = () => {
-    setShowNewSchedule(true);
+    // setShowNewSchedule(true);
+    history.push("/new-schedule/");
   };
   const handleNewSchedule = async () => {
     console.log(title);
@@ -127,58 +128,67 @@ const Userpage = () => {
   return (
     <div>
       <div className={styles2.centerContent}>
-      <div className={styles2.gridContainer}>
-      <div onClick={handleNewScheduleShow}  className={styles2.clickDiv}>
-        Add New Schedule
-      </div>
-      {schedules.map((single) => (
-        <SingleSchedule
-          deleteSchedule={handleDeleteShow}
-          editSchedule={handleEditScheduleShow}
-          key={single.schedule_id}
-          {...single}
-        />
-      ))}
-      </div>
-      <div>
-        {/* Modal start for new schedule */}
-        <Modal centered show={showNewSchedule} onHide={handleNewScheduleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title className={styles["modal-title"]}>
-              Create New schedule
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-          <div className="form-group">
-            <label>Give your schedule a Title</label>
-            <input className="form-control"
-              value={title || ""}
-              onChange={(e) => updateTitle(e.target.value)}
+        <div className={styles2.gridContainer}>
+          <div onClick={handleNewScheduleShow} className={styles2.clickDiv}>
+            Add New Schedule
+          </div>
+          {schedules.map((single) => (
+            <SingleSchedule
+              deleteSchedule={handleDeleteShow}
+              editSchedule={handleEditScheduleShow}
+              key={single.schedule_id}
+              {...single}
             />
-            <hr></hr>
-            <label>Please give a short description</label>
-            <input className="form-control"
-              value={description || ""}
-              onChange={(e) => updateDescription(e.target.value)}
-            />
-            </div>
-          </Modal.Body>
-          <Modal.Footer className={styles["modal-footer"]}>
-          <Button className={styles.cancel} onClick={handleNewScheduleClose}>
-              Cancel
-            </Button>
-            <Button
-              className="btn-success"
-              onClick={() => {
-                handleNewSchedule();
-              }}
-            >
-              Create new schedule
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
+          ))}
         </div>
+        <div>
+          {/* Modal start for new schedule */}
+          <Modal
+            centered
+            show={showNewSchedule}
+            onHide={handleNewScheduleClose}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title className={styles["modal-title"]}>
+                Create New schedule
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className="form-group">
+                <label>Give your schedule a Title</label>
+                <input
+                  className="form-control"
+                  value={title || ""}
+                  onChange={(e) => updateTitle(e.target.value)}
+                />
+                <hr></hr>
+                <label>Please give a short description</label>
+                <input
+                  className="form-control"
+                  value={description || ""}
+                  onChange={(e) => updateDescription(e.target.value)}
+                />
+              </div>
+            </Modal.Body>
+            <Modal.Footer className={styles["modal-footer"]}>
+              <Button
+                className={styles.cancel}
+                onClick={handleNewScheduleClose}
+              >
+                Cancel
+              </Button>
+              <Button
+                className="btn-success"
+                onClick={() => {
+                  handleNewSchedule();
+                }}
+              >
+                Create new schedule
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </div>
+      </div>
       <div>
         {/* Modal starts for deleting single event */}
         <Modal centered show={showDeleteConfirm} onHide={handleDeleteClose}>
@@ -189,15 +199,15 @@ const Userpage = () => {
           </Modal.Header>
           <Modal.Body className={styles["modal-body"]}>
             <div class={styles2.buttonBar}>
-            <Button
-              className="btn-danger"
-              onClick={() => handleDelete(scheduleID)}
-            >
-              Delete schedule
-            </Button>
-            <Button className={styles.cancel} onClick={handleDeleteClose}>
-              Cancel
-            </Button>
+              <Button
+                className="btn-danger"
+                onClick={() => handleDelete(scheduleID)}
+              >
+                Delete schedule
+              </Button>
+              <Button className={styles.cancel} onClick={handleDeleteClose}>
+                Cancel
+              </Button>
             </div>
           </Modal.Body>
         </Modal>
@@ -216,19 +226,21 @@ const Userpage = () => {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className={styles["modal-body"]}>
-          <div className="form-group">
-            <label>Edit a Title</label>
-            <input className="form-control"
-              value={title || ""}
-              onChange={(e) => updateTitle(e.target.value)}
-            />
-            <hr></hr>
-            <label>edit your description</label>
-            <input className="form-control"
-              value={description || ""}
-              onChange={(e) => updateDescription(e.target.value)}
-            />
-             </div>
+            <div className="form-group">
+              <label>Edit a Title</label>
+              <input
+                className="form-control"
+                value={title || ""}
+                onChange={(e) => updateTitle(e.target.value)}
+              />
+              <hr></hr>
+              <label>edit your description</label>
+              <input
+                className="form-control"
+                value={description || ""}
+                onChange={(e) => updateDescription(e.target.value)}
+              />
+            </div>
           </Modal.Body>
           <Modal.Footer className={styles["modal-footer"]}>
             <Button

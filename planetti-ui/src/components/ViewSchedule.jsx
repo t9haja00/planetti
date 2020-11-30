@@ -103,6 +103,7 @@ const ViewSchedule = ({ match, history }) => {
   --------------------------*/
 
   const onPopupOpen = args => {
+    if (args.type === 'Editor') {
 
       // fields validation
       mandatoryOrFirstOrDefault().map(field => {
@@ -111,6 +112,7 @@ const ViewSchedule = ({ match, history }) => {
         validator.addRules(`${field.name}`, { required: true });
       });
 
+    }
   };
 
   const onPopupClose = args => {
@@ -148,11 +150,11 @@ const ViewSchedule = ({ match, history }) => {
   /* Utils
   ---------*/
   const setMinDate = minDate => {
-    return minDate || new Date(1900, 0, 1);
+    return new Date(minDate).toDateString() || new Date(1900, 0, 1);
   };
 
   const setMaxDate = maxDate => {
-    return maxDate || new Date(2099, 11, 31);
+    return new Date(maxDate).toDateString() || new Date(2099, 11, 31);
   };
 
   const isCustomFields = _ => {
@@ -304,8 +306,8 @@ const ViewSchedule = ({ match, history }) => {
                 readonly={false}
                 showQuickInfo={true}
                 firstDayOfWeek={1}
-                workDays={[1, 2, 3, 4, 5, 6]}
-                showWeekend={false}
+                // workDays={[1, 2, 3, 4, 5, 6]}
+                // showWeekend={false}
                 eventSettings={{
                   dataSource: dataManager,
                   query: dataQuery,

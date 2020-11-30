@@ -5,7 +5,7 @@ const db = require("../db/index");
 router.post('/', (req, res) => {
 
   const { schedule_id } = req.body.params;
-  const { action, added, changed, deleted } = req.body;
+  const { action, added, changed, deleted, key } = req.body;
 
   db.query("SELECT * FROM events WHERE schedule_id=($1)", [schedule_id])
     .then(({ rows }) => {
@@ -90,8 +90,8 @@ router.post('/', (req, res) => {
 
       if (action == "remove" || (action == "batch" && deleted.length > 0)) {
 
-        for (let event of deleted) {
-          const filterData = rows.find(r => r.event.Id === event.Id);
+        if (action == "remove") {
+          const filterData = rows.find(r => r.event.Id === key);
           const { event_id } = filterData;
 
           db.query("DELETE FROM events WHERE event_id=($1)", [event_id])
@@ -99,6 +99,18 @@ router.post('/', (req, res) => {
             .catch((err) => {
               res.sendStatus(500);
             });
+        }
+        else {
+          for (let event of deleted) {
+            const filterData = rows.find(r => r.event.Id === event.Id);
+            const { event_id } = filterData;
+
+            db.query("DELETE FROM events WHERE event_id=($1)", [event_id])
+              .then(_ => res.send(filterData))
+              .catch((err) => {
+                res.sendStatus(500);
+              });
+          }
         }
       }
 
@@ -109,7 +121,6 @@ router.post('/', (req, res) => {
 // add user defined fields
 function userDefined(value) {
   for (let key in value) {
-    console.log(key);
     if (key !== 'StartTime' || key !== 'EndTime')
       this[key] = value[key];
   }

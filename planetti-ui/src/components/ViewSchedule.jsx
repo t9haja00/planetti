@@ -101,54 +101,8 @@ const ViewSchedule = ({ match, history }) => {
 
   /* Schedule eventHandlers
   --------------------------*/
-  const onActionBegin = args => {
-
-    // set events to readOnly
-    if (args.requestType === 'eventCreate') {
-      //args.data[0].IsReadonly = true;
-      //console.log(args.data[0]);
-    }
-
-    // if (args.requestType === 'eventChange') {
-    //   scheduleObj.openEditor(args.data[0], 'EditOccurrence', true);
-    // }
-
-    //  restrict the users to create and update more than one appointment on specific time slots
-    // if (args.requestType === 'eventCreate' && args.data.length > 0) {
-    //   let eventData = args.data[0];
-    //   let eventField = scheduleObj.eventFields;
-    //   let startDate = eventData[eventField.startTime];
-    //   let endDate = eventData[eventField.endTime];
-    //   args.cancel = !scheduleObj.isSlotAvailable(startDate, endDate);
-    // }
-  };
 
   const onPopupOpen = args => {
-    if (args.type === 'Editor') {
-      // control options for repeating an event
-      //scheduleObj.eventWindow.recurrenceEditor.frequencies = ['none'];
-
-      // Customizing the default time duration in editor window
-      args.duration = 60;
-
-      // another way to set read only events but can be deleted (neither can add *checking fix*)
-      //args.cancel = true;
-      //toast.dark('Cant edit this event');
-
-      // Add additional fields to the default editor
-      // if (!args.element.querySelector('.custom-field-row')) {
-      //   let row = createElement('div', { className: 'custom-field-row' });
-      //   let formElement = args.element.querySelector('.e-schedule-form');
-      //   formElement.firstChild.insertBefore(row, formElement.firstChild.firstChild);
-      //   let container = createElement('div', { className: 'custom-field-container' });
-      //   let inputEle = createElement('input', {
-      //     className: 'e-field', attrs: { name: 'EventType' }
-      //   });
-      //   container.appendChild(inputEle);
-      //   row.appendChild(container);
-      //   inputEle.setAttribute('name', 'user defined');
-      //   inputEle.setAttribute('type', 'user defined');
-      // }
 
       // fields validation
       mandatoryOrFirstOrDefault().map(field => {
@@ -157,12 +111,6 @@ const ViewSchedule = ({ match, history }) => {
         validator.addRules(`${field.name}`, { required: true });
       });
 
-      // improve read only events by disabling editing button
-      // if (args.type === 'EditEventInfo') {
-      //   let editButton = args.element.querySelector('.e-edit');
-      //   editButton.disabled = true;
-      // }
-    }
   };
 
   const onPopupClose = args => {
@@ -370,7 +318,6 @@ const ViewSchedule = ({ match, history }) => {
                 maxDate={setMaxDate(schedule.schedule_config.maxDate)}
                 popupOpen={onPopupOpen}
                 popupClose={onPopupClose}
-                actionBegin={onActionBegin}
                 editorTemplate={editorWindowTemplate}
                 quickInfoTemplates={{ header, content, footer: null }}
               >

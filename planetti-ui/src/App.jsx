@@ -13,7 +13,7 @@ import UserPage from "./components/Userpage";
 import ViewSchedule from "./components/ViewSchedule";
 import UserSettings from "./components/UserSettings";
 import Footer from "./components/common/Footer";
-
+import NewSchedule from "./components/NewSchedule";
 /* Styles
 ----------*/
 import "react-toastify/dist/ReactToastify.css";
@@ -72,21 +72,22 @@ const App = () => {
       />
       <Switch>
         <Route
+          path="/new-schedule"
+          render={(routeProps) => <NewSchedule {...routeProps} />}
+        />
+        <Route
           path="/login"
-          render={routeProps => (
-            <Signin
-              signin={handleSignin}
-              {...routeProps} />
+          render={(routeProps) => (
+            <Signin signin={handleSignin} {...routeProps} />
           )}
         />
         <Route
           path="/view-schedule/:uuid"
-          render={routeProps => (
-            <ViewSchedule {...routeProps} />)}
+          render={(routeProps) => <ViewSchedule {...routeProps} />}
         />
         <Route
           path="/user-settings"
-          render={routeProps =>
+          render={(routeProps) =>
             loggedIn && (
               <UserSettings
                 deleteFeedBack={handleAccountDelete}
@@ -97,7 +98,8 @@ const App = () => {
           }
         />
         <Route
-          path="/" exact
+          path="/"
+          exact
           render={(routeProps) => {
             if (!loggedIn) return <NotLogged {...routeProps} />;
             return <UserPage />;

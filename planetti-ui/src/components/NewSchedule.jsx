@@ -3,6 +3,7 @@ import { Component } from "react";
 import { Button, ToastBody } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Select from "react-select";
+import { newSchedule } from "../services/scheduleService";
 
 import styles from "../assets/css/delete-account.module.css";
 
@@ -16,7 +17,7 @@ const todayDate = new Date();
 
 class NewSchedule extends Component {
   state = {
-    values: [],
+    customFields: [],
     selectedOption: null,
     start_date: todayDate.toISOString().slice(0, 10),
     end_date: todayDate.toISOString().slice(0, 10),
@@ -25,6 +26,9 @@ class NewSchedule extends Component {
   };
   backToUserpage = () => {
     useHistory.push("/");
+  };
+  routeChange = (path) => {
+    useHistory.push("/view-schedule/" + path);
   };
   customStylesSelect = {
     menu: (provided, state) => ({
@@ -45,17 +49,17 @@ class NewSchedule extends Component {
   };
   // stuff for new inputs
   createUI = () => {
-    return this.state.values.map((el, i) => (
+    return this.state.customFields.map((el, i) => (
       <div key={i}>
         <div>
           <input
             name={el.value + " "}
             type="input"
-            value={this.state.values[i].value}
+            value={this.state.customFields[i].value}
             onChange={this.handleChangesInput.bind(this, i)}
           />
           <Select
-            value={this.state.values[i].selectedOption}
+            value={this.state.customFields[i].selectedOption}
             onChange={this.handleChangeSelect.bind(this, i)}
             options={options}
             width="200px"
@@ -68,7 +72,7 @@ class NewSchedule extends Component {
             name="isMandatory"
             type="checkbox"
             defaultChecked={false}
-            checked={this.state.values[i].isMandatory}
+            checked={this.state.customFields[i].isMandatory}
             onChange={this.handleCheckBox.bind(this, i)}
           />
           <input
@@ -82,43 +86,70 @@ class NewSchedule extends Component {
   };
 
   handleChangesInput = (i, event) => {
-    let values = [...this.state.values];
-    values[i] = { ...values[i], input: event.target.value };
-    this.setState({ values });
+    let customFields = [...this.state.customFields];
+    customFields[i] = { ...customFields[i], input: event.target.value };
+    this.setState({ customFields });
   };
 
   handleChangeSelect = (i, event) => {
-    let values = [...this.state.values];
-    values[i] = { ...values[i], select: event.value };
-    this.setState({ values });
+    let customFields = [...this.state.customFields];
+    customFields[i] = { ...customFields[i], select: event.value };
+    this.setState({ customFields });
   };
 
   handleCheckBox = (i, event) => {
-    let values = [...this.state.values];
-    values[i] = { ...values[i], isMandatory: event.target.checked };
-    this.setState({ values });
+    let customFields = [...this.state.customFields];
+    customFields[i] = { ...customFields[i], isMandatory: event.target.checked };
+    this.setState({ customFields });
   };
 
   addClick = () => {
+    let id = this.state.customFields.length + 1;
+    let test = { id: id };
     this.setState((prevState) => ({
-      values: [...prevState.values, {}],
+      customFields: [...prevState.customFields, test],
     }));
   };
 
   removeClick = (i) => {
-    let values = [...this.state.values];
-    values.splice(i, 1);
-    this.setState({ values });
+    let customFields = [...this.state.customFields];
+    customFields.splice(i, 1);
+    this.setState({ customFields });
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state.values);
+    console.log(this.state.customFields);
   };
 
-  handleNewSchedule = () => {
-    alert("hello");
+  handleNewSchedule = async () => {
+    console.log(this.state);
+    console.log(this.state.customFields);
+    let customFieldsSpread = { ...this.state.customFields };
+    console.log(customFieldsSpread);
+    const userInfo = localStorage.getItem("userInfo");
+    const { user_id } = JSON.parse(userInfo);
+
+    let scheduleData = {
+      title: this.state.description,
+      description: this.state.description,
+      user_id: user_id,
+      maxDate: this.state.start_date,
+      minDate: this.state.end_date,
+      schedule_config: {
+        id: "1",
+        name: "phoneNumber",
+        label: "Phone Number",
+        type: "number",
+        mandatory: "true",
+      },
+      schedule_color: "#16a3a3",
+    };
+    console.log(scheduleData);
+    scheduleData = await newSchedule(scheduleData);
+    this.routeChange(scheduleData[0].uuid);
   };
+
   render() {
     return (
       <div>

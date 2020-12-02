@@ -62,7 +62,7 @@ class NewSchedule extends Component {
           />
           <Select
             value={this.state.values[i].selectedOption}
-            onChange={this.handleChanges.bind(this, i)}
+            onChange={this.handleChangeSelect.bind(this, i)}
             options={options}
             width="200px"
             menuColor="red"
@@ -93,7 +93,17 @@ class NewSchedule extends Component {
     console.log(props);
     let values = [...this.state.values];
     let type = event.target.type;
-    values[i] = { ...values[i], [type]: event.target.value };
+    values[i] = { ...values[i], [type]:  event.target.value };
+    this.setState({ values });
+  };
+
+  handleChangeSelect = (i, event, props) => {
+    console.log(i);
+    console.log(event);
+    console.log(props);
+    let values = [...this.state.values];
+    let type = event.type;
+    values[i] = { ...values[i], [type]:  event.value };
     this.setState({ values });
   };
 
@@ -158,13 +168,13 @@ class NewSchedule extends Component {
               <input
                 type="date"
                 name="start_date"
-                value={this.state.start_date || ""}
+                value={this.state.start_date  ?! this.state.end_date : ""}
                 onChange={(e) => this.setState({ start_date: e.target.value })}
               />
               <input
                 type="date"
                 name="end_date"
-                value={this.state.end_date || ""}
+                value={ this.state.end_date ?! this.state.start_date : ""}
                 onChange={(e) => this.setState({ end_date: e.target.value })}
               />
               {/* {console.log(this.state.start_date)}

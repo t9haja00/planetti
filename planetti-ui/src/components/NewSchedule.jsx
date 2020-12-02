@@ -1,23 +1,27 @@
 import React from "react";
 import { Component } from "react";
-import { Button } from "react-bootstrap";
+import { Button, ToastBody } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Select from "react-select";
 
 import styles from "../assets/css/delete-account.module.css";
+
 const options = [
   { value: "chocolate", label: "Chocolate", type: "select" },
   { value: "strawberry", label: "Strawberry", type: "select" },
   { value: "vanilla", label: "Vanilla", type: "select" },
   { value: "email", label: "Email", type: "select" },
 ];
+
+const todayDate = new Date;
+
 class NewSchedule extends Component {
   state = {
     values: [],
     stuff: [],
     selectedOption: null,
-    start_date: Date,
-    end_date: Date,
+    start_date: todayDate.toISOString().slice(0,10),
+    end_date: todayDate.toISOString().slice(0,10),
     title: "",
     description: "",
   };
@@ -159,22 +163,19 @@ class NewSchedule extends Component {
               {this.createUI()}
               <input type="submit" value="test submit" />
             </div>
-            <div>
-              <div>Here be the colors? RGB color wheel?</div>
-              <input name="color picker" type="color"></input>
-            </div>
+              <label>Colors~~~</label>
             <div>
               two data input fields here?
               <input
                 type="date"
                 name="start_date"
-                value={this.state.start_date  ?! this.state.end_date : ""}
+                value={this.state.start_date}
                 onChange={(e) => this.setState({ start_date: e.target.value })}
               />
               <input
                 type="date"
                 name="end_date"
-                value={ this.state.end_date ?! this.state.start_date : ""}
+                value={ this.state.end_date}
                 onChange={(e) => this.setState({ end_date: e.target.value })}
               />
               {/* {console.log(this.state.start_date)}

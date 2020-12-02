@@ -6,10 +6,10 @@ import Select from "react-select";
 
 import styles from "../assets/css/delete-account.module.css";
 const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
-  { value: "email", label: "Email" },
+  { value: "chocolate", label: "Chocolate", type: "select" },
+  { value: "strawberry", label: "Strawberry", type: "select" },
+  { value: "vanilla", label: "Vanilla", type: "select" },
+  { value: "email", label: "Email", type: "select" },
 ];
 class NewSchedule extends Component {
   state = {
@@ -24,54 +24,82 @@ class NewSchedule extends Component {
   backToUserpage = () => {
     useHistory.push("/");
   };
+  customStylesSelect = {
+    menu: (provided, state) => ({
+      ...provided,
+      width: state.selectProps.width,
+      borderBottom: "10px dotted pink",
+      color: state.selectProps.menuColor,
+      padding: 20,
+    }),
+
+    control: (_, { selectProps: { width } }) => ({
+      width: width,
+    }),
+
+    singleValue: (provided, state) => {
+      const opacity = state.isDisabled ? 0.5 : 1;
+      const transition = "opacity 300ms";
+
+      return { ...provided, opacity, transition };
+    },
+  };
 
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
-
-    this.addClick(selectedOption);
   };
 
   // stuff for new inputs
   createUI = () => {
     return this.state.values.map((el, i) => (
       <div key={i}>
-        <h1>
-          {el.label + " "}
-          <label>
-            Is Mandatory? :
-            <input
-              name="isMandatory"
-              type="checkbox"
-              checked={this.state.values[i].isMandatory}
-              onChange={this.handleChanges.bind(this, i)}
-            />
-          </label>
+        <div>
           <input
             name={el.value + " "}
             type="input"
             value={this.state.values[i].value}
             onChange={this.handleChanges.bind(this, i)}
           />
-        </h1>
-        <input
-          type="button"
-          value="remove"
-          onClick={this.removeClick.bind(this, i)}
-        />
+          <Select
+            value={this.state.values[i].selectedOption}
+            onChange={this.handleChanges.bind(this, i)}
+            options={options}
+            width="200px"
+            menuColor="red"
+            styles={this.customStylesSelect}
+            name="select"
+          />
+          Is Mandatory? :
+          <input
+            name="isMandatory"
+            type="checkbox"
+            defaultChecked={false}
+            checked={this.state.values[i].isMandatory}
+            onChange={this.handleChanges.bind(this, i)}
+          />
+          <input
+            type="button"
+            value="remove"
+            onClick={this.removeClick.bind(this, i)}
+          />
+        </div>
       </div>
     ));
   };
 
-  handleChanges = (i, event) => {
+  handleChanges = (i, event, props) => {
+    console.log(i);
+    console.log(event);
+    console.log(props);
     let values = [...this.state.values];
-    values[i] = { ...values[i], isMandatory: event.target.checked };
-
+    let type = event.target.type;
+    values[i] = { ...values[i], [type]: event.target.value };
     this.setState({ values });
   };
 
-  addClick = (selectedOption) => {
+  addClick = () => {
     this.setState((prevState) => ({
-      values: [...prevState.values, selectedOption],
+      values: [...prevState.values, {}],
     }));
   };
 
@@ -86,6 +114,9 @@ class NewSchedule extends Component {
     console.log(this.state.values);
   };
 
+  handleNewSchedule = () => {
+    alert("hello");
+  };
   render() {
     const { selectedOption } = this.state;
 
@@ -113,11 +144,7 @@ class NewSchedule extends Component {
               </div>
             </div>
             <div>
-              <Select
-                value={selectedOption}
-                onChange={this.handleChange}
-                options={options}
-              />
+              <button onClick={this.addClick}>new stuff</button>
               {/* extra stuff */}
               {this.createUI()}
               <input type="submit" value="test submit" />

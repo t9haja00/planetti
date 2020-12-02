@@ -6,16 +6,13 @@ import Select from "react-select";
 
 import styles from "../assets/css/delete-account.module.css";
 const options = [
-  { value: "chocolate", label: "Chocolate", type: "select" },
-  { value: "strawberry", label: "Strawberry", type: "select" },
-  { value: "vanilla", label: "Vanilla", type: "select" },
-  { value: "email", label: "Email", type: "select" },
+  { value: "text", label: "text" },
+  { value: "number", label: "number" },
+  { value: "email", label: "email" },
 ];
 class NewSchedule extends Component {
   state = {
     values: [],
-    stuff: [],
-    selectedOption: null,
     start_date: Date,
     end_date: Date,
     title: "",
@@ -44,11 +41,6 @@ class NewSchedule extends Component {
       return { ...provided, opacity, transition };
     },
   };
-
-  handleChange = (selectedOption) => {
-    this.setState({ selectedOption });
-  };
-
   // stuff for new inputs
   createUI = () => {
     return this.state.values.map((el, i) => (
@@ -58,7 +50,7 @@ class NewSchedule extends Component {
             name={el.value + " "}
             type="input"
             value={this.state.values[i].value}
-            onChange={this.handleChanges.bind(this, i)}
+            onChange={this.handleChangesInput.bind(this, i)}
           />
           <Select
             value={this.state.values[i].selectedOption}
@@ -75,7 +67,7 @@ class NewSchedule extends Component {
             type="checkbox"
             defaultChecked={false}
             checked={this.state.values[i].isMandatory}
-            onChange={this.handleChanges.bind(this, i)}
+            onChange={this.handleCheckBox.bind(this, i)}
           />
           <input
             type="button"
@@ -87,23 +79,21 @@ class NewSchedule extends Component {
     ));
   };
 
-  handleChanges = (i, event, props) => {
-    console.log(i);
-    console.log(event);
-    console.log(props);
+  handleChangesInput = (i, event) => {
     let values = [...this.state.values];
-    let type = event.target.type;
-    values[i] = { ...values[i], [type]:  event.target.value };
+    values[i] = { ...values[i], input: event.target.value };
     this.setState({ values });
   };
 
-  handleChangeSelect = (i, event, props) => {
-    console.log(i);
-    console.log(event);
-    console.log(props);
+  handleChangeSelect = (i, event) => {
     let values = [...this.state.values];
-    let type = event.type;
-    values[i] = { ...values[i], [type]:  event.value };
+    values[i] = { ...values[i], select: event.value };
+    this.setState({ values });
+  };
+
+  handleCheckBox = (i, event) => {
+    let values = [...this.state.values];
+    values[i] = { ...values[i], isMandatory: event.target.checked };
     this.setState({ values });
   };
 
@@ -128,8 +118,6 @@ class NewSchedule extends Component {
     alert("hello");
   };
   render() {
-    const { selectedOption } = this.state;
-
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -168,13 +156,13 @@ class NewSchedule extends Component {
               <input
                 type="date"
                 name="start_date"
-                value={this.state.start_date  ?! this.state.end_date : ""}
+                value={this.state.start_date ? !this.state.end_date : ""}
                 onChange={(e) => this.setState({ start_date: e.target.value })}
               />
               <input
                 type="date"
                 name="end_date"
-                value={ this.state.end_date ?! this.state.start_date : ""}
+                value={this.state.end_date ? !this.state.start_date : ""}
                 onChange={(e) => this.setState({ end_date: e.target.value })}
               />
               {/* {console.log(this.state.start_date)}

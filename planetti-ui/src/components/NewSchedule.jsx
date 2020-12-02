@@ -24,6 +24,7 @@ class NewSchedule extends Component {
     end_date: todayDate.toISOString().slice(0,10),
     title: "",
     description: "",
+    chosenColor: "#16a3a3"
   };
   backToUserpage = () => {
     useHistory.push("/");
@@ -131,6 +132,13 @@ class NewSchedule extends Component {
   handleNewSchedule = () => {
     alert("hello");
   };
+
+  chooseColor = (event) =>
+  {
+    event.preventDefault();
+    console.log(event.target.id);
+    this.setState( { chosenColor: event.target.id } )
+  }
   render() {
     const { selectedOption } = this.state;
 
@@ -163,7 +171,23 @@ class NewSchedule extends Component {
               {this.createUI()}
               <input type="submit" value="test submit" />
             </div>
-              <label>Colors~~~</label>
+                  
+                  <div>
+                  <label className="form-control">Colors</label>
+                  <div className={styles.colorContainer}>
+                  <div className={styles.colorLabel}> Selected Color: </div>
+                  <div className={styles.selectedColor} style={{backgroundColor:this.state.chosenColor}}> </div>
+                  <div className={styles.colorLabel}> Available Colors: </div>
+                  <div className={styles.colorButton} id="#16a3a3" style={{backgroundColor:'#16a3a3'}} onClick={this.chooseColor}> Default </div>
+                  <div className={styles.colorButton} id="#f3947c" style={{backgroundColor:'#f3947c'}} onClick={this.chooseColor}> Peach</div>
+                  <div className={styles.colorButton} id="#a693bc" style={{backgroundColor:'#a693bc'}} onClick={this.chooseColor}> Lilac</div>
+                  <div className={styles.colorButton} id="#353839" style={{backgroundColor:'#353839'}} onClick={this.chooseColor}> Onyx</div>
+                  <div className={styles.colorButton} id="#e39e59" style={{backgroundColor:'#e39e59'}} onClick={this.chooseColor}> Ochre</div>
+                  </div>
+                  
+                  </div>
+                  
+                
             <div>
               two data input fields here?
               <input

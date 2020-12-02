@@ -11,3 +11,44 @@
 .modal-body {
   justify-content: space-between !important;
 }
+
+.selectedColor
+{
+  min-width: 80px;
+  min-height: 30px;
+  background-color: ivory;
+}
+
+.colorButton
+{
+  min-width: 80px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Russo One", sans-serif;
+  color: white;
+  padding: 5px;
+  margin: 10px;
+}
+
+:hover .colorButton
+{
+  cursor: pointer;
+}
+
+.colorContainer
+{
+  width: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.colorLabel
+{
+  white-space: nowrap;
+  margin: auto;
+  padding: 5px;
+}

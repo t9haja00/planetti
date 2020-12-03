@@ -150,11 +150,27 @@ const ViewSchedule = ({ match, history }) => {
   /* Utils
   ---------*/
   const setMinDate = minDate => {
-    return new Date(minDate).toDateString() || new Date(1900, 0, 1);
+    if (minDate == "")
+    {
+      return new Date(1900, 0, 1)
+    }
+    else
+    {
+    return new Date(minDate).toDateString()
+    }
+   // return new Date(minDate).toDateString() || new Date(1900, 0, 1);
   };
 
   const setMaxDate = maxDate => {
-    return new Date(maxDate).toDateString() || new Date(2099, 11, 31);
+    if (maxDate == "")
+    {
+      return new Date(2099, 11, 31)
+    }
+    else
+    {
+    return new Date(maxDate).toDateString()
+    }
+    //return new Date(maxDate).toDateString() || new Date(2099, 11, 31);
   };
 
   const isCustomFields = _ => {

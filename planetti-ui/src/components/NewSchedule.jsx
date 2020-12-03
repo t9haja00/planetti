@@ -15,6 +15,8 @@ const options = [
   { value: "url", label: "Url" },
 ];
 
+const todayDate = new Date();
+
 class NewSchedule extends Form {
   state = {
     data: {
@@ -34,8 +36,8 @@ class NewSchedule extends Form {
 
   schema = Joi.object({
     title: Joi.string().required(),
-    start_date: Joi.date().allow(null, ""),
-    end_date: Joi.date().greater(Joi.ref("start_date")).allow(null, ""),
+    start_date: Joi.date().allow(""),
+    end_date: Joi.date().min(Joi.ref("start_date")).allow("")
   });
 
   backToUserpage = () => {
@@ -157,9 +159,28 @@ class NewSchedule extends Form {
     this.setState({ chosenColor: color });
   };
 
+  DatePickerHandler = (e) =>
+  {
+    
+    this.state.showDatePicker ?
+    
+    this.setState({
+     // showDatePicker: e.target.checked,
+     data : { start_date: "", end_date: ""}
+     
+    })
+    :
+    this.setState({
+     // showDatePicker: e.target.checked,
+
+      data : { start_date: todayDate.toISOString().slice(0,10) , end_date : todayDate.toISOString().slice(0,10) }
+    })
+
+  }
+
   render() {
     return (
-      <div>
+      <div className={styles.createPageContainer}>
         <form onSubmit={null}>
           <div>
             <div>
@@ -200,6 +221,7 @@ class NewSchedule extends Form {
               chooseColor={this.chooseColor}
               chosenColor={this.state.chosenColor}
             />
+
             <div>
               Want to have custom schedule duration?{" "}
               <input
@@ -207,9 +229,17 @@ class NewSchedule extends Form {
                 name="showDatePicker"
                 checked={this.state.showDatePicker}
                 onChange={(e) => {
+                
+                 
                   this.setState({
                     showDatePicker: e.target.checked,
+                    // data : { start_date: todayDate.toISOString().slice(0,10)}
                   });
+                  this.DatePickerHandler(e);
+                  console.log(this.state.data.start_date);
+                  
+                  
+
                 }}
               />
               {this.state.showDatePicker && (
@@ -259,7 +289,7 @@ class NewSchedule extends Form {
                 </div>
               )}
             </div>
-            <div>
+            <div className={styles.buttonBar}>
               <Button className={styles.cancel} onClick={this.backToUserpage}>
                 Back
               </Button>

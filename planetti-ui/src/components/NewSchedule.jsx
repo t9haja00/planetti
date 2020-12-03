@@ -6,6 +6,8 @@ import { newSchedule } from "../services/scheduleService";
 import styles from "../assets/css/delete-account.module.css";
 import Joi from "joi";
 import { createUI } from "../components/CreateUI";
+import ColorPicker from "../components/ColorPicker";
+
 const options = [
   { value: "text", label: "Text" },
   { value: "number", label: "Only Numbers" },
@@ -154,11 +156,11 @@ class NewSchedule extends Form {
     this.routeChange(responseUuid);
   };
 
-  chooseColor = (event) => {
-    event.preventDefault();
-    console.log(event.target.id);
-    this.setState({ chosenColor: event.target.id });
+  chooseColor = (color) => {
+    console.log(color);
+    this.setState({ chosenColor: color });
   };
+
   render() {
     return (
       <div>
@@ -191,64 +193,10 @@ class NewSchedule extends Form {
               </div>
             </div>
             <div>{this.createUI()}</div>
-            <div>
-              <label className="form-control">Colors</label>
-              <div className={styles.colorContainer}>
-                <div className={styles.colorLabel}> Selected Color: </div>
-                <div
-                  className={styles.selectedColor}
-                  style={{ backgroundColor: this.state.chosenColor }}
-                >
-                  {" "}
-                </div>
-                <div className={styles.colorLabel}> Available Colors: </div>
-                <div
-                  className={styles.colorButton}
-                  id="#16a3a3"
-                  style={{ backgroundColor: "#16a3a3" }}
-                  onClick={this.chooseColor}
-                >
-                  {" "}
-                  Default{" "}
-                </div>
-                <div
-                  className={styles.colorButton}
-                  id="#f3947c"
-                  style={{ backgroundColor: "#f3947c" }}
-                  onClick={this.chooseColor}
-                >
-                  {" "}
-                  Peach
-                </div>
-                <div
-                  className={styles.colorButton}
-                  id="#a693bc"
-                  style={{ backgroundColor: "#a693bc" }}
-                  onClick={this.chooseColor}
-                >
-                  {" "}
-                  Lilac
-                </div>
-                <div
-                  className={styles.colorButton}
-                  id="#353839"
-                  style={{ backgroundColor: "#353839" }}
-                  onClick={this.chooseColor}
-                >
-                  {" "}
-                  Onyx
-                </div>
-                <div
-                  className={styles.colorButton}
-                  id="#e39e59"
-                  style={{ backgroundColor: "#e39e59" }}
-                  onClick={this.chooseColor}
-                >
-                  {" "}
-                  Ochre
-                </div>
-              </div>
-            </div>
+            <ColorPicker
+              chooseColor={this.chooseColor}
+              chosenColor={this.state.chosenColor}
+            />
             <div>
               Want to have custom schedule duration?{" "}
               <input

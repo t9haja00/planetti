@@ -1,4 +1,5 @@
 import Select from "react-select";
+
 const options = [
   { value: "text", label: "Text" },
   { value: "number", label: "Only Numbers" },
@@ -22,7 +23,8 @@ const customStylesSelect = {
     return { ...provided, opacity, transition };
   },
 };
-export default createUI = (props) => {
+
+function CreateUI(props) {
   return props.map((el, i) => (
     <div key={i}>
       <div>
@@ -57,4 +59,6 @@ export default createUI = (props) => {
       </div>
     </div>
   ));
-};
+}
+
+export default CreateUI;

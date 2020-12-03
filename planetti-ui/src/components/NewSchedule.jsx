@@ -28,6 +28,7 @@ class NewSchedule extends Component {
   backToUserpage = () => {
     useHistory.push("/");
   };
+
   routeChange = (path) => {
     useHistory.push("/view-schedule/" + path);
   };
@@ -146,9 +147,10 @@ class NewSchedule extends Component {
       },
       schedule_color: "#16a3a3",
     };
-    console.log(scheduleData);
-    scheduleData = await newSchedule(scheduleData);
-    this.routeChange(scheduleData[0].uuid);
+    let responseData = await newSchedule(scheduleData);
+    console.log(responseData);
+    console.log(responseData.data[0].uuid);
+    this.routeChange(responseData.data[0].uuid);
   };
 
   chooseColor = (event) => {

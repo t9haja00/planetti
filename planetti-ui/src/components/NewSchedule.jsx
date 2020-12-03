@@ -1,42 +1,49 @@
 import React from "react";
-import { Component } from "react";
-import { Button, ToastBody } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import Form from "../components/common/Form";
+import { Button } from "react-bootstrap";
 import Select from "react-select";
 import { newSchedule } from "../services/scheduleService";
-
 import styles from "../assets/css/delete-account.module.css";
+import Joi from "joi";
 
 const options = [
-  { value: "text", label: "text" },
-  { value: "number", label: "number" },
-  { value: "email", label: "email" },
+  { value: "text", label: "Text" },
+  { value: "number", label: "Only Numbers" },
+  { value: "email", label: "Email" },
+  { value: "url", label: "Url" },
 ];
 
-const todayDate = new Date();
-
-class NewSchedule extends Component {
+class NewSchedule extends Form {
   state = {
+    data: {
+      title: "",
+    },
     customFields: [],
     selectedOption: null,
-    start_date: todayDate.toISOString().slice(0, 10),
-    end_date: todayDate.toISOString().slice(0, 10),
+    start_date: "",
+    end_date: "",
     title: "",
     description: "",
     chosenColor: "#16a3a3",
+    errors: {},
   };
+
+  schema = Joi.object({
+    title: Joi.string().required(),
+  });
+
   backToUserpage = () => {
-    useHistory.push("/");
+    this.props.history.push("/");
   };
 
   routeChange = (path) => {
-    useHistory.push("/view-schedule/" + path);
+    this.props.history.push("/view-schedule/" + path);
   };
   customStylesSelect = {
     menu: (provided, state) => ({
       ...provided,
       width: state.selectProps.width,
-      borderBottom: "25px dotted pink",
+      borderBottom: "250px dotted pink",
       color: state.selectProps.menuColor,
       padding: 20,
     }),
@@ -56,9 +63,9 @@ class NewSchedule extends Component {
         <div>
           <input
             name={el.value + " "}
-            type="input"
-            value={this.state.customFields[i].value}
-            onChange={this.handleChangesInput.bind(this, i)}
+            type="text"
+            value={el.value}
+            onChange={(e) => this.handleChangesInput(e, i)}
           />
           <Select
             value={this.state.customFields[i].selectedOption}
@@ -87,9 +94,9 @@ class NewSchedule extends Component {
     ));
   };
 
-  handleChangesInput = (i, event) => {
+  handleChangesInput = (e, i) => {
     let customFields = [...this.state.customFields];
-    customFields[i] = { ...customFields[i], input: event.target.value };
+    customFields[i] = { ...customFields[i], input: e.target.value };
     this.setState({ customFields });
   };
 
@@ -119,38 +126,30 @@ class NewSchedule extends Component {
     this.setState({ customFields });
   };
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(this.state.customFields);
-  };
+  // handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   console.log(this.state.customFields);
+  // };
 
-  handleNewSchedule = async () => {
-    console.log(this.state);
-    console.log(this.state.customFields);
-    let customFieldsSpread = { ...this.state.customFields };
-    console.log(customFieldsSpread);
+  doSubmit = async () => {
+    let customFieldsSpread = [...this.state.customFields];
     const userInfo = localStorage.getItem("userInfo");
     const { user_id } = JSON.parse(userInfo);
-
     let scheduleData = {
       title: this.state.description,
       description: this.state.description,
       user_id: user_id,
-      maxDate: this.state.start_date,
-      minDate: this.state.end_date,
       schedule_config: {
-        id: "1",
-        name: "phoneNumber",
-        label: "Phone Number",
-        type: "number",
-        mandatory: "true",
+        maxDate: this.state.start_date,
+        minDate: this.state.end_date,
+        fields: customFieldsSpread,
       },
-      schedule_color: "#16a3a3",
+      schedule_color: this.state.chosenColor,
     };
-    let responseData = await newSchedule(scheduleData);
-    console.log(responseData);
-    console.log(responseData.data[0].uuid);
-    this.routeChange(responseData.data[0].uuid);
+    let { data } = await newSchedule(scheduleData);
+    let responseUuid = data[0].uuid;
+    console.log(responseUuid);
+    this.routeChange(responseUuid);
   };
 
   chooseColor = (event) => {
@@ -161,7 +160,7 @@ class NewSchedule extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={null}>
           <div>
             <div>
               {/* required inputs */}
@@ -172,6 +171,12 @@ class NewSchedule extends Component {
                   value={this.state.title || ""}
                   onChange={(e) => this.setState({ title: e.target.value })}
                 />
+                {this.state.errors.title && (
+                  <small className="text-danger">
+                    {this.state.errors.title}
+                  </small>
+                )}
+
                 <label>Please give a short description</label>
                 <input
                   className="form-control"
@@ -182,13 +187,7 @@ class NewSchedule extends Component {
                 />
               </div>
             </div>
-            <div>
-              <button onClick={this.addClick}>new stuff</button>
-              {/* extra stuff */}
-              {this.createUI()}
-              <input type="submit" value="test submit" />
-            </div>
-
+            <div>{this.createUI()}</div>
             <div>
               <label className="form-control">Colors</label>
               <div className={styles.colorContainer}>
@@ -247,9 +246,7 @@ class NewSchedule extends Component {
                 </div>
               </div>
             </div>
-
             <div>
-              two data input fields here?
               <input
                 type="date"
                 name="start_date"
@@ -272,15 +269,17 @@ class NewSchedule extends Component {
               </Button>
               <Button
                 className="btn-success"
-                onClick={() => {
-                  this.handleNewSchedule();
-                }}
+                onClick={(e) => this.handlesubmit(e)}
               >
                 Create this schedule
               </Button>
             </div>
           </div>
         </form>
+        <div>
+          <button onClick={this.addClick}>new stuff</button>
+          <input type="submit" value="test submit" />
+        </div>
       </div>
     );
   }

@@ -7,7 +7,7 @@ function SingleSchedule(props) {
   return (
     <div className={styles.grid_item}>
     <Card style={{ width: "100%" }}>
-      <Card.Body className={styles.card_style}>
+      <Card.Body className={styles.card_style}  style={{backgroundColor:props.schedule_color}}>
         <div key={props.schedule_id}>
           <Link
             to={`/view-schedule/${props.uuid}`}

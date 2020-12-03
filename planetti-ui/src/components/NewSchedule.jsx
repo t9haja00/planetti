@@ -5,7 +5,7 @@ import Select from "react-select";
 import { newSchedule } from "../services/scheduleService";
 import styles from "../assets/css/delete-account.module.css";
 import Joi from "joi";
-
+import { createUI } from "../components/CreateUI";
 const options = [
   { value: "text", label: "Text" },
   { value: "number", label: "Only Numbers" },
@@ -17,6 +17,8 @@ class NewSchedule extends Form {
   state = {
     data: {
       title: "",
+      start_date: "",
+      end_date: "",
     },
     customFields: [],
     selectedOption: null,
@@ -25,6 +27,7 @@ class NewSchedule extends Form {
     title: "",
     description: "",
     chosenColor: "#16a3a3",
+    showDatePicker: "",
     errors: {},
   };
 
@@ -56,7 +59,6 @@ class NewSchedule extends Form {
       return { ...provided, opacity, transition };
     },
   };
-  // stuff for new inputs
   createUI = () => {
     return this.state.customFields.map((el, i) => (
       <div key={i}>
@@ -68,8 +70,8 @@ class NewSchedule extends Form {
             onChange={(e) => this.handleChangesInput(e, i)}
           />
           <Select
-            value={this.state.customFields[i].selectedOption}
-            onChange={this.handleChangeSelect.bind(this, i)}
+            value={el.selectedOption}
+            onChange={(e) => this.handleChangeSelect(e, i)}
             options={options}
             width="200px"
             menuColor="red"
@@ -81,8 +83,8 @@ class NewSchedule extends Form {
             name="isMandatory"
             type="checkbox"
             defaultChecked={false}
-            checked={this.state.customFields[i].isMandatory}
-            onChange={this.handleCheckBox.bind(this, i)}
+            checked={el.isMandatory}
+            onChange={(e) => this.handleCheckBox(e, i)}
           />
           <input
             type="button"
@@ -100,15 +102,15 @@ class NewSchedule extends Form {
     this.setState({ customFields });
   };
 
-  handleChangeSelect = (i, event) => {
+  handleChangeSelect = (e, i) => {
     let customFields = [...this.state.customFields];
-    customFields[i] = { ...customFields[i], select: event.value };
+    customFields[i] = { ...customFields[i], select: e.value };
     this.setState({ customFields });
   };
 
-  handleCheckBox = (i, event) => {
+  handleCheckBox = (e, i) => {
     let customFields = [...this.state.customFields];
-    customFields[i] = { ...customFields[i], isMandatory: event.target.checked };
+    customFields[i] = { ...customFields[i], isMandatory: e.target.checked };
     this.setState({ customFields });
   };
 
@@ -176,8 +178,9 @@ class NewSchedule extends Form {
                     {this.state.errors.title}
                   </small>
                 )}
-
-                <label>Please give a short description</label>
+                <label>
+                  Please give a short description if you want (Optional)
+                </label>
                 <input
                   className="form-control"
                   value={this.state.description || ""}
@@ -247,22 +250,42 @@ class NewSchedule extends Form {
               </div>
             </div>
             <div>
+              Want to have custom schedule duration?{" "}
               <input
-                type="date"
-                name="start_date"
-                value={this.state.start_date}
-                onChange={(e) => this.setState({ start_date: e.target.value })}
+                type="checkbox"
+                name="showDatePicker"
+                checked={this.state.showDatePicker}
+                onChange={(e) => {
+                  this.setState({
+                    showDatePicker: e.target.checked,
+                  });
+                }}
               />
-              <input
-                type="date"
-                name="end_date"
-                value={this.state.end_date}
-                onChange={(e) => this.setState({ end_date: e.target.value })}
-              />
-              {/* {console.log(this.state.start_date)}
-              {console.log(this.state.end_date)} */}
+              {this.state.showDatePicker && (
+                <div>
+                  <label>Start date</label>
+                  <input
+                    type="date"
+                    name="start_date"
+                    value={this.state.start_date}
+                    onChange={(e) =>
+                      this.setState({ start_date: e.target.value })
+                    }
+                  />
+                  <div>
+                    <label> End date</label>
+                    <input
+                      type="date"
+                      name="end_date"
+                      value={this.state.end_date}
+                      onChange={(e) =>
+                        this.setState({ end_date: e.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+              )}
             </div>
-            {/* button div */}
             <div>
               <Button className={styles.cancel} onClick={this.backToUserpage}>
                 Back

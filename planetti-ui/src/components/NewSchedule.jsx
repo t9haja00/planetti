@@ -5,7 +5,7 @@ import Select from "react-select";
 import { newSchedule } from "../services/scheduleService";
 import styles from "../assets/css/delete-account.module.css";
 import Joi from "joi";
-import { createUI } from "../components/CreateUI";
+//import  CreateUI  from "../components/CreateUI";
 import ColorPicker from "../components/ColorPicker";
 
 const options = [
@@ -26,7 +26,6 @@ class NewSchedule extends Form {
     selectedOption: null,
     start_date: "",
     end_date: "",
-    title: "",
     description: "",
     chosenColor: "#16a3a3",
     showDatePicker: "",
@@ -35,6 +34,8 @@ class NewSchedule extends Form {
 
   schema = Joi.object({
     title: Joi.string().required(),
+    start_date: Joi.date().allow(null, ""),
+    end_date: Joi.date().greater(Joi.ref("start_date")).allow(null, ""),
   });
 
   backToUserpage = () => {
@@ -130,22 +131,17 @@ class NewSchedule extends Form {
     this.setState({ customFields });
   };
 
-  // handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   console.log(this.state.customFields);
-  // };
-
   doSubmit = async () => {
     let customFieldsSpread = [...this.state.customFields];
     const userInfo = localStorage.getItem("userInfo");
     const { user_id } = JSON.parse(userInfo);
     let scheduleData = {
-      title: this.state.description,
+      title: this.state.data.title,
       description: this.state.description,
       user_id: user_id,
       schedule_config: {
-        maxDate: this.state.start_date,
-        minDate: this.state.end_date,
+        maxDate: this.state.data.end_date,
+        minDate: this.state.data.start_date,
         fields: customFieldsSpread,
       },
       schedule_color: this.state.chosenColor,
@@ -172,8 +168,15 @@ class NewSchedule extends Form {
                 <label>Give your schedule a Title</label>
                 <input
                   className="form-control"
-                  value={this.state.title || ""}
-                  onChange={(e) => this.setState({ title: e.target.value })}
+                  value={this.state.data.title || ""}
+                  onChange={(e) =>
+                    this.setState((prevState) => ({
+                      data: {
+                        ...prevState.data,
+                        title: e.target.value,
+                      },
+                    }))
+                  }
                 />
                 {this.state.errors.title && (
                   <small className="text-danger">
@@ -211,23 +214,45 @@ class NewSchedule extends Form {
               />
               {this.state.showDatePicker && (
                 <div>
+                  <div>
+                    {this.state.errors.start_date && (
+                      <small className="text-danger">
+                        {this.state.errors.start_date}
+                      </small>
+                    )}
+                  </div>
                   <label>Start date</label>
                   <input
                     type="date"
                     name="start_date"
-                    value={this.state.start_date}
+                    value={this.state.data.start_date}
                     onChange={(e) =>
-                      this.setState({ start_date: e.target.value })
+                      this.setState((prevState) => ({
+                        data: {
+                          ...prevState.data,
+                          start_date: e.target.value,
+                        },
+                      }))
                     }
                   />
                   <div>
+                    {this.state.errors.end_date && (
+                      <small className="text-danger">
+                        {this.state.errors.end_date}
+                      </small>
+                    )}
                     <label> End date</label>
                     <input
                       type="date"
                       name="end_date"
-                      value={this.state.end_date}
+                      value={this.state.data.end_date}
                       onChange={(e) =>
-                        this.setState({ end_date: e.target.value })
+                        this.setState((prevState) => ({
+                          data: {
+                            ...prevState.data,
+                            end_date: e.target.value,
+                          },
+                        }))
                       }
                     />
                   </div>
@@ -249,7 +274,6 @@ class NewSchedule extends Form {
         </form>
         <div>
           <button onClick={this.addClick}>new stuff</button>
-          <input type="submit" value="test submit" />
         </div>
       </div>
     );

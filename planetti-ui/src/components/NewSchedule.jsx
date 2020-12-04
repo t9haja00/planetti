@@ -1,21 +1,18 @@
 import React from "react";
 import Form from "../components/common/Form";
-import { Button, FormControl, InputGroup } from "react-bootstrap";
-import Select from "react-select";
+import {
+  DropdownButton,
+  Dropdown,
+  Button,
+  FormControl,
+  InputGroup,
+} from "react-bootstrap";
 import { newSchedule } from "../services/scheduleService";
 import styles from "../assets/css/delete-account.module.css";
 import Joi from "joi";
 //import  CreateUI  from "../components/CreateUI";
 
 import ColorPicker from "../components/ColorPicker";
-
-const options = [
-  { value: "text", label: "Text" },
-  { value: "number", label: "Only Numbers" },
-  { value: "email", label: "Email" },
-  { value: "url", label: "Url" },
-];
-
 const todayDate = new Date();
 
 class NewSchedule extends Form {
@@ -24,16 +21,17 @@ class NewSchedule extends Form {
       title: "",
       start_date: "",
       end_date: "",
+      description: "",
     },
     customFields: [],
     selectedOption: null,
-    description: "",
     chosenColor: "#16a3a3",
     showDatePicker: false,
     errors: {},
   };
 
   schema = Joi.object({
+    description: Joi.string().allow(""),
     title: Joi.string().required(),
     start_date: Joi.date().allow(""),
     end_date: Joi.date().min(Joi.ref("start_date")).allow(""),
@@ -46,56 +44,55 @@ class NewSchedule extends Form {
   routeChange = (path) => {
     this.props.history.push("/view-schedule/" + path);
   };
-  customStylesSelect = {
-    menu: (provided, state) => ({
-      ...provided,
-      width: state.selectProps.width,
-      padding: 20,
-    }),
-    control: (_, { selectProps: { width } }) => ({
-      width: width,
-    }),
-    singleValue: (provided, state) => {
-      const opacity = state.isDisabled ? 0.5 : 1;
-      const transition = "opacity 300ms";
-      return { ...provided, opacity, transition };
-    },
-  };
+
   createUI = () => {
     return this.state.customFields.map((el, i) => (
       <div key={i}>
         <div className="form-group">
           <div className={styles.wrapRow}>
-            <input
-              name={el.value + " "}
-              type="text"
-              value={el.value}
-              onChange={(e) => this.handleChangesInput(e, i)}
-            />
-            <div>
-              <Select
-                value={el.selectedOption}
-                onChange={(e) => this.handleChangeSelect(e, i)}
-                options={options}
-                name="select"
-                styles={this.customStylesSelect}
+            <InputGroup>
+              <FormControl
+                placeholder="Your fields name in schedule"
+                aria-label="Your fields name in schedule"
+                aria-describedby="basic-addon2"
+                name={el.value + " "}
+                onChange={(e) => this.handleChangesInput(e, i)}
               />
-            </div>
-            <div>
-              Is Mandatory? :
-              <input
-                name="mandatory"
-                type="checkbox"
-                defaultChecked={false}
-                checked={el.mandatory}
-                onChange={(e) => this.handleCheckBox(e, i)}
-              />
-            </div>
-            <input
-              type="button"
-              value="remove"
-              onClick={this.removeClick.bind(this, i)}
-            />
+              <DropdownButton
+                focusFirstItemOnShow={true}
+                as={InputGroup.Append}
+                variant="outline-secondary"
+                title={this.state.customFields[i].type}
+                id="input-group-dropdown-2"
+                onSelect={(e) => this.handleChangeSelect(e, i)}
+              >
+                <Dropdown.Item eventKey="number">Numbers</Dropdown.Item>
+                <Dropdown.Item eventKey="email">Email</Dropdown.Item>
+                <Dropdown.Item eventKey="text">Text</Dropdown.Item>
+                <Dropdown.Item eventKey="url">URL</Dropdown.Item>
+              </DropdownButton>
+              <InputGroup.Prepend>
+                <InputGroup.Text>Mandatory?</InputGroup.Text>
+                <InputGroup.Checkbox
+                  aria-label="Checkbox for following text input"
+                  name="mandatory"
+                  type="checkbox"
+                  defaultChecked={false}
+                  checked={el.mandatory}
+                  onChange={(e) => this.handleCheckBox(e, i)}
+                />
+              </InputGroup.Prepend>
+              <InputGroup.Append>
+                <Button
+                  variant="outline-secondary"
+                  type="button"
+                  value="remove"
+                  onClick={this.removeClick.bind(this, i)}
+                >
+                  Delete
+                </Button>
+              </InputGroup.Append>
+            </InputGroup>
           </div>
         </div>
       </div>
@@ -104,13 +101,20 @@ class NewSchedule extends Form {
 
   handleChangesInput = (e, i) => {
     let customFields = [...this.state.customFields];
-    customFields[i] = { ...customFields[i], label: e.target.value, name: e.target.value };
+    customFields[i] = {
+      ...customFields[i],
+      label: e.target.value,
+      name: e.target.value,
+    };
     this.setState({ customFields });
   };
 
   handleChangeSelect = (e, i) => {
+    console.log(e);
+    console.log(i);
     let customFields = [...this.state.customFields];
-    customFields[i] = { ...customFields[i], type: e.value, lable: e.label };
+    customFields[i] = { ...customFields[i], type: e, label: e };
+    console.log(customFields);
     this.setState({ customFields });
   };
 
@@ -122,9 +126,9 @@ class NewSchedule extends Form {
 
   addClick = () => {
     let id = this.state.customFields.length + 1;
-    let test = { id: id };
+    let setDefaults = { id: id, type: "text" };
     this.setState((prevState) => ({
-      customFields: [...prevState.customFields, test],
+      customFields: [...prevState.customFields, setDefaults],
     }));
   };
 
@@ -140,7 +144,7 @@ class NewSchedule extends Form {
     const { user_id } = JSON.parse(userInfo);
     let scheduleData = {
       title: this.state.data.title,
-      description: this.state.description,
+      description: this.state.data.description,
       user_id: user_id,
       schedule_config: {
         maxDate: this.state.data.end_date,
@@ -164,18 +168,23 @@ class NewSchedule extends Form {
   //Handler for data boxes, if checkbox is checked, change state to today date.
   DatePickerHandler = () => {
     if (this.state.showDatePicker) {
-      this.setState({
+      this.setState((prevState) => ({
         showDatePicker: false,
-        data: { start_date: "", end_date: "" },
-      });
+        data: {
+          ...prevState.data,
+          start_date: "",
+          end_date: "",
+        },
+      }));
     } else {
-      this.setState({
+      this.setState((prevState) => ({
         showDatePicker: true,
         data: {
+          ...prevState.data,
           start_date: todayDate.toISOString().slice(0, 10),
           end_date: todayDate.toISOString().slice(0, 10),
         },
-      });
+      }));
     }
   };
 
@@ -185,7 +194,6 @@ class NewSchedule extends Form {
         <form onSubmit={null}>
           <div>
             <div>
-              {/* required inputs */}
               <div className="form-group">
                 <label>Give your schedule a Title</label>
                 <input
@@ -210,19 +218,30 @@ class NewSchedule extends Form {
                 </label>
                 <input
                   className="form-control"
-                  value={this.state.description || ""}
+                  value={this.state.data.description || ""}
                   onChange={(e) =>
-                    this.setState({ description: e.target.value })
+                    this.setState((prevState) => ({
+                      data: {
+                        ...prevState.data,
+                        description: e.target.value,
+                      },
+                    }))
                   }
                 />
               </div>
             </div>
             <div>{this.createUI()}</div>
+          </div>
+        </form>
+        <Button className="btn-info" onClick={(e) => this.addClick(e)}>
+          Add more custom inputs
+        </Button>
+        <form action={null}>
+          <div>
             <ColorPicker
               chooseColor={this.chooseColor}
               chosenColor={this.state.chosenColor}
             />
-
             <div className="form-group">
               Want to have custom schedule duration?{" "}
               <input
@@ -295,9 +314,6 @@ class NewSchedule extends Form {
             </div>
           </div>
         </form>
-        <div>
-          <button onClick={this.addClick}>Add extra fields</button>
-        </div>
       </div>
     );
   }

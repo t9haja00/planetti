@@ -163,7 +163,7 @@ class NewSchedule extends Form {
 
   //Handler for data boxes, if checkbox is checked, change state to today date.
   DatePickerHandler = () => {
-    if (this.state.showDatePicker == true) {
+    if (this.state.showDatePicker) {
       this.setState({
         showDatePicker: false,
         data: { start_date: "", end_date: "" },

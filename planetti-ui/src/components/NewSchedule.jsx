@@ -1,11 +1,12 @@
 import React from "react";
 import Form from "../components/common/Form";
-import { Button } from "react-bootstrap";
+import { Button, FormControl, InputGroup } from "react-bootstrap";
 import Select from "react-select";
 import { newSchedule } from "../services/scheduleService";
 import styles from "../assets/css/delete-account.module.css";
 import Joi from "joi";
 //import  CreateUI  from "../components/CreateUI";
+
 import ColorPicker from "../components/ColorPicker";
 
 const options = [
@@ -37,7 +38,7 @@ class NewSchedule extends Form {
   schema = Joi.object({
     title: Joi.string().required(),
     start_date: Joi.date().allow(""),
-    end_date: Joi.date().min(Joi.ref("start_date")).allow("")
+    end_date: Joi.date().min(Joi.ref("start_date")).allow(""),
   });
 
   backToUserpage = () => {
@@ -51,8 +52,6 @@ class NewSchedule extends Form {
     menu: (provided, state) => ({
       ...provided,
       width: state.selectProps.width,
-      borderBottom: "250px dotted pink",
-      color: state.selectProps.menuColor,
       padding: 20,
     }),
     control: (_, { selectProps: { width } }) => ({
@@ -78,17 +77,15 @@ class NewSchedule extends Form {
             value={el.selectedOption}
             onChange={(e) => this.handleChangeSelect(e, i)}
             options={options}
-            width="200px"
-            menuColor="red"
             styles={this.customStylesSelect}
             name="select"
           />
           Is Mandatory? :
           <input
-            name="isMandatory"
+            name="mandatory"
             type="checkbox"
             defaultChecked={false}
-            checked={el.isMandatory}
+            checked={el.mandatory}
             onChange={(e) => this.handleCheckBox(e, i)}
           />
           <input
@@ -103,19 +100,19 @@ class NewSchedule extends Form {
 
   handleChangesInput = (e, i) => {
     let customFields = [...this.state.customFields];
-    customFields[i] = { ...customFields[i], input: e.target.value };
+    customFields[i] = { ...customFields[i], name: e.target.value };
     this.setState({ customFields });
   };
 
   handleChangeSelect = (e, i) => {
     let customFields = [...this.state.customFields];
-    customFields[i] = { ...customFields[i], select: e.value };
+    customFields[i] = { ...customFields[i], type: e.value, lable: e.label };
     this.setState({ customFields });
   };
 
   handleCheckBox = (e, i) => {
     let customFields = [...this.state.customFields];
-    customFields[i] = { ...customFields[i], isMandatory: e.target.checked };
+    customFields[i] = { ...customFields[i], mandatory: e.target.checked };
     this.setState({ customFields });
   };
 
@@ -148,10 +145,11 @@ class NewSchedule extends Form {
       },
       schedule_color: this.state.chosenColor,
     };
-    let { data } = await newSchedule(scheduleData);
-    let responseUuid = data[0].uuid;
-    console.log(responseUuid);
-    this.routeChange(responseUuid);
+    console.log(scheduleData);
+    //let { data } = await newSchedule(scheduleData);
+    //let responseUuid = data[0].uuid;
+    //console.log(responseUuid);
+    //this.routeChange(responseUuid);
   };
 
   chooseColor = (color) => {
@@ -159,24 +157,21 @@ class NewSchedule extends Form {
     this.setState({ chosenColor: color });
   };
 
-  DatePickerHandler = (e) =>
-  {
-    
-    this.state.showDatePicker ?
-    
-    this.setState({
-     // showDatePicker: e.target.checked,
-     data : { start_date: "", end_date: ""}
-     
-    })
-    :
-    this.setState({
-     // showDatePicker: e.target.checked,
+  DatePickerHandler = (e) => {
+    this.state.showDatePicker
+      ? this.setState({
+          // showDatePicker: e.target.checked,
+          data: { start_date: "", end_date: "" },
+        })
+      : this.setState({
+          // showDatePicker: e.target.checked,
 
-      data : { start_date: todayDate.toISOString().slice(0,10) , end_date : todayDate.toISOString().slice(0,10) }
-    })
-
-  }
+          data: {
+            start_date: todayDate.toISOString().slice(0, 10),
+            end_date: todayDate.toISOString().slice(0, 10),
+          },
+        });
+  };
 
   render() {
     return (
@@ -229,17 +224,12 @@ class NewSchedule extends Form {
                 name="showDatePicker"
                 checked={this.state.showDatePicker}
                 onChange={(e) => {
-                
-                 
                   this.setState({
                     showDatePicker: e.target.checked,
                     // data : { start_date: todayDate.toISOString().slice(0,10)}
                   });
                   this.DatePickerHandler(e);
                   console.log(this.state.data.start_date);
-                  
-                  
-
                 }}
               />
               {this.state.showDatePicker && (
@@ -303,7 +293,7 @@ class NewSchedule extends Form {
           </div>
         </form>
         <div>
-          <button onClick={this.addClick}>new stuff</button>
+          <button onClick={this.addClick}>Add extra fields</button>
         </div>
       </div>
     );

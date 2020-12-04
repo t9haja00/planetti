@@ -28,8 +28,7 @@
   justify-content: center;
   font-family: "Russo One", sans-serif;
   color: white;
-  padding: 5px;
-  margin: 10px;
+  margin-right: 10px;
 }
 
 :hover .colorButton
@@ -66,4 +65,12 @@
 .buttonBar {
   display: flex;
   justify-content: space-around;
+}
+
+.wrapRow
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  
 }

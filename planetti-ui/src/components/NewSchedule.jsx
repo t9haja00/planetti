@@ -64,33 +64,39 @@ class NewSchedule extends Form {
   createUI = () => {
     return this.state.customFields.map((el, i) => (
       <div key={i}>
-        <div>
-          <input
-            name={el.value + " "}
-            type="text"
-            value={el.value}
-            onChange={(e) => this.handleChangesInput(e, i)}
-          />
-          <Select
-            value={el.selectedOption}
-            onChange={(e) => this.handleChangeSelect(e, i)}
-            options={options}
-            styles={this.customStylesSelect}
-            name="select"
-          />
-          Is Mandatory? :
-          <input
-            name="mandatory"
-            type="checkbox"
-            defaultChecked={false}
-            checked={el.mandatory}
-            onChange={(e) => this.handleCheckBox(e, i)}
-          />
-          <input
-            type="button"
-            value="remove"
-            onClick={this.removeClick.bind(this, i)}
-          />
+        <div className="form-group">
+          <div className={styles.wrapRow}>
+            <input
+              name={el.value + " "}
+              type="text"
+              value={el.value}
+              onChange={(e) => this.handleChangesInput(e, i)}
+            />
+            <div>
+              <Select
+                value={el.selectedOption}
+                onChange={(e) => this.handleChangeSelect(e, i)}
+                options={options}
+                name="select"
+                styles={this.customStylesSelect}
+              />
+            </div>
+            <div>
+              Is Mandatory? :
+              <input
+                name="mandatory"
+                type="checkbox"
+                defaultChecked={false}
+                checked={el.mandatory}
+                onChange={(e) => this.handleCheckBox(e, i)}
+              />
+            </div>
+            <input
+              type="button"
+              value="remove"
+              onClick={this.removeClick.bind(this, i)}
+            />
+          </div>
         </div>
       </div>
     ));
@@ -98,7 +104,7 @@ class NewSchedule extends Form {
 
   handleChangesInput = (e, i) => {
     let customFields = [...this.state.customFields];
-    customFields[i] = { ...customFields[i], name: e.target.value };
+    customFields[i] = { ...customFields[i], label: e.target.value, name: e.target.value };
     this.setState({ customFields });
   };
 
@@ -144,10 +150,10 @@ class NewSchedule extends Form {
       schedule_color: this.state.chosenColor,
     };
     console.log(scheduleData);
-    //let { data } = await newSchedule(scheduleData);
-    //let responseUuid = data[0].uuid;
-    //console.log(responseUuid);
-    //this.routeChange(responseUuid);
+    let { data } = await newSchedule(scheduleData);
+    let responseUuid = data[0].uuid;
+    console.log(responseUuid);
+    this.routeChange(responseUuid);
   };
 
   chooseColor = (color) => {
@@ -275,17 +281,17 @@ class NewSchedule extends Form {
               )}
             </div>
             <div className="form-group">
-            <div className={styles.buttonBar}>
-              <Button className={styles.cancel} onClick={this.backToUserpage}>
-                Back
-              </Button>
-              <Button
-                className="btn-success"
-                onClick={(e) => this.handlesubmit(e)}
-              >
-                Create this schedule
-              </Button>
-            </div>
+              <div className={styles.buttonBar}>
+                <Button className={styles.cancel} onClick={this.backToUserpage}>
+                  Back
+                </Button>
+                <Button
+                  className="btn-success"
+                  onClick={(e) => this.handlesubmit(e)}
+                >
+                  Create this schedule
+                </Button>
+              </div>
             </div>
           </div>
         </form>

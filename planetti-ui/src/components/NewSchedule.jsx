@@ -27,11 +27,9 @@ class NewSchedule extends Form {
     },
     customFields: [],
     selectedOption: null,
-    start_date: "",
-    end_date: "",
     description: "",
     chosenColor: "#16a3a3",
-    showDatePicker: "",
+    showDatePicker: false,
     errors: {},
   };
 
@@ -157,20 +155,22 @@ class NewSchedule extends Form {
     this.setState({ chosenColor: color });
   };
 
-  DatePickerHandler = (e) => {
-    this.state.showDatePicker
-      ? this.setState({
-          // showDatePicker: e.target.checked,
-          data: { start_date: "", end_date: "" },
-        })
-      : this.setState({
-          // showDatePicker: e.target.checked,
-
-          data: {
-            start_date: todayDate.toISOString().slice(0, 10),
-            end_date: todayDate.toISOString().slice(0, 10),
-          },
-        });
+  //Handler for data boxes, if checkbox is checked, change state to today date.
+  DatePickerHandler = () => {
+    if (this.state.showDatePicker == true) {
+      this.setState({
+        showDatePicker: false,
+        data: { start_date: "", end_date: "" },
+      });
+    } else {
+      this.setState({
+        showDatePicker: true,
+        data: {
+          start_date: todayDate.toISOString().slice(0, 10),
+          end_date: todayDate.toISOString().slice(0, 10),
+        },
+      });
+    }
   };
 
   render() {
@@ -217,19 +217,14 @@ class NewSchedule extends Form {
               chosenColor={this.state.chosenColor}
             />
 
-            <div>
+            <div className="form-group">
               Want to have custom schedule duration?{" "}
               <input
                 type="checkbox"
                 name="showDatePicker"
                 checked={this.state.showDatePicker}
-                onChange={(e) => {
-                  this.setState({
-                    showDatePicker: e.target.checked,
-                    // data : { start_date: todayDate.toISOString().slice(0,10)}
-                  });
-                  this.DatePickerHandler(e);
-                  console.log(this.state.data.start_date);
+                onChange={() => {
+                  this.DatePickerHandler();
                 }}
               />
               {this.state.showDatePicker && (
@@ -279,6 +274,7 @@ class NewSchedule extends Form {
                 </div>
               )}
             </div>
+            <div className="form-group">
             <div className={styles.buttonBar}>
               <Button className={styles.cancel} onClick={this.backToUserpage}>
                 Back
@@ -289,6 +285,7 @@ class NewSchedule extends Form {
               >
                 Create this schedule
               </Button>
+            </div>
             </div>
           </div>
         </form>

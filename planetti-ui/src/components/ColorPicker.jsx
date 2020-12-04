@@ -7,8 +7,8 @@ function ColorPicker(props) {
   }
 
   return (
-    <div>
-      <label className="form-control">Colors</label>
+    <div className="form-group">
+      <label>Colors</label>
       <div className={styles.colorContainer}>
         <div className={styles.colorLabel}> Selected Color: </div>
         <div

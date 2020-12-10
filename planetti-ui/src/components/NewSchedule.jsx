@@ -110,11 +110,8 @@ class NewSchedule extends Form {
   };
 
   handleChangeSelect = (e, i) => {
-    console.log(e);
-    console.log(i);
     let customFields = [...this.state.customFields];
     customFields[i] = { ...customFields[i], type: e, label: e };
-    console.log(customFields);
     this.setState({ customFields });
   };
 
@@ -153,15 +150,12 @@ class NewSchedule extends Form {
       },
       schedule_color: this.state.chosenColor,
     };
-    console.log(scheduleData);
     let { data } = await newSchedule(scheduleData);
     let responseUuid = data[0].uuid;
-    console.log(responseUuid);
     this.routeChange(responseUuid);
   };
 
   chooseColor = (color) => {
-    console.log(color);
     this.setState({ chosenColor: color });
   };
 

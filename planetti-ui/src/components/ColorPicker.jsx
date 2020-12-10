@@ -1,6 +1,15 @@
 import React from "react";
 import styles from "../assets/css/delete-account.module.css";
 
+const Colours = [
+  { id: 1, name: "Default", colorCode: "#16a3a3" },
+  { id: 2, name: "Peach", colorCode: "#f3947c" },
+  { id: 3, name: "Lilac", colorCode: "#a693bc" },
+  { id: 4, name: "Goldenrod", colorCode: "#f4c558" },
+  { id: 5, name: "Onyx", colorCode: "#353839" },
+  { id: 6, name: "Ochre", colorCode: "#e39e59" },
+];
+
 function ColorPicker(props) {
   function chooseColor(event) {
     props.chooseColor(event.target.id);
@@ -8,62 +17,29 @@ function ColorPicker(props) {
 
   return (
     <div className="form-group">
-      <label>Colors</label>
+      <hr></hr>
       <div className={styles.colorContainer}>
         <div className={styles.colorLabel}> Selected Color: </div>
         <div
           className={styles.selectedColor}
           style={{ backgroundColor: props.chosenColor }}
-        >
-          {" "}
-        </div>
-        <div className={styles.colorLabel}> Available Colors: </div>
-        <div
-          className={styles.colorButton}
-          id="#16a3a3"
-          style={{ backgroundColor: "#16a3a3" }}
-          onClick={chooseColor}
-        >
-          {" "}
-          Default{" "}
-        </div>
-        <div
-          className={styles.colorButton}
-          id="#f3947c"
-          style={{ backgroundColor: "#f3947c" }}
-          onClick={chooseColor}
-        >
-          {" "}
-          Peach
-        </div>
-        <div
-          className={styles.colorButton}
-          id="#a693bc"
-          style={{ backgroundColor: "#a693bc" }}
-          onClick={chooseColor}
-        >
-          {" "}
-          Lilac
-        </div>
-        <div
-          className={styles.colorButton}
-          id="#353839"
-          style={{ backgroundColor: "#353839" }}
-          onClick={chooseColor}
-        >
-          {" "}
-          Onyx
-        </div>
-        <div
-          className={styles.colorButton}
-          id="#e39e59"
-          style={{ backgroundColor: "#e39e59" }}
-          onClick={chooseColor}
-        >
-          {" "}
-          Ochre
+        ></div>
+
+        <div className={styles.colorButtonsGrid}>
+          {Colours.map((Colour) => (
+            <div
+              className={styles.colorButton}
+              id={Colour.colorCode}
+              style={{ backgroundColor: Colour.colorCode }}
+              onClick={chooseColor}
+              key={Colour.id}
+            >
+              {Colour.name}
+            </div>
+          ))}
         </div>
       </div>
+      <hr></hr>
     </div>
   );
 }

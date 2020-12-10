@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Card, Overlay, Tooltip } from 'react-bootstrap';
-import { toast } from 'react-toastify';
-import { createElement, L10n, Internationalization } from '@syncfusion/ej2-base';
+import { L10n, Internationalization } from '@syncfusion/ej2-base';
 import { FormValidator } from '@syncfusion/ej2-inputs';
 import { DialogUtility } from '@syncfusion/ej2-react-popups';
 import {
@@ -106,7 +105,7 @@ const ViewSchedule = ({ match, history }) => {
     if (args.type === 'Editor') {
 
       // fields validation
-      mandatoryOrFirstOrDefault().map(field => {
+      mandatoryOrFirstOrDefault().forEach(field => {
         const formElement = args.element.querySelector('.e-schedule-form');
         let validator = formElement.ej2_instances[0];
         validator.addRules(`${field.name}`, { required: true });
@@ -117,7 +116,7 @@ const ViewSchedule = ({ match, history }) => {
 
   const onPopupClose = args => {
 
-    if (args.type == "Editor" && scheduleObj.eventWindow.isCrudAction) {
+    if (args.type === "Editor" && scheduleObj.eventWindow.isCrudAction) {
       var bool = !(args.data.StartTime < args.data.EndTime);
       if (bool) {
         args.cancel = true;
@@ -137,7 +136,7 @@ const ViewSchedule = ({ match, history }) => {
       // fields validation
       let validator = new FormValidator('#quickPopupForm');
 
-      mandatoryOrFirstOrDefault().map(field => {
+      mandatoryOrFirstOrDefault().forEach(field => {
         validator.addRules(`${field.name}`, { required: true });
       });
 
@@ -150,27 +149,17 @@ const ViewSchedule = ({ match, history }) => {
   /* Utils
   ---------*/
   const setMinDate = minDate => {
-    if (minDate == "")
-    {
-      return new Date(1900, 0, 1)
-    }
-    else
-    {
+    if (minDate)
     return new Date(minDate).toDateString()
-    }
-   // return new Date(minDate).toDateString() || new Date(1900, 0, 1);
+
+    return new Date(1900, 0, 1)
   };
 
   const setMaxDate = maxDate => {
-    if (maxDate == "")
-    {
-      return new Date(2099, 11, 31)
-    }
-    else
-    {
+    if (maxDate)
     return new Date(maxDate).toDateString()
-    }
-    //return new Date(maxDate).toDateString() || new Date(2099, 11, 31);
+
+    return new Date(2099, 11, 31)
   };
 
   const isCustomFields = _ => {

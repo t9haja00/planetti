@@ -13,10 +13,11 @@ import UserPage from "./components/Userpage";
 import ViewSchedule from "./components/ViewSchedule";
 import UserSettings from "./components/UserSettings";
 import Footer from "./components/common/Footer";
-
+import NewSchedule from "./components/NewSchedule";
 /* Styles
 ----------*/
 import "react-toastify/dist/ReactToastify.css";
+import styles from "./assets/css/main-page.module.css";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(null);
@@ -57,56 +58,61 @@ const App = () => {
 
   return (
     <>
-      <ToastContainer
-        autoClose={3000}
-        hideProgressBar={true}
-        pauseOnHover={false}
-        pauseOnFocusLose={false}
-        closeButton={false}
-        limit={1}
-      />
-      <NavBar
-        siteName="Planetti"
-        userName={loggedIn && loggedIn.name}
-        onLogout={handleSignout}
-      />
-      <Switch>
-        <Route
-          path="/login"
-          render={routeProps => (
-            <Signin
-              signin={handleSignin}
-              {...routeProps} />
-          )}
+      <div className={styles.wrap}>
+        <ToastContainer
+          autoClose={3000}
+          hideProgressBar={true}
+          pauseOnHover={false}
+          pauseOnFocusLose={false}
+          closeButton={false}
+          limit={1}
         />
-        <Route
-          path="/view-schedule/:uuid"
-          render={routeProps => (
-            <ViewSchedule {...routeProps} />)}
+
+        <NavBar
+          siteName="Planetti"
+          userName={loggedIn && loggedIn.name}
+          onLogout={handleSignout}
         />
-        <Route
-          path="/user-settings"
-          render={routeProps =>
-            loggedIn && (
-              <UserSettings
-                deleteFeedBack={handleAccountDelete}
-                profileFeedBack={handleProfileChanged}
-                {...routeProps}
-              />
-            )
-          }
-        />
-        <Route
-          path="/" exact
-          render={(routeProps) => {
-            if (!loggedIn) return <NotLogged {...routeProps} />;
-            return <UserPage />;
-          }}
-        />
-        {/* <Route
+        <Switch>
+          <Route
+            path="/new-schedule"
+            render={(routeProps) => <NewSchedule {...routeProps} />}
+          />
+          <Route
+            path="/login"
+            render={(routeProps) => (
+              <Signin signin={handleSignin} {...routeProps} />
+            )}
+          />
+          <Route
+            path="/view-schedule/:uuid"
+            render={(routeProps) => <ViewSchedule {...routeProps} />}
+          />
+          <Route
+            path="/user-settings"
+            render={(routeProps) =>
+              loggedIn && (
+                <UserSettings
+                  deleteFeedBack={handleAccountDelete}
+                  profileFeedBack={handleProfileChanged}
+                  {...routeProps}
+                />
+              )
+            }
+          />
+          <Route
+            path="/"
+            exact
+            render={(routeProps) => {
+              if (!loggedIn) return <NotLogged {...routeProps} />;
+              return <UserPage />;
+            }}
+          />
+          {/* <Route
           path="*"
           render={() => <h1>Not Found</h1>} /> */}
-      </Switch>
+        </Switch>
+      </div>
       <Footer />
     </>
   );

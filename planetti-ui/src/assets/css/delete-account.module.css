@@ -11,3 +11,90 @@
 .modal-body {
   justify-content: space-between !important;
 }
+
+.selectedColor
+{
+  min-width: 50px;
+  min-height: 50px;
+  background-color: ivory;
+  margin: 10px;
+  border-style: solid;
+  border-width: 1px;
+  border-bottom-width: 2px;
+}
+
+.colorButton
+{
+  width: 100px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Russo One", sans-serif;
+  color: white;
+  margin: 10px;
+  padding: 15px;
+  border-radius: 3px;
+}
+
+:hover .colorButton
+{
+  cursor: pointer;
+}
+
+.colorContainer
+{
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+  align-items: center;
+}
+
+.colorLabel
+{
+  white-space: nowrap;
+  margin: auto;
+  padding: 5px;
+}
+
+.createPageContainer
+{
+  display: flex;
+  flex-direction: column;
+  max-width: 50%;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.buttonBar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.wrapRow
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  
+}
+
+.colorButtonsGrid{
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  grid-template-rows: auto auto auto;
+  grid-gap: 5px;
+  justify-content: space-evenly;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dateBox
+{ 
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+}

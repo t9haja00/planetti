@@ -210,11 +210,13 @@ class NewSchedule extends Form {
                     }))
                   }
                 />
-                {this.state.errors.title && (
-                  <small className="text-danger">
-                    {this.state.errors.title}
-                  </small>
-                )}
+                <div>
+                  {this.state.errors.title && (
+                    <small className="text-danger">
+                      {this.state.errors.title}
+                    </small>
+                  )}
+                </div>
                 <label>
                   Please give a short description if you want (Optional)
                 </label>

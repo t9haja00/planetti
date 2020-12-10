@@ -1,13 +1,14 @@
 .gridContainer {
   display: grid;
-  grid-template-columns: 33% 33% 33%;
-  grid-template-rows: auto auto auto;
+  grid-template-columns: 250px 250px 250px;
+  grid-template-rows: 220px 220px 220px;
   grid-gap: 25px;
   justify-content: space-evenly;
   padding-top: 50px;
   margin-left: auto;
   margin-right: auto;
 }
+* {box-sizing: border-box;}
 
 .centerContent {
   display: flex;
@@ -18,7 +19,6 @@
 .grid_item {
   display: flex;
   size:100%;
-  min-width: 250px;
 }
 
 .truncated_paragraph {
@@ -46,15 +46,15 @@
 
 .clickDiv {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
   font-family: "Russo One", sans-serif;
   background-color: #16a3a3 !important;
   color: #f1f5f7;
   border-color: transparent !important;
   padding: 50px;
   width:100%;
-
+  min-width: 250px;
+  min-height: 200px;
 }
 
 :hover .clickDiv
@@ -68,7 +68,6 @@
 }
 
 .card_style {
-  background-color: #16a3a3 !important;
   border-color: transparent !important;
   display: inline-block;
   size: 100%;

@@ -1,0 +1,7 @@
+  .wrap{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: #F2F2F8;
+    min-height: 94vh;
+}

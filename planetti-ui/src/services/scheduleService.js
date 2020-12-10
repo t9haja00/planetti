@@ -16,11 +16,13 @@ export function getScheduleByUUID(UUID) {
 
 //create new schedule for this user_id
 export function newSchedule(schedule) {
-  const { title, description, user_id } = schedule
+  const { title, description, user_id,schedule_config,schedule_color } = schedule
   return http.post(schedulesAPI, {
     title,
     description,
-    user_id
+    user_id,
+    schedule_config,
+    schedule_color
   });
 }
 

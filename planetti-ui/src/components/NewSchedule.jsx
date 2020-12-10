@@ -185,6 +185,8 @@ class NewSchedule extends Form {
   render() {
     return (
       <div className={styles.createPageContainer}>
+        <h2 style={{ textAlign: "center" }}>Create New Schedule</h2>
+        <hr></hr>
         <form onSubmit={null}>
           <div>
             <div>
@@ -202,11 +204,13 @@ class NewSchedule extends Form {
                     }))
                   }
                 />
-                {this.state.errors.title && (
-                  <small className="text-danger">
-                    {this.state.errors.title}
-                  </small>
-                )}
+                <div>
+                  {this.state.errors.title && (
+                    <small className="text-danger">
+                      {this.state.errors.title}
+                    </small>
+                  )}
+                </div>
                 <label>
                   Please give a short description if you want (Optional)
                 </label>
@@ -237,7 +241,7 @@ class NewSchedule extends Form {
               chosenColor={this.state.chosenColor}
             />
             <div className="form-group">
-              Want to have custom schedule duration?{" "}
+              <label>Want to have custom schedule duration?</label>{" "}
               <input
                 type="checkbox"
                 name="showDatePicker"
@@ -247,53 +251,60 @@ class NewSchedule extends Form {
                 }}
               />
               {this.state.showDatePicker && (
-                <div>
-                  <div>
-                    {this.state.errors.start_date && (
-                      <small className="text-danger">
-                        {this.state.errors.start_date}
-                      </small>
-                    )}
+                <>
+                  <div className={styles.dateBox}>
+                    <div>
+                      <label>Start date</label>{" "}
+                      <input
+                        type="date"
+                        name="start_date"
+                        value={this.state.data.start_date}
+                        onChange={(e) =>
+                          this.setState((prevState) => ({
+                            data: {
+                              ...prevState.data,
+                              start_date: e.target.value,
+                            },
+                          }))
+                        }
+                      />
+                      <div>
+                        {this.state.errors.start_date && (
+                          <small className="text-danger">
+                            {this.state.errors.start_date}
+                          </small>
+                        )}
+                      </div>
+                    </div>
+                    <div>
+                      <label> End date</label>{" "}
+                      <input
+                        type="date"
+                        name="end_date"
+                        value={this.state.data.end_date}
+                        onChange={(e) =>
+                          this.setState((prevState) => ({
+                            data: {
+                              ...prevState.data,
+                              end_date: e.target.value,
+                            },
+                          }))
+                        }
+                      />
+                    </div>
                   </div>
-                  <label>Start date</label>
-                  <input
-                    type="date"
-                    name="start_date"
-                    value={this.state.data.start_date}
-                    onChange={(e) =>
-                      this.setState((prevState) => ({
-                        data: {
-                          ...prevState.data,
-                          start_date: e.target.value,
-                        },
-                      }))
-                    }
-                  />
                   <div>
                     {this.state.errors.end_date && (
                       <small className="text-danger">
                         {this.state.errors.end_date}
                       </small>
                     )}
-                    <label> End date</label>
-                    <input
-                      type="date"
-                      name="end_date"
-                      value={this.state.data.end_date}
-                      onChange={(e) =>
-                        this.setState((prevState) => ({
-                          data: {
-                            ...prevState.data,
-                            end_date: e.target.value,
-                          },
-                        }))
-                      }
-                    />
                   </div>
-                </div>
+                </>
               )}
             </div>
             <div className="form-group">
+              <hr></hr>
               <div className={styles.buttonBar}>
                 <Button className={styles.cancel} onClick={this.backToUserpage}>
                   Back

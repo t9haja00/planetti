@@ -130,7 +130,7 @@ const Userpage = () => {
       <div className={styles2.centerContent}>
         <div className={styles2.gridContainer}>
           <div onClick={handleNewScheduleShow} className={styles2.clickDiv}>
-            Add New Schedule
+            <h4>Add New Schedule</h4>
           </div>
           {schedules.map((single) => (
             <SingleSchedule

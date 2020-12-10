@@ -77,8 +77,9 @@ class NewSchedule extends Form {
                   aria-label="Checkbox for following text input"
                   name="mandatory"
                   type="checkbox"
+                  value={this.state.customFields[i].mandatory || ''} 
                   defaultChecked={false}
-                  checked={el.mandatory}
+                  //checked={el.mandatory}
                   onChange={(e) => this.handleCheckBox(e, i)}
                 />
               </InputGroup.Prepend>

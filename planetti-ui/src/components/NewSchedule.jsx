@@ -10,7 +10,6 @@ import {
 import { newSchedule } from "../services/scheduleService";
 import styles from "../assets/css/delete-account.module.css";
 import Joi from "joi";
-//import  CreateUI  from "../components/CreateUI";
 
 import ColorPicker from "../components/ColorPicker";
 const todayDate = new Date();
@@ -77,7 +76,7 @@ class NewSchedule extends Form {
                   aria-label="Checkbox for following text input"
                   name="mandatory"
                   type="checkbox"
-                  value={this.state.customFields[i].mandatory || ''} 
+                  value={this.state.customFields[i].mandatory || ""}
                   defaultChecked={false}
                   //checked={el.mandatory}
                   onChange={(e) => this.handleCheckBox(e, i)}

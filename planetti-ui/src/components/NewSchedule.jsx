@@ -255,54 +255,56 @@ class NewSchedule extends Form {
                 }}
               />
               {this.state.showDatePicker && (
-                <div className={styles.dateBox}>
-                  <div>
-                    <label>Start date</label>{" "}
-                    <input
-                      type="date"
-                      name="start_date"
-                      value={this.state.data.start_date}
-                      onChange={(e) =>
-                        this.setState((prevState) => ({
-                          data: {
-                            ...prevState.data,
-                            start_date: e.target.value,
-                          },
-                        }))
-                      }
-                    />
+                <>
+                  <div className={styles.dateBox}>
                     <div>
-                      {this.state.errors.start_date && (
-                        <small className="text-danger">
-                          {this.state.errors.start_date}
-                        </small>
-                      )}
+                      <label>Start date</label>{" "}
+                      <input
+                        type="date"
+                        name="start_date"
+                        value={this.state.data.start_date}
+                        onChange={(e) =>
+                          this.setState((prevState) => ({
+                            data: {
+                              ...prevState.data,
+                              start_date: e.target.value,
+                            },
+                          }))
+                        }
+                      />
+                      <div>
+                        {this.state.errors.start_date && (
+                          <small className="text-danger">
+                            {this.state.errors.start_date}
+                          </small>
+                        )}
+                      </div>
+                    </div>
+                    <div>
+                      <label> End date</label>{" "}
+                      <input
+                        type="date"
+                        name="end_date"
+                        value={this.state.data.end_date}
+                        onChange={(e) =>
+                          this.setState((prevState) => ({
+                            data: {
+                              ...prevState.data,
+                              end_date: e.target.value,
+                            },
+                          }))
+                        }
+                      />
                     </div>
                   </div>
                   <div>
-                    <label> End date</label>{" "}
-                    <input
-                      type="date"
-                      name="end_date"
-                      value={this.state.data.end_date}
-                      onChange={(e) =>
-                        this.setState((prevState) => ({
-                          data: {
-                            ...prevState.data,
-                            end_date: e.target.value,
-                          },
-                        }))
-                      }
-                    />
-                    <div>
-                      {this.state.errors.end_date && (
-                        <small className="text-danger">
-                          {this.state.errors.end_date}
-                        </small>
-                      )}
-                    </div>
+                    {this.state.errors.end_date && (
+                      <small className="text-danger">
+                        {this.state.errors.end_date}
+                      </small>
+                    )}
                   </div>
-                </div>
+                </>
               )}
             </div>
             <div className="form-group">

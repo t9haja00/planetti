@@ -176,7 +176,7 @@ const ViewSchedule = ({ match, history }) => {
 
   const mandatoryFields = _ => {
     const { fields } = schedule.schedule_config;
-    return fields.filter(field => field.mandatory === 'true');
+    return fields.filter(field => field.mandatory);
   };
 
   const mandatoryOrFirstOrDefault = _ => {

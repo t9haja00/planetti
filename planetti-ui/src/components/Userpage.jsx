@@ -1,7 +1,8 @@
 /* Packages
 ------------*/
 import React, { useEffect, useState } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Card } from "react-bootstrap";
+
 /* Components
 --------------*/
 import {
@@ -129,9 +130,11 @@ const Userpage = () => {
     <div>
       <div className={styles2.centerContent}>
         <div className={styles2.gridContainer}>
-          <div onClick={handleNewScheduleShow} className={styles2.clickDiv}>
+          <Card onClick={handleNewScheduleShow} className={styles2.clickDiv}>
+         
             <h4>Add New Schedule</h4>
-          </div>
+      
+          </Card>
           {schedules.map((single) => (
             <SingleSchedule
               deleteSchedule={handleDeleteShow}

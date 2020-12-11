@@ -73,3 +73,10 @@
   background-color: inherit;
   border: 0;
 }
+
+
+.icon {
+  width: 75px;
+  height: 75px;
+  margin-right: 10px;
+}

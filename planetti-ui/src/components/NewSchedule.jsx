@@ -47,13 +47,14 @@ class NewSchedule extends Form {
 
   createUI = () => {
     return this.state.customFields.map((el, i) => (
-      <div key={i} className="form-group">
+      <div key={i}>
         <div className="form-group">
-          <div className={styles.wrapRow}>
-            <InputGroup>
+          <InputGroup>
+            <div className={styles.inputWrap}>
               <FormControl
-                placeholder="Your fields name in schedule"
-                aria-label="Your fields name in schedule"
+                style={{ minWidth: "200px" }}
+                placeholder="Custom title.."
+                aria-label="Custom title (Name, phone, etc.)"
                 aria-describedby="basic-addon2"
                 name={el.value + " "}
                 onChange={(e) => this.handleChangesInput(e, i)}
@@ -93,8 +94,8 @@ class NewSchedule extends Form {
                   Delete
                 </Button>
               </InputGroup.Append>
-            </InputGroup>
-          </div>
+            </div>
+          </InputGroup>
         </div>
       </div>
     ));
@@ -196,7 +197,7 @@ class NewSchedule extends Form {
         <hr></hr>
         <form onSubmit={null}>
           <div>
-            <div style={{ minWidth: "400px" }}>
+            <div style={{ minWidth: "360px" }}>
               <div className="form-group">
                 <label>Enter schedule title</label>
                 <input
@@ -219,7 +220,9 @@ class NewSchedule extends Form {
                   )}
                 </div>
                 <label>Enter schedule description</label>
-                <input
+                <textarea
+                  maxlength="1000"
+                  rows="3"
                   className="form-control"
                   value={this.state.data.description || ""}
                   onChange={(e) =>
@@ -233,13 +236,6 @@ class NewSchedule extends Form {
                 />
               </div>
             </div>
-            <div>
-              {this.state.customFieldsError && (
-                <small className="text-danger">
-                  "please fill all custom fields or delete the unnessary ones"
-                </small>
-              )}
-            </div>
           </div>
           <hr></hr>
         </form>
@@ -249,10 +245,17 @@ class NewSchedule extends Form {
             <Button
               className="btn-info"
               onClick={(e) => this.addClick(e)}
-              style={{ marginBottom: "10px",backgroundColor: "#16a3a3"  }}
+              style={{ marginBottom: "10px", backgroundColor: "#16a3a3" }}
             >
               Add custom titles for events
             </Button>
+          )}
+        </div>
+        <div>
+          {this.state.customFieldsError && (
+            <small className="text-danger">
+              "please fill in all the fields or delete the unnessary ones"
+            </small>
           )}
         </div>
         <div>{this.createUI()}</div>

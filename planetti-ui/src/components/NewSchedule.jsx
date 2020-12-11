@@ -256,10 +256,12 @@ class NewSchedule extends Form {
         )}
         <form action={null}>
           <div>
+            <div className={styles.colorContainer}> 
             <ColorPicker
               chooseColor={this.chooseColor}
               chosenColor={this.state.chosenColor}
             />
+            </div>
             <div className="form-group">
               <label>Want to have custom schedule duration?</label>{" "}
               <input

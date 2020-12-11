@@ -82,7 +82,14 @@
 }
 
 .iconUser {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
+  visibility: hidden;
 
+}
+
+@media (min-width: 450px) {
+  .iconUser {
+    visibility: visible;
+  }
 }

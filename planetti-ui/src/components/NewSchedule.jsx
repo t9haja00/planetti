@@ -26,6 +26,7 @@ class NewSchedule extends Form {
     selectedOption: null,
     chosenColor: "#16a3a3",
     showDatePicker: false,
+    customFieldsError: false,
     errors: {},
   };
 
@@ -100,6 +101,7 @@ class NewSchedule extends Form {
   };
 
   handleChangesInput = (e, i) => {
+    this.setState({ customFieldsError: false });
     let customFields = [...this.state.customFields];
     customFields[i] = {
       ...customFields[i],
@@ -130,29 +132,34 @@ class NewSchedule extends Form {
   };
 
   removeClick = (i) => {
+    this.setState({ customFieldsError: false });
     let customFields = [...this.state.customFields];
     customFields.splice(i, 1);
     this.setState({ customFields });
   };
 
   doSubmit = async () => {
-    let customFieldsSpread = [...this.state.customFields];
-    const userInfo = localStorage.getItem("userInfo");
-    const { user_id } = JSON.parse(userInfo);
-    let scheduleData = {
-      title: this.state.data.title,
-      description: this.state.data.description,
-      user_id: user_id,
-      schedule_config: {
-        maxDate: this.state.data.end_date,
-        minDate: this.state.data.start_date,
-        fields: customFieldsSpread,
-      },
-      schedule_color: this.state.chosenColor,
-    };
-    let { data } = await newSchedule(scheduleData);
-    let responseUuid = data[0].uuid;
-    this.routeChange(responseUuid);
+    if (this.state.customFields.every((e) => e.name)) {
+      let customFieldsSpread = [...this.state.customFields];
+      const userInfo = localStorage.getItem("userInfo");
+      const { user_id } = JSON.parse(userInfo);
+      let scheduleData = {
+        title: this.state.data.title,
+        description: this.state.data.description,
+        user_id: user_id,
+        schedule_config: {
+          maxDate: this.state.data.end_date,
+          minDate: this.state.data.start_date,
+          fields: customFieldsSpread,
+        },
+        schedule_color: this.state.chosenColor,
+      };
+      let { data } = await newSchedule(scheduleData);
+      let responseUuid = data[0].uuid;
+      this.routeChange(responseUuid);
+    } else {
+      return this.setState({ customFieldsError: true });
+    }
   };
 
   chooseColor = (color) => {
@@ -227,6 +234,13 @@ class NewSchedule extends Form {
                   }
                 />
               </div>
+            </div>
+            <div>
+              {this.state.customFieldsError && (
+                <small className="text-danger">
+                  "please fill all custom fields or delete the unnessary ones"
+                </small>
+              )}
             </div>
             <div>{this.createUI()}</div>
           </div>

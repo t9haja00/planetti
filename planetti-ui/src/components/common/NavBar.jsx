@@ -50,7 +50,7 @@ const NavBar = ({ siteName = "", userName = null, onLogout = (f) => f }) => {
                 to="/"
                 name="join"
               >
-                Sing up
+                Sign up
               </Link>
             </Nav>
           </Navbar>

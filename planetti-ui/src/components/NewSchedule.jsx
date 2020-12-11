@@ -245,7 +245,7 @@ class NewSchedule extends Form {
             <div>{this.createUI()}</div>
           </div>
         </form>
-        <Button className="btn-info" onClick={(e) => this.addClick(e)}>
+        <Button className="btn-info" style={{backgroundColor:"#16a3a3"}} onClick={(e) => this.addClick(e)}>
           Add more custom inputs
         </Button>
         <form action={null}>

@@ -81,6 +81,11 @@ const NavBar = ({ siteName = "", userName = null, onLogout = (f) => f }) => {
               </Link>
             </Navbar.Brand>
             <Nav>
+            <img
+                  className={styles.iconUser}
+                  src={`${iconsUrl}/icons/user_icon.svg`}
+                  alt=""
+                />
               <NavDropdown
                 title={userName}
                 className={`${styles["nav-dropdown"]}`}

@@ -26,6 +26,7 @@ class NewSchedule extends Form {
     selectedOption: null,
     chosenColor: "#16a3a3",
     showDatePicker: false,
+    customFieldsError: false,
     errors: {},
   };
 
@@ -48,11 +49,12 @@ class NewSchedule extends Form {
     return this.state.customFields.map((el, i) => (
       <div key={i}>
         <div className="form-group">
-          <div className={styles.wrapRow}>
-            <InputGroup>
+          <InputGroup className={styles.inputWrap}>
+            <InputGroup.Prepend>
               <FormControl
-                placeholder="Your fields name in schedule"
-                aria-label="Your fields name in schedule"
+                maxlength="26"
+                placeholder="Custom title.."
+                aria-label="Custom title (Name, phone, etc.)"
                 aria-describedby="basic-addon2"
                 name={el.value + " "}
                 onChange={(e) => this.handleChangesInput(e, i)}
@@ -70,36 +72,37 @@ class NewSchedule extends Form {
                 <Dropdown.Item eventKey="text">Text</Dropdown.Item>
                 <Dropdown.Item eventKey="url">URL</Dropdown.Item>
               </DropdownButton>
-              <InputGroup.Prepend>
-                <InputGroup.Text>Mandatory?</InputGroup.Text>
-                <InputGroup.Checkbox
-                  aria-label="Checkbox for following text input"
-                  name="mandatory"
-                  type="checkbox"
-                  value={this.state.customFields[i].mandatory || ""}
-                  defaultChecked={false}
-                  //checked={el.mandatory}
-                  onChange={(e) => this.handleCheckBox(e, i)}
-                />
-              </InputGroup.Prepend>
-              <InputGroup.Append>
-                <Button
-                  variant="outline-secondary"
-                  type="button"
-                  value="remove"
-                  onClick={this.removeClick.bind(this, i)}
-                >
-                  Delete
-                </Button>
-              </InputGroup.Append>
-            </InputGroup>
-          </div>
+            </InputGroup.Prepend>
+            <InputGroup.Prepend>
+              <InputGroup.Text>Mandatory?</InputGroup.Text>
+              <InputGroup.Checkbox
+                aria-label="Checkbox for following text input"
+                name="mandatory"
+                type="checkbox"
+                value={this.state.customFields[i].mandatory || ""}
+                defaultChecked={false}
+                //checked={el.mandatory}
+                onChange={(e) => this.handleCheckBox(e, i)}
+              />
+            </InputGroup.Prepend>
+
+            <Button
+              as={InputGroup.Append}
+              variant="outline-secondary"
+              type="button"
+              value="remove"
+              onClick={this.removeClick.bind(this, i)}
+            >
+              Delete
+            </Button>
+          </InputGroup>
         </div>
       </div>
     ));
   };
 
   handleChangesInput = (e, i) => {
+    this.setState({ customFieldsError: false });
     let customFields = [...this.state.customFields];
     customFields[i] = {
       ...customFields[i],
@@ -130,29 +133,34 @@ class NewSchedule extends Form {
   };
 
   removeClick = (i) => {
+    this.setState({ customFieldsError: false });
     let customFields = [...this.state.customFields];
     customFields.splice(i, 1);
     this.setState({ customFields });
   };
 
   doSubmit = async () => {
-    let customFieldsSpread = [...this.state.customFields];
-    const userInfo = localStorage.getItem("userInfo");
-    const { user_id } = JSON.parse(userInfo);
-    let scheduleData = {
-      title: this.state.data.title,
-      description: this.state.data.description,
-      user_id: user_id,
-      schedule_config: {
-        maxDate: this.state.data.end_date,
-        minDate: this.state.data.start_date,
-        fields: customFieldsSpread,
-      },
-      schedule_color: this.state.chosenColor,
-    };
-    let { data } = await newSchedule(scheduleData);
-    let responseUuid = data[0].uuid;
-    this.routeChange(responseUuid);
+    if (this.state.customFields.every((e) => e.name)) {
+      let customFieldsSpread = [...this.state.customFields];
+      const userInfo = localStorage.getItem("userInfo");
+      const { user_id } = JSON.parse(userInfo);
+      let scheduleData = {
+        title: this.state.data.title,
+        description: this.state.data.description,
+        user_id: user_id,
+        schedule_config: {
+          maxDate: this.state.data.end_date,
+          minDate: this.state.data.start_date,
+          fields: customFieldsSpread,
+        },
+        schedule_color: this.state.chosenColor,
+      };
+      let { data } = await newSchedule(scheduleData);
+      let responseUuid = data[0].uuid;
+      this.routeChange(responseUuid);
+    } else {
+      return this.setState({ customFieldsError: true });
+    }
   };
 
   chooseColor = (color) => {
@@ -189,10 +197,11 @@ class NewSchedule extends Form {
         <hr></hr>
         <form onSubmit={null}>
           <div>
-            <div>
+            <div style={{ minWidth: "360px" }}>
               <div className="form-group">
-                <label>Give your schedule a Title</label>
+                <label>Enter schedule title</label>
                 <input
+                  maxlength="40"
                   className="form-control"
                   value={this.state.data.title || ""}
                   onChange={(e) =>
@@ -211,10 +220,10 @@ class NewSchedule extends Form {
                     </small>
                   )}
                 </div>
-                <label>
-                  Please give a short description if you want (Optional)
-                </label>
-                <input
+                <label>Enter schedule description</label>
+                <textarea
+                  maxlength="1000"
+                  rows="3"
                   className="form-control"
                   value={this.state.data.description || ""}
                   onChange={(e) =>
@@ -228,20 +237,39 @@ class NewSchedule extends Form {
                 />
               </div>
             </div>
-            <div>{this.createUI()}</div>
           </div>
+          <hr></hr>
         </form>
-        <Button className="btn-info" onClick={(e) => this.addClick(e)}>
-          Add more custom inputs
-        </Button>
+
+        <div>
+          {this.state.customFields.length < 4 && (
+            <Button
+              className="btn-info"
+              onClick={(e) => this.addClick(e)}
+              style={{ marginBottom: "10px", backgroundColor: "#16a3a3" }}
+            >
+              Add custom titles for events
+            </Button>
+          )}
+        </div>
+        <div>
+          {this.state.customFieldsError && (
+            <small className="text-danger">
+              "please fill in all the fields or delete the unnessary ones"
+            </small>
+          )}
+        </div>
+        <div>{this.createUI()}</div>
         <form action={null}>
           <div>
-            <ColorPicker
-              chooseColor={this.chooseColor}
-              chosenColor={this.state.chosenColor}
-            />
+            <div className={styles.colorContainer}>
+              <ColorPicker
+                chooseColor={this.chooseColor}
+                chosenColor={this.state.chosenColor}
+              />
+            </div>
             <div className="form-group">
-              <label>Want to have custom schedule duration?</label>{" "}
+              <label>Create schedule with a specific timerange?</label>{" "}
               <input
                 type="checkbox"
                 name="showDatePicker"
@@ -250,58 +278,60 @@ class NewSchedule extends Form {
                   this.DatePickerHandler();
                 }}
               />
-              {this.state.showDatePicker && (
-                <>
-                  <div className={styles.dateBox}>
-                    <div>
-                      <label>Start date</label>{" "}
-                      <input
-                        type="date"
-                        name="start_date"
-                        value={this.state.data.start_date}
-                        onChange={(e) =>
-                          this.setState((prevState) => ({
-                            data: {
-                              ...prevState.data,
-                              start_date: e.target.value,
-                            },
-                          }))
-                        }
-                      />
+              <div>
+                {this.state.showDatePicker && (
+                  <>
+                    <div className={styles.dateBox}>
                       <div>
-                        {this.state.errors.start_date && (
-                          <small className="text-danger">
-                            {this.state.errors.start_date}
-                          </small>
-                        )}
+                        <label>Start date</label>{" "}
+                        <input
+                          type="date"
+                          name="start_date"
+                          value={this.state.data.start_date}
+                          onChange={(e) =>
+                            this.setState((prevState) => ({
+                              data: {
+                                ...prevState.data,
+                                start_date: e.target.value,
+                              },
+                            }))
+                          }
+                        />
+                        <div>
+                          {this.state.errors.start_date && (
+                            <small className="text-danger">
+                              {this.state.errors.start_date}
+                            </small>
+                          )}
+                        </div>
+                      </div>
+                      <div>
+                        <label> End date</label>{" "}
+                        <input
+                          type="date"
+                          name="end_date"
+                          value={this.state.data.end_date}
+                          onChange={(e) =>
+                            this.setState((prevState) => ({
+                              data: {
+                                ...prevState.data,
+                                end_date: e.target.value,
+                              },
+                            }))
+                          }
+                        />
                       </div>
                     </div>
                     <div>
-                      <label> End date</label>{" "}
-                      <input
-                        type="date"
-                        name="end_date"
-                        value={this.state.data.end_date}
-                        onChange={(e) =>
-                          this.setState((prevState) => ({
-                            data: {
-                              ...prevState.data,
-                              end_date: e.target.value,
-                            },
-                          }))
-                        }
-                      />
+                      {this.state.errors.end_date && (
+                        <small className="text-danger">
+                          {this.state.errors.end_date}
+                        </small>
+                      )}
                     </div>
-                  </div>
-                  <div>
-                    {this.state.errors.end_date && (
-                      <small className="text-danger">
-                        {this.state.errors.end_date}
-                      </small>
-                    )}
-                  </div>
-                </>
-              )}
+                  </>
+                )}
+              </div>
             </div>
             <div className="form-group">
               <hr></hr>

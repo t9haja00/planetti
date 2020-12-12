@@ -12,8 +12,7 @@
   justify-content: space-between !important;
 }
 
-.selectedColor
-{
+.selectedColor {
   min-width: 50px;
   min-height: 50px;
   background-color: ivory;
@@ -23,8 +22,7 @@
   border-bottom-width: 2px;
 }
 
-.colorButton
-{
+.colorButton {
   width: 100px;
   height: 30px;
   display: flex;
@@ -37,30 +35,25 @@
   border-radius: 3px;
 }
 
-:hover .colorButton
-{
+:hover .colorButton {
   cursor: pointer;
 }
 
-.colorContainer
-{
-  height: 100px;
+.colorContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 10px;
+
   align-items: center;
 }
 
-.colorLabel
-{
+.colorLabel {
   white-space: nowrap;
   margin: auto;
   padding: 5px;
 }
 
-.createPageContainer
-{
+.createPageContainer {
   display: flex;
   flex-direction: column;
   max-width: 50%;
@@ -74,27 +67,70 @@
   justify-content: space-between;
 }
 
-.wrapRow
-{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  
-}
-
-.colorButtonsGrid{
+.colorButtonsGrid {
   display: grid;
-  grid-template-columns: 33% 33% 33%;
-  grid-template-rows: auto auto auto;
+  grid-template-columns: 100%;
   grid-gap: 5px;
   justify-content: space-evenly;
   margin-left: auto;
   margin-right: auto;
 }
 
-.dateBox
-{ 
-display: flex;
-flex-direction: row;
-justify-content: space-between;
+
+.inputWrap
+{
+ 
+  display: grid;
+  grid-template-columns: 50% 25%;
+  grid-template-rows: auto auto;
+  grid-gap: 5px;
+  justify-content: space-between;
+  margin-left: auto;
+  margin-right: auto;
+  
+}
+
+@media (min-width: 500px) {
+  .colorButtonsGrid {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto auto auto;
+    grid-gap: 5px;
+    justify-content: space-evenly;
+    margin-left: auto;
+    margin-right: auto;
+  }
+ 
+}
+
+
+@media (min-width: 800px) {
+  .colorButtonsGrid {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: auto auto auto;
+    grid-gap: 5px;
+    justify-content: space-evenly;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .inputWrap
+  {
+
+    display: flex;
+    flex-direction: row;
+    justify-content:unset;
+    grid-template-columns: unset;
+    grid-template-rows: unset;
+    grid-gap:unset;
+    width: inherit;
+  }
+
+}
+
+.dateBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

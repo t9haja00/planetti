@@ -6,10 +6,9 @@ import styles from "../assets/css/userpage.module.css";
 function SingleSchedule(props) {
   return (
     <div className={styles.grid_item}>
-      <Card style={{ width: "100%" }}>
+      <Card style={{ width: "100%", height:"100%",  backgroundColor: props.schedule_color }}>
         <Card.Body
           className={styles.card_style}
-          style={{ backgroundColor: props.schedule_color }}
         >
           <div key={props.schedule_id}>
             <Link

@@ -49,10 +49,10 @@ class NewSchedule extends Form {
     return this.state.customFields.map((el, i) => (
       <div key={i}>
         <div className="form-group">
-          <InputGroup>
-            <div className={styles.inputWrap}>
+          <InputGroup className={styles.inputWrap}>
+            <InputGroup.Prepend>
               <FormControl
-                style={{ minWidth: "200px" }}
+                maxlength="26"
                 placeholder="Custom title.."
                 aria-label="Custom title (Name, phone, etc.)"
                 aria-describedby="basic-addon2"
@@ -72,29 +72,29 @@ class NewSchedule extends Form {
                 <Dropdown.Item eventKey="text">Text</Dropdown.Item>
                 <Dropdown.Item eventKey="url">URL</Dropdown.Item>
               </DropdownButton>
-              <InputGroup.Prepend>
-                <InputGroup.Text>Mandatory?</InputGroup.Text>
-                <InputGroup.Checkbox
-                  aria-label="Checkbox for following text input"
-                  name="mandatory"
-                  type="checkbox"
-                  value={this.state.customFields[i].mandatory || ""}
-                  defaultChecked={false}
-                  //checked={el.mandatory}
-                  onChange={(e) => this.handleCheckBox(e, i)}
-                />
-              </InputGroup.Prepend>
-              <InputGroup.Append>
-                <Button
-                  variant="outline-secondary"
-                  type="button"
-                  value="remove"
-                  onClick={this.removeClick.bind(this, i)}
-                >
-                  Delete
-                </Button>
-              </InputGroup.Append>
-            </div>
+            </InputGroup.Prepend>
+            <InputGroup.Prepend>
+              <InputGroup.Text>Mandatory?</InputGroup.Text>
+              <InputGroup.Checkbox
+                aria-label="Checkbox for following text input"
+                name="mandatory"
+                type="checkbox"
+                value={this.state.customFields[i].mandatory || ""}
+                defaultChecked={false}
+                //checked={el.mandatory}
+                onChange={(e) => this.handleCheckBox(e, i)}
+              />
+            </InputGroup.Prepend>
+
+            <Button
+              as={InputGroup.Append}
+              variant="outline-secondary"
+              type="button"
+              value="remove"
+              onClick={this.removeClick.bind(this, i)}
+            >
+              Delete
+            </Button>
           </InputGroup>
         </div>
       </div>
@@ -201,6 +201,7 @@ class NewSchedule extends Form {
               <div className="form-group">
                 <label>Enter schedule title</label>
                 <input
+                  maxlength="40"
                   className="form-control"
                   value={this.state.data.title || ""}
                   onChange={(e) =>

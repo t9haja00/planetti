@@ -9,6 +9,9 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+.jumbotron .align-items-center {
+  align-items: unset!important;
+}
 
 .jumbotron {
   padding: 80px 0;
@@ -16,18 +19,49 @@ code {
   background-repeat: no-repeat;
   background-clip: border-box;
   border-radius: 0;
+  padding: auto;
 }
 
-@media (max-width:950px) {
+
+
+@media (max-width:900px) {
+  .jumbotron .align-items-center {
+    align-items: unset!important;
+  }
+  .jumbotron {
+  
+    background: #16a3a3;
+    background-image: url('assets/images/logo_no_bg.svg');
+    background-repeat: no-repeat;
+    background-clip: border-box;
+    background-position: 15% 65%;
+    margin:auto;
+  }
+  .jumbotron .h1 {
+    font-size: 2rem;
+    color: #EDF5E1;
+  }
+
+}
+
+@media (max-width:600px) {
   .jumbotron .align-items-center {
     align-items: unset!important;
   }
   .jumbotron {
     background-image: none;
+    background:#16a3a3;
+  }
+  .jumbotron .h1 {
+    font-size: 1rem;
+    color: #EDF5E1;
   }
 }
 
+
 @media (min-width: 2400px) {
+
+
   .jumbotron {
     background-image: none;
   }

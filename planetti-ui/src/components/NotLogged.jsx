@@ -9,8 +9,8 @@ const NotLogged = ({ history }) => {
       <Jumbotron>
         <div className="container-lg">
           <div
-            className="d-flex align-items-center gutter-md-spacious">
-            <div className="col-7 text-center">
+            className="d-block d-sm-flex align-items-center gutter-md-spacious">
+            <div className="col-lg-7 col-d-sm-w-100 col-d-block-md text-center">
               <p className="h1 text-wrap">Schedule generator for every day activities and more!</p>
             </div>
             <div className="col-lg-5 col-d-sm-w-100">

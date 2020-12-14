@@ -11,7 +11,7 @@ const NotLogged = ({ history }) => {
           <div
             className="d-flex align-items-center gutter-md-spacious">
             <div className="col-7 text-center">
-              <p className="h1 text-wrap">Schedule generator for everyone</p>
+              <p className="h1 text-wrap">Schedule generator for every day activities and more!</p>
             </div>
             <div className="col-5">
               <Signup history={history} />
@@ -25,8 +25,9 @@ const NotLogged = ({ history }) => {
             <Card.Body>
               <Card.Title>Create</Card.Title>
               <Card.Text>
-                This is a wider card with supporting text below as a natural lead-in to
-                additional content. This content is a little bit longer.
+                Create customizable schedules <br/>
+                Allows up to 4 custom fields <br/>
+                Select your favorite color
               </Card.Text>
             </Card.Body>
           </Card>
@@ -34,18 +35,16 @@ const NotLogged = ({ history }) => {
             <Card.Body>
               <Card.Title>Share</Card.Title>
               <Card.Text>
-                This card has supporting text below as a natural lead-in to additional
-        content.{' '}
+                Share your unique schedules with other people without them having to register
               </Card.Text>
             </Card.Body>
           </Card>
           <Card className="shadow-lg text-center border-0">
             <Card.Body>
-              <Card.Title>Enjoy</Card.Title>
+              <Card.Title>Be Green Leave It On The Screen</Card.Title>
               <Card.Text>
-                This is a wider card with supporting text below as a natural lead-in to
-                additional content. This card has even longer content than the first to
-                show that equal height action.
+                Save Paper <br />
+                Save Trees
               </Card.Text>
             </Card.Body>
           </Card>

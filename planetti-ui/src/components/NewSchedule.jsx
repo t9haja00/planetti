@@ -49,10 +49,10 @@ class NewSchedule extends Form {
     return this.state.customFields.map((el, i) => (
       <div key={i}>
         <div className="form-group">
-          <InputGroup className={styles.inputWrap}>
-            <InputGroup.Prepend>
+          <InputGroup>
+            <InputGroup.Append>
               <FormControl
-                maxlength="26"
+                maxLength="26"
                 placeholder="Custom title.."
                 aria-label="Custom title (Name, phone, etc.)"
                 aria-describedby="basic-addon2"
@@ -72,7 +72,7 @@ class NewSchedule extends Form {
                 <Dropdown.Item eventKey="text">Text</Dropdown.Item>
                 <Dropdown.Item eventKey="url">URL</Dropdown.Item>
               </DropdownButton>
-            </InputGroup.Prepend>
+            </InputGroup.Append>
             <InputGroup.Prepend>
               <InputGroup.Text>Mandatory?</InputGroup.Text>
               <InputGroup.Checkbox
@@ -84,7 +84,7 @@ class NewSchedule extends Form {
                 //checked={el.mandatory}
                 onChange={(e) => this.handleCheckBox(e, i)}
               />
-            </InputGroup.Prepend>
+           
 
             <Button
               as={InputGroup.Append}
@@ -95,6 +95,7 @@ class NewSchedule extends Form {
             >
               Delete
             </Button>
+            </InputGroup.Prepend>
           </InputGroup>
         </div>
       </div>
@@ -201,7 +202,7 @@ class NewSchedule extends Form {
               <div className="form-group">
                 <label>Enter schedule title</label>
                 <input
-                  maxlength="40"
+                  maxLength="40"
                   className="form-control"
                   value={this.state.data.title || ""}
                   onChange={(e) =>
@@ -222,7 +223,7 @@ class NewSchedule extends Form {
                 </div>
                 <label>Enter schedule description</label>
                 <textarea
-                  maxlength="1000"
+                  maxLength="1000"
                   rows="3"
                   className="form-control"
                   value={this.state.data.description || ""}

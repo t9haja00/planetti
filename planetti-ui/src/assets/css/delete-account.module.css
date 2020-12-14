@@ -76,20 +76,6 @@
   margin-right: auto;
 }
 
-
-.inputWrap
-{
- 
-  display: grid;
-  grid-template-columns: 50% 25%;
-  grid-template-rows: auto auto;
-  grid-gap: 5px;
-  justify-content: space-between;
-  margin-left: auto;
-  margin-right: auto;
-  
-}
-
 @media (min-width: 500px) {
   .colorButtonsGrid {
     display: grid;
@@ -100,9 +86,7 @@
     margin-left: auto;
     margin-right: auto;
   }
- 
 }
-
 
 @media (min-width: 800px) {
   .colorButtonsGrid {
@@ -115,22 +99,9 @@
     margin-right: auto;
   }
 
-  .inputWrap
-  {
-
+  .dateBox {
     display: flex;
     flex-direction: row;
-    justify-content:unset;
-    grid-template-columns: unset;
-    grid-template-rows: unset;
-    grid-gap:unset;
-    width: inherit;
+    justify-content: space-between;
   }
-
-}
-
-.dateBox {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 }

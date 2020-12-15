@@ -115,7 +115,7 @@ class NewSchedule extends Form {
 
   handleChangeSelect = (e, i) => {
     let customFields = [...this.state.customFields];
-    customFields[i] = { ...customFields[i], type: e, label: e };
+    customFields[i] = { ...customFields[i], type: e};
     this.setState({ customFields });
   };
 

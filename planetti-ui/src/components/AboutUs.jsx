@@ -13,7 +13,7 @@ function AboutUs() {
           <hr></hr>
             <p>Planetti is a highly customizeable schedule generator application, 
               it is usefull for keeping track of multiple schedules one might need.
-              </p><br></br><p>
+              <br></br>
               One of our core principles, is that scheduling should be possible without
               any dependance on third-parties that host the schedule application.</p>
         </Card.Body>

@@ -117,7 +117,7 @@ const Userpage = () => {
     const userInfo = localStorage.getItem("userInfo");
     const { user_id } = JSON.parse(userInfo);
     const { data } = await getSchedules(user_id);
-    setSchedules(data);
+    setSchedules(data.reverse());
     handleEditScheduleClose();
   };
 

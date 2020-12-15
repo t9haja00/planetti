@@ -9,8 +9,9 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
 .jumbotron .align-items-center {
-  align-items: unset!important;
+  align-items: center!important;
 }
 
 .jumbotron {

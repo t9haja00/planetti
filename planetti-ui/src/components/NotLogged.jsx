@@ -11,7 +11,7 @@ const NotLogged = ({ history }) => {
           <div
             className="d-block d-sm-flex align-items-center gutter-md-spacious">
             <div className="col-lg-7 col-d-sm-w-100 col-d-block-md text-center">
-              <p className="h1 text-wrap">Schedule generator for every day activities and more!</p>
+              <p className="h1 text-wrap">Schedule generator for everyone</p>
             </div>
             <div className="col-lg-5 col-d-sm-w-100">
               <Signup history={history} />

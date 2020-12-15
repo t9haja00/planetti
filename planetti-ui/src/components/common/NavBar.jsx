@@ -104,6 +104,10 @@ const NavBar = ({ siteName = "", userName = null, onLogout = (f) => f }) => {
                   FAQ
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
+                <NavDropdown.Item as={Link} to="/">
+                  FAQ
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
                 <NavDropdown.Item>
                   <button onClick={onLogout}>Sign out</button>
                 </NavDropdown.Item>

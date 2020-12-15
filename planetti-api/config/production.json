@@ -1,0 +1,7 @@
+{
+    "database": {
+      "name": "de3jed846a1gg5",
+      "host": "ec2-54-75-225-52.eu-west-1.compute.amazonaws.com",
+      "port": "5432"
+    }
+}

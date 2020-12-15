@@ -31,8 +31,8 @@ class NewSchedule extends Form {
   };
 
   schema = Joi.object({
-    description: Joi.string().allow("").max(255),
-    title: Joi.string().max(30).required().messages({
+    description: Joi.string().allow("").max(1000),
+    title: Joi.string().max(40).required().messages({
       "string.required": `Title is required.`,
       "string.empty": `Title cannot be empty.`,
       "string.max": `Title cannot be more then 40 characters.`,

@@ -101,7 +101,7 @@ const NavBar = ({ siteName = "", userName = null, onLogout = (f) => f }) => {
                   User settings
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item as={Link} to="/">
+                <NavDropdown.Item as={Link} to="/aboutus">
                   FAQ
                 </NavDropdown.Item>
                 <NavDropdown.Divider />

@@ -1,0 +1,33 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.items {
+  width: 50%;
+  margin-top: 10px;
+}
+
+.logo {
+  margin-top: 20px;
+}
+
+@media (max-width: 800px) {
+  .items {
+    width: 90%;
+  }
+}
+
+h4 {
+  text-align: center;
+}
+
+p {
+  width: 75%;
+  text-align: left;
+  margin: auto;
+}

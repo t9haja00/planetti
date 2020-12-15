@@ -100,6 +100,9 @@ const NavBar = ({ siteName = "", userName = null, onLogout = (f) => f }) => {
                 <NavDropdown.Item as={Link} to="/user-settings/user-profile">
                   User settings
                 </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/aboutus">
+                  FAQ
+                </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item>
                   <button onClick={onLogout}>Sign out</button>

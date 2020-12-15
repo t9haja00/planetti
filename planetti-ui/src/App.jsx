@@ -14,6 +14,7 @@ import ViewSchedule from "./components/ViewSchedule";
 import UserSettings from "./components/UserSettings";
 import Footer from "./components/common/Footer";
 import NewSchedule from "./components/NewSchedule";
+import AboutUs from "./components/AboutUs";
 /* Styles
 ----------*/
 import "react-toastify/dist/ReactToastify.css";
@@ -99,6 +100,10 @@ const App = () => {
                 />
               )
             }
+          />
+                    <Route
+            path="/aboutus"
+            render={(routeProps) => <AboutUs />}
           />
           <Route
             path="/"

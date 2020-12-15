@@ -67,10 +67,10 @@ class NewSchedule extends Form {
                 id="input-group-dropdown-2"
                 onSelect={(e) => this.handleChangeSelect(e, i)}
               >
-                <Dropdown.Item eventKey="number">Numbers</Dropdown.Item>
-                <Dropdown.Item eventKey="email">Email</Dropdown.Item>
-                <Dropdown.Item eventKey="text">Text</Dropdown.Item>
-                <Dropdown.Item eventKey="url">URL</Dropdown.Item>
+                <Dropdown.Item eventKey="number">number</Dropdown.Item>
+                <Dropdown.Item eventKey="email">email</Dropdown.Item>
+                <Dropdown.Item eventKey="text">text</Dropdown.Item>
+                <Dropdown.Item eventKey="url">url</Dropdown.Item>
               </DropdownButton>
             </InputGroup.Append>
             <InputGroup.Prepend>

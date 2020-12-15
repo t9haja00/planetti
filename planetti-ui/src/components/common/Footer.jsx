@@ -16,13 +16,20 @@ const Footer = ({ match }) => {
           <div className="d-flex container justify-content-between flex-row-reverse align-items-center py-3">
             <ul className="list-unstyled d-flex justify-content-center mb-0">
               <li className="mr-3">
-                <img className={styles.icon} src={`${iconsUrl}/icons/facebook.svg`} alt='' />
+                <a
+                  target="_blank"
+                  href="https://www.linkedin.com/in/jami-hannus-428a281b1"
+                  onClick={() => {
+                    window.open('https://www.linkedin.com/in/karim-abdelrahman86');
+                    window.open('https://www.linkedin.com/in/alexander-veliev-784ba8201');
+                  }}>
+                  <img className={styles.icon} src={`${iconsUrl}/icons/linkedin.svg`} alt='' />
+                </a>
               </li>
               <li className="mr-3">
-                <img className={styles.icon} src={`${iconsUrl}/icons/linkedin.svg`} alt='' />
-              </li>
-              <li className="mr-3">
-                <img className={styles.icon} src={`${iconsUrl}/icons/github.svg`} alt='' />
+                <a target="_blank" href="https://github.com/k-rahman/planetti">
+                  <img className={styles.icon} src={`${iconsUrl}/icons/github.svg`} alt='' />
+                </a>
               </li>
             </ul>
             <div>

@@ -7,7 +7,6 @@ import { Modal, Button, Card } from "react-bootstrap";
 --------------*/
 import {
   getSchedules,
-  newSchedule,
   updateSchedule,
   deleteSchedule,
 } from "../services/scheduleService";
@@ -27,11 +26,11 @@ const Userpage = () => {
   const [schedules, setSchedules] = useState([]);
   //states for pop up modules
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [showNewSchedule, setShowNewSchedule] = useState(false);
   const [showEditSchedule, setEditNewSchedule] = useState(false);
   // input field states for modules
   const [title, updateTitle] = useState("");
   const [description, updateDescription] = useState("");
+  const [error, updateError] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -64,32 +63,9 @@ const Userpage = () => {
     handleDeleteClose();
   };
 
-  // new schedule funtions
-
-  const handleNewScheduleClose = () => {
-    setShowNewSchedule(false);
-    updateTitle("");
-    updateDescription("");
-  };
-  const handleNewScheduleShow = () => {
-    // setShowNewSchedule(true);
+  const handleNewSchedule = () => {
     history.push("/new-schedule/");
   };
-  const handleNewSchedule = async () => {
-    console.log(title);
-    console.log(description);
-    const userInfo = localStorage.getItem("userInfo");
-    const { user_id } = JSON.parse(userInfo);
-    const scheduleInfo = {
-      title: title,
-      description: description,
-      user_id: user_id,
-    };
-    const { data } = await newSchedule(scheduleInfo);
-    handleNewScheduleClose();
-    routeChange(data[0].uuid);
-  };
-
   // edit old schedule and update it to database
 
   const handleEditScheduleClose = () => {
@@ -121,19 +97,18 @@ const Userpage = () => {
     handleEditScheduleClose();
   };
 
-  // Used to push to new scedules main window.
-  const routeChange = (path) => {
-    history.push("/view-schedule/" + path);
+  const editScheduleValidation = (props) => {
+    updateTitle(props.value);
+    updateError(props.validationMessage);
+    console.log(props);
   };
 
   return (
     <div>
       <div className={styles2.centerContent}>
         <div className={styles2.gridContainer}>
-          <Card onClick={handleNewScheduleShow} className={styles2.clickDiv}>
-         
+          <Card onClick={handleNewSchedule} className={styles2.clickDiv}>
             <h4>Add New Schedule</h4>
-      
           </Card>
           {schedules.map((single) => (
             <SingleSchedule
@@ -143,53 +118,6 @@ const Userpage = () => {
               {...single}
             />
           ))}
-        </div>
-        <div>
-          {/* Modal start for new schedule */}
-          <Modal
-            centered
-            show={showNewSchedule}
-            onHide={handleNewScheduleClose}
-          >
-            <Modal.Header closeButton>
-              <Modal.Title className={styles["modal-title"]}>
-                Create New schedule
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <div className="form-group">
-                <label>Give your schedule a Title</label>
-                <input
-                  className="form-control"
-                  value={title || ""}
-                  onChange={(e) => updateTitle(e.target.value)}
-                />
-                <hr></hr>
-                <label>Please give a short description</label>
-                <input
-                  className="form-control"
-                  value={description || ""}
-                  onChange={(e) => updateDescription(e.target.value)}
-                />
-              </div>
-            </Modal.Body>
-            <Modal.Footer className={styles["modal-footer"]}>
-              <Button
-                className={styles.cancel}
-                onClick={handleNewScheduleClose}
-              >
-                Cancel
-              </Button>
-              <Button
-                className="btn-success"
-                onClick={() => {
-                  handleNewSchedule();
-                }}
-              >
-                Create new schedule
-              </Button>
-            </Modal.Footer>
-          </Modal>
         </div>
       </div>
       <div>
@@ -217,7 +145,6 @@ const Userpage = () => {
       </div>
       <div>
         {/* Modal starts for editing single event */}
-
         <Modal
           centered
           show={showEditSchedule}
@@ -232,13 +159,21 @@ const Userpage = () => {
             <div className="form-group">
               <label>Edit a Title</label>
               <input
+                required
+                id="title"
+                name="title"
                 className="form-control"
-                value={title || ""}
-                onChange={(e) => updateTitle(e.target.value)}
+                placeholder="Title"
+                value={title}
+                onChange={(e) => editScheduleValidation(e.target)}
+                pattern="[A-Za-z-0-9]{1,40}"
               />
+              <div className="invalid-feedback d-block">{error}</div>
               <hr></hr>
               <label>edit your description</label>
-              <input
+              <textarea
+                maxLength="1000"
+                rows="3"
                 className="form-control"
                 value={description || ""}
                 onChange={(e) => updateDescription(e.target.value)}
@@ -247,6 +182,7 @@ const Userpage = () => {
           </Modal.Body>
           <Modal.Footer className={styles["modal-footer"]}>
             <Button
+              disabled={error}
               className="btn-success"
               onClick={() => {
                 handleEditSchedule();

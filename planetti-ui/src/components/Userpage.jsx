@@ -37,7 +37,7 @@ const Userpage = () => {
       const userInfo = localStorage.getItem("userInfo");
       const { user_id } = JSON.parse(userInfo);
       const { data } = await getSchedules(user_id);
-      setSchedules(data.reverse());
+      setSchedules(data);
     }
     fetchData();
     //so gets all the schedules for given user id
@@ -59,7 +59,7 @@ const Userpage = () => {
     const userInfo = localStorage.getItem("userInfo");
     const { user_id } = JSON.parse(userInfo);
     const { data } = await getSchedules(user_id);
-    setSchedules(data.reverse());
+    setSchedules(data);
     handleDeleteClose();
   };
 
@@ -93,7 +93,7 @@ const Userpage = () => {
     const userInfo = localStorage.getItem("userInfo");
     const { user_id } = JSON.parse(userInfo);
     const { data } = await getSchedules(user_id);
-    setSchedules(data.reverse());
+    setSchedules(data);
     handleEditScheduleClose();
   };
 
@@ -110,7 +110,7 @@ const Userpage = () => {
           <Card onClick={handleNewSchedule} className={styles2.clickDiv}>
             <h4>Add New Schedule</h4>
           </Card>
-          {schedules.map((single) => (
+          {schedules.reverse().map((single) => (
             <SingleSchedule
               deleteSchedule={handleDeleteShow}
               editSchedule={handleEditScheduleShow}

@@ -11,7 +11,7 @@ const NotLogged = ({ history }) => {
           <div
             className="d-block d-sm-flex align-items-center gutter-md-spacious">
             <div className="col-lg-7 col-d-sm-w-100 col-d-block-md text-center">
-              <p className="h1 text-wrap">Schedule generator for every day activities and more!</p>
+              <p className="h1 text-wrap">Schedule generator for everyone</p>
             </div>
             <div className="col-lg-5 col-d-sm-w-100">
               <Signup history={history} />
@@ -26,8 +26,8 @@ const NotLogged = ({ history }) => {
               <Card.Title>Create</Card.Title>
               <Card.Text>
                 Create customizable schedules <br/>
-                Allows up to 4 custom fields <br/>
-                Select your favorite color
+                Add custom fields to your events<br />
+                Organise by choosing different colors!
               </Card.Text>
             </Card.Body>
           </Card>
@@ -35,16 +35,18 @@ const NotLogged = ({ history }) => {
             <Card.Body>
               <Card.Title>Share</Card.Title>
               <Card.Text>
-                Share your unique schedules with other people without them having to register
+                Share your unique schedules with other people without them having to register.
+
               </Card.Text>
             </Card.Body>
           </Card>
           <Card className="shadow-lg text-center border-0">
             <Card.Body>
-              <Card.Title>Be Green Leave It On The Screen</Card.Title>
+              <Card.Title>Be Green</Card.Title>
               <Card.Text>
-                Save Paper <br />
-                Save Trees
+                Leave it on the screen <br />
+                Save paper <br />
+                Save trees
               </Card.Text>
             </Card.Body>
           </Card>

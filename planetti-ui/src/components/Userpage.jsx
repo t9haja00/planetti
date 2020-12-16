@@ -97,6 +97,12 @@ const Userpage = () => {
     handleEditScheduleClose();
   };
 
+  const editScheduleValidation = (props) => {
+    updateTitle(props.value);
+    updateError(props.validationMessage);
+    console.log(props);
+  };
+
   return (
     <div>
       <div className={styles2.centerContent}>
@@ -153,13 +159,14 @@ const Userpage = () => {
             <div className="form-group">
               <label>Edit a Title</label>
               <input
+                required
                 id="title"
                 name="title"
                 className="form-control"
                 placeholder="Title"
-                value={title || ""}
-                onChange={(e) => updateTitle(e.target.value)}
-                pattern="[A-Za-z]{6}"
+                value={title}
+                onChange={(e) => editScheduleValidation(e.target)}
+                pattern="[A-Za-z-0-9]{1,40}"
               />
               <div className="invalid-feedback d-block">{error}</div>
               <hr></hr>
@@ -173,6 +180,7 @@ const Userpage = () => {
           </Modal.Body>
           <Modal.Footer className={styles["modal-footer"]}>
             <Button
+              disabled={error}
               className="btn-success"
               onClick={() => {
                 handleEditSchedule();

@@ -37,7 +37,7 @@ const Userpage = () => {
       const userInfo = localStorage.getItem("userInfo");
       const { user_id } = JSON.parse(userInfo);
       const { data } = await getSchedules(user_id);
-      setSchedules(data.reverse());
+      setSchedules(data);
     }
     fetchData();
     //so gets all the schedules for given user id
@@ -59,7 +59,7 @@ const Userpage = () => {
     const userInfo = localStorage.getItem("userInfo");
     const { user_id } = JSON.parse(userInfo);
     const { data } = await getSchedules(user_id);
-    setSchedules(data.reverse());
+    setSchedules(data);
     handleDeleteClose();
   };
 
@@ -70,6 +70,7 @@ const Userpage = () => {
 
   const handleEditScheduleClose = () => {
     setEditNewSchedule(false);
+    updateError("");
   };
 
   const handleEditScheduleShow = (props) => {
@@ -93,14 +94,14 @@ const Userpage = () => {
     const userInfo = localStorage.getItem("userInfo");
     const { user_id } = JSON.parse(userInfo);
     const { data } = await getSchedules(user_id);
-    setSchedules(data.reverse());
+    setSchedules(data);
     handleEditScheduleClose();
   };
 
   const editScheduleValidation = (props) => {
     updateTitle(props.value);
-    updateError(props.validationMessage);
-    console.log(props);
+    if (props.value == "") updateError("Title cannot be empty");
+    else updateError("");
   };
 
   return (
@@ -110,7 +111,7 @@ const Userpage = () => {
           <Card onClick={handleNewSchedule} className={styles2.clickDiv}>
             <h4>Add New Schedule</h4>
           </Card>
-          {schedules.map((single) => (
+          {schedules.reverse().map((single) => (
             <SingleSchedule
               deleteSchedule={handleDeleteShow}
               editSchedule={handleEditScheduleShow}
@@ -166,7 +167,7 @@ const Userpage = () => {
                 placeholder="Title"
                 value={title}
                 onChange={(e) => editScheduleValidation(e.target)}
-                pattern="[A-Za-z-0-9]{1,40}"
+                maxLength="40"
               />
               <div className="invalid-feedback d-block">{error}</div>
               <hr></hr>

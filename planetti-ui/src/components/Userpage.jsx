@@ -171,7 +171,9 @@ const Userpage = () => {
               <div className="invalid-feedback d-block">{error}</div>
               <hr></hr>
               <label>edit your description</label>
-              <input
+              <textarea
+                maxLength="1000"
+                rows="3"
                 className="form-control"
                 value={description || ""}
                 onChange={(e) => updateDescription(e.target.value)}

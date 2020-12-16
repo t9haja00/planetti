@@ -111,14 +111,19 @@ const Userpage = () => {
           <Card onClick={handleNewSchedule} className={styles2.clickDiv}>
             <h4>Add New Schedule</h4>
           </Card>
-          {schedules.reverse().map((single) => (
-            <SingleSchedule
-              deleteSchedule={handleDeleteShow}
-              editSchedule={handleEditScheduleShow}
-              key={single.schedule_id}
-              {...single}
-            />
-          ))}
+          {schedules
+            .sort(
+              (a, b) => parseFloat(a.schedule_id) - parseFloat(b.schedule_id)
+            )
+            .reverse()
+            .map((single) => (
+              <SingleSchedule
+                deleteSchedule={handleDeleteShow}
+                editSchedule={handleEditScheduleShow}
+                key={single.schedule_id}
+                {...single}
+              />
+            ))}
         </div>
       </div>
       <div>

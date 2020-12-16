@@ -20,7 +20,6 @@ code {
   background-repeat: no-repeat;
   background-clip: border-box;
   border-radius: 0;
-  padding: auto;
 }
 
 @media (max-width:1700px) {
@@ -49,6 +48,7 @@ code {
   }
 
 }
+
 
 @media (max-width:650px) {
   .jumbotron .align-items-center {

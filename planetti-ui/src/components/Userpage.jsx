@@ -70,6 +70,7 @@ const Userpage = () => {
 
   const handleEditScheduleClose = () => {
     setEditNewSchedule(false);
+    updateError("");
   };
 
   const handleEditScheduleShow = (props) => {
@@ -99,8 +100,8 @@ const Userpage = () => {
 
   const editScheduleValidation = (props) => {
     updateTitle(props.value);
-    updateError(props.validationMessage);
-    console.log(props);
+    if (props.value == "") updateError("Title cannot be empty");
+    else updateError("");
   };
 
   return (
@@ -166,7 +167,7 @@ const Userpage = () => {
                 placeholder="Title"
                 value={title}
                 onChange={(e) => editScheduleValidation(e.target)}
-                pattern="[A-Za-z-0-9]{1,40}"
+                maxLength="40"
               />
               <div className="invalid-feedback d-block">{error}</div>
               <hr></hr>

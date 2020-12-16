@@ -31,10 +31,16 @@ class NewSchedule extends Form {
   };
 
   schema = Joi.object({
-    description: Joi.string().allow(""),
-    title: Joi.string().required(),
+    description: Joi.string().allow("").max(1000),
+    title: Joi.string().max(40).required().messages({
+      "string.required": `Title is required.`,
+      "string.empty": `Title cannot be empty.`,
+      "string.max": `Title cannot be more then 40 characters.`,
+    }),
     start_date: Joi.date().allow(""),
-    end_date: Joi.date().min(Joi.ref("start_date")).allow(""),
+    end_date: Joi.date().min(Joi.ref("start_date")).allow("").messages({
+      "date.min": `End date needs to be larger or equal to the start date.`,
+    }),
   });
 
   backToUserpage = () => {
@@ -84,17 +90,16 @@ class NewSchedule extends Form {
                 //checked={el.mandatory}
                 onChange={(e) => this.handleCheckBox(e, i)}
               />
-           
 
-            <Button
-              as={InputGroup.Append}
-              variant="outline-secondary"
-              type="button"
-              value="remove"
-              onClick={this.removeClick.bind(this, i)}
-            >
-              Delete
-            </Button>
+              <Button
+                as={InputGroup.Append}
+                variant="outline-secondary"
+                type="button"
+                value="remove"
+                onClick={this.removeClick.bind(this, i)}
+              >
+                Delete
+              </Button>
             </InputGroup.Prepend>
           </InputGroup>
         </div>
@@ -115,7 +120,7 @@ class NewSchedule extends Form {
 
   handleChangeSelect = (e, i) => {
     let customFields = [...this.state.customFields];
-    customFields[i] = { ...customFields[i], type: e};
+    customFields[i] = { ...customFields[i], type: e };
     this.setState({ customFields });
   };
 

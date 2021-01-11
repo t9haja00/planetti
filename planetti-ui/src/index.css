@@ -9,8 +9,9 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
 .jumbotron .align-items-center {
-  align-items: unset!important;
+  align-items: center!important;
 }
 
 .jumbotron {
@@ -19,9 +20,13 @@ code {
   background-repeat: no-repeat;
   background-clip: border-box;
   border-radius: 0;
-  padding: auto;
 }
 
+@media (max-width:1700px) {
+  .jumbotron .align-items-center {
+    align-items: unset!important;
+  }
+}
 
 
 @media (max-width:900px) {
@@ -34,7 +39,7 @@ code {
     background-image: url('assets/images/logo_no_bg.svg');
     background-repeat: no-repeat;
     background-clip: border-box;
-    background-position: 15% 65%;
+    background-position: 15% 70%;
     margin:auto;
   }
   .jumbotron .h1 {
@@ -44,7 +49,8 @@ code {
 
 }
 
-@media (max-width:600px) {
+
+@media (max-width:650px) {
   .jumbotron .align-items-center {
     align-items: unset!important;
   }
